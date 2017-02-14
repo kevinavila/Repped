@@ -18,6 +18,15 @@ class LoginController: UIViewController, FBSDKLoginButtonDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if FIRAuth.auth()?.currentUser != nil {
+            // User is signed in.
+            // Move user to home screen
+            
+        } else {
+            // No user is signed in.
+            //
+        }
+        
         facebookLoginButton.delegate = self
         facebookLoginButton.readPermissions = ["public_profile", "email", "user_friends"]
     }
@@ -28,7 +37,20 @@ class LoginController: UIViewController, FBSDKLoginButtonDelegate {
     }
 
     func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
-        print("User logged into facebook.")
+        if (error != nil) {
+            print(error!.localizedDescription)
+            return
+        }
+        
+        print("User logged into Facebook.")
+        let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
+        FIRAuth.auth()?.signIn(with: credential) { (user, error) in
+            if let error = error {
+                print(error)
+                return
+            }
+            print("User authenticated with Firebase.")
+        }
     }
     
     func loginButtonWillLogin(_ loginButton: FBSDKLoginButton!) -> Bool {
@@ -36,7 +58,9 @@ class LoginController: UIViewController, FBSDKLoginButtonDelegate {
     }
     
     func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
-        print("User logged out of facebook.")
+        try! FIRAuth.auth()!.signOut()
+        FBSDKAccessToken.setCurrent(nil)
+        print("User logged out of Facebook and Firebase.")
     }
 }
 

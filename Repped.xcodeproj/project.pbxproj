@@ -12,7 +12,7 @@
 		C89F9DEB8D56D48322769E84 /* Pods_ReppedUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BEE666B8E8AC1F90BDD6477 /* Pods_ReppedUITests.framework */; };
 		DB3A775E1E52AE9A001D3B15 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB3A775D1E52AE9A001D3B15 /* GoogleService-Info.plist */; };
 		DBC80E8F1E4B840E00A3CCBC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC80E8E1E4B840E00A3CCBC /* AppDelegate.swift */; };
-		DBC80E911E4B840E00A3CCBC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC80E901E4B840E00A3CCBC /* ViewController.swift */; };
+		DBC80E911E4B840E00A3CCBC /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC80E901E4B840E00A3CCBC /* LoginController.swift */; };
 		DBC80E941E4B840E00A3CCBC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBC80E921E4B840E00A3CCBC /* Main.storyboard */; };
 		DBC80E961E4B840E00A3CCBC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBC80E951E4B840E00A3CCBC /* Assets.xcassets */; };
 		DBC80E991E4B840E00A3CCBC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBC80E971E4B840E00A3CCBC /* LaunchScreen.storyboard */; };
@@ -46,9 +46,10 @@
 		BDBCB15701519444437FA42C /* Pods-ReppedTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReppedTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReppedTests/Pods-ReppedTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D9F0FE0FA5ADD3716E537AAE /* Pods_ReppedTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReppedTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB3A775D1E52AE9A001D3B15 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DB3A775F1E52C4DC001D3B15 /* BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
 		DBC80E8B1E4B840E00A3CCBC /* Repped.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Repped.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBC80E8E1E4B840E00A3CCBC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DBC80E901E4B840E00A3CCBC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		DBC80E901E4B840E00A3CCBC /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		DBC80E931E4B840E00A3CCBC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DBC80E951E4B840E00A3CCBC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DBC80E981E4B840E00A3CCBC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -140,8 +141,9 @@
 			isa = PBXGroup;
 			children = (
 				DBC80E8E1E4B840E00A3CCBC /* AppDelegate.swift */,
-				DBC80E901E4B840E00A3CCBC /* ViewController.swift */,
+				DBC80E901E4B840E00A3CCBC /* LoginController.swift */,
 				DBC80E921E4B840E00A3CCBC /* Main.storyboard */,
+				DB3A775F1E52C4DC001D3B15 /* BridgingHeader.h */,
 				DBC80E951E4B840E00A3CCBC /* Assets.xcassets */,
 				DBC80E971E4B840E00A3CCBC /* LaunchScreen.storyboard */,
 				DBC80E9A1E4B840E00A3CCBC /* Info.plist */,
@@ -434,7 +436,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DBC80E911E4B840E00A3CCBC /* ViewController.swift in Sources */,
+				DBC80E911E4B840E00A3CCBC /* LoginController.swift in Sources */,
 				DBC80E8F1E4B840E00A3CCBC /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

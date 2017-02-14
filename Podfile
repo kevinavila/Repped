@@ -5,8 +5,12 @@ target 'Repped' do
   # Comment this line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
 
-  # Pods for Repped
+  # Database
   pod 'Firebase'
+  pod 'Firebase/Auth'
+
+  # Facebook
+  pod 'FBSDKLoginKit'  
 
   target 'ReppedTests' do
     inherit! :search_paths

@@ -99,7 +99,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
 
-    
     // Check if user has Apple Music membership
     func checkIfUserHasAppleMusic() {
         let serviceController = SKCloudServiceController()
@@ -108,19 +107,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print(err!.localizedDescription)
                 print("An error occured when trying to validate Apple Music membership.")
             }
-            switch capability {
-                
-            case SKCloudServiceCapability.musicCatalogPlayback:
-                print("The user has an Apple Music subscription and can playback music!")
-                
-            case SKCloudServiceCapability.addToCloudMusicLibrary:
+            
+            if (capability.rawValue >= SKCloudServiceCapability.addToCloudMusicLibrary.rawValue) {
                 print("The user has an Apple Music subscription, can playback music AND can add to the Cloud Music Library")
-                
-            default:
+            } else if (capability.rawValue == SKCloudServiceCapability.musicCatalogPlayback.rawValue) {
+                print("The user has an Apple Music subscription and can playback music!")
+            } else {
                 print("The user doesn't have an Apple Music subscription available. Now would be a good time to prompt them to buy one?")
-                
-                
             }
+            
         })
         
     }

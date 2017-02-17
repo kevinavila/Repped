@@ -20,7 +20,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FIRApp.configure()
-        return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        requestAppleMusicPermission() // should this also be called in ApplicationDidBecomeActive?
+        
+        
+        return true
     }
     
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
@@ -44,36 +49,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         FBSDKAppEvents.activateApp()
-        checkIfUserHasAppleMusic()
-        requestAppleMusicPermission()
-        
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    }
-    
-    // Check if user has Apple Music membership
-    func checkIfUserHasAppleMusic() {
-        let serviceController = SKCloudServiceController()
-        serviceController.requestCapabilities(completionHandler: { (capability:SKCloudServiceCapability, err:Error?) in
-            if (err != nil) {
-                print("An error occured when trying to validate Apple Music membership.")
-            }
-            switch capability {
-                
-            case SKCloudServiceCapability.musicCatalogPlayback:
-                print("The user has an Apple Music subscription and can playback music!")
-                
-            case SKCloudServiceCapability.addToCloudMusicLibrary:
-                print("The user has an Apple Music subscription, can playback music AND can add to the Cloud Music Library")
-                
-            default:
-                print("The user doesn't have an Apple Music subscription available. Now would be a good time to prompt them to buy one?")
-                
-            }
-        })
-        
     }
     
     // Request Apple Music Permission
@@ -82,6 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         case .authorized:
             print("The user's already authorized - we don't need to do anything more here, so we'll exit early.")
+            self.checkIfUserHasAppleMusic()
             return
             
         case .denied:
@@ -102,7 +82,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             switch status {
                 
             case .authorized:
-                print("All good - the user tapped 'OK', so you're clear to move forward and start playing.")
+                print("All good - the user tapped 'OK'.")
+                self.checkIfUserHasAppleMusic()
                 
             case .denied:
                 print("The user tapped 'Don't allow'.")
@@ -118,6 +99,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
 
+    
+    // Check if user has Apple Music membership
+    func checkIfUserHasAppleMusic() {
+        let serviceController = SKCloudServiceController()
+        serviceController.requestCapabilities(completionHandler: { (capability:SKCloudServiceCapability, err:Error?) in
+            if (err != nil) {
+                print(err!.localizedDescription)
+                print("An error occured when trying to validate Apple Music membership.")
+            }
+            switch capability {
+                
+            case SKCloudServiceCapability.musicCatalogPlayback:
+                print("The user has an Apple Music subscription and can playback music!")
+                
+            case SKCloudServiceCapability.addToCloudMusicLibrary:
+                print("The user has an Apple Music subscription, can playback music AND can add to the Cloud Music Library")
+                
+            default:
+                print("The user doesn't have an Apple Music subscription available. Now would be a good time to prompt them to buy one?")
+                
+                
+            }
+        })
+        
+    }
 
 }
 

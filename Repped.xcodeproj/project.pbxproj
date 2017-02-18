@@ -13,11 +13,13 @@
 		DB3A775E1E52AE9A001D3B15 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB3A775D1E52AE9A001D3B15 /* GoogleService-Info.plist */; };
 		DBC80E8F1E4B840E00A3CCBC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC80E8E1E4B840E00A3CCBC /* AppDelegate.swift */; };
 		DBC80E911E4B840E00A3CCBC /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC80E901E4B840E00A3CCBC /* LoginController.swift */; };
-		DBC80E941E4B840E00A3CCBC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBC80E921E4B840E00A3CCBC /* Main.storyboard */; };
+		DBC80E941E4B840E00A3CCBC /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBC80E921E4B840E00A3CCBC /* Login.storyboard */; };
 		DBC80E961E4B840E00A3CCBC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBC80E951E4B840E00A3CCBC /* Assets.xcassets */; };
 		DBC80E991E4B840E00A3CCBC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBC80E971E4B840E00A3CCBC /* LaunchScreen.storyboard */; };
 		DBC80EA41E4B840F00A3CCBC /* ReppedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC80EA31E4B840F00A3CCBC /* ReppedTests.swift */; };
 		DBC80EAF1E4B840F00A3CCBC /* ReppedUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC80EAE1E4B840F00A3CCBC /* ReppedUITests.swift */; };
+		DBFA247B1E57F25300224898 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBFA247A1E57F25300224898 /* Home.storyboard */; };
+		DBFA247D1E57F29B00224898 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFA247C1E57F29B00224898 /* HomeController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +52,7 @@
 		DBC80E8B1E4B840E00A3CCBC /* Repped.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Repped.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBC80E8E1E4B840E00A3CCBC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DBC80E901E4B840E00A3CCBC /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
-		DBC80E931E4B840E00A3CCBC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DBC80E931E4B840E00A3CCBC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
 		DBC80E951E4B840E00A3CCBC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DBC80E981E4B840E00A3CCBC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DBC80E9A1E4B840E00A3CCBC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -60,6 +62,8 @@
 		DBC80EAA1E4B840F00A3CCBC /* ReppedUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReppedUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBC80EAE1E4B840F00A3CCBC /* ReppedUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReppedUITests.swift; sourceTree = "<group>"; };
 		DBC80EB01E4B840F00A3CCBC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DBFA247A1E57F25300224898 /* Home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
+		DBFA247C1E57F29B00224898 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		DC6F11409791BEBA8BE1DEA9 /* Pods-ReppedUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReppedUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ReppedUITests/Pods-ReppedUITests.release.xcconfig"; sourceTree = "<group>"; };
 		F0C9986E9D4553657775FCD1 /* Pods-Repped.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Repped.release.xcconfig"; path = "Pods/Target Support Files/Pods-Repped/Pods-Repped.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -142,10 +146,12 @@
 			children = (
 				DBC80E8E1E4B840E00A3CCBC /* AppDelegate.swift */,
 				DBC80E901E4B840E00A3CCBC /* LoginController.swift */,
-				DBC80E921E4B840E00A3CCBC /* Main.storyboard */,
+				DBFA247C1E57F29B00224898 /* HomeController.swift */,
+				DBFA247A1E57F25300224898 /* Home.storyboard */,
+				DBC80E921E4B840E00A3CCBC /* Login.storyboard */,
+				DBC80E971E4B840E00A3CCBC /* LaunchScreen.storyboard */,
 				DB3A775F1E52C4DC001D3B15 /* BridgingHeader.h */,
 				DBC80E951E4B840E00A3CCBC /* Assets.xcassets */,
-				DBC80E971E4B840E00A3CCBC /* LaunchScreen.storyboard */,
 				DBC80E9A1E4B840E00A3CCBC /* Info.plist */,
 				DB3A775D1E52AE9A001D3B15 /* GoogleService-Info.plist */,
 			);
@@ -292,9 +298,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBC80E991E4B840E00A3CCBC /* LaunchScreen.storyboard in Resources */,
+				DBFA247B1E57F25300224898 /* Home.storyboard in Resources */,
 				DB3A775E1E52AE9A001D3B15 /* GoogleService-Info.plist in Resources */,
 				DBC80E961E4B840E00A3CCBC /* Assets.xcassets in Resources */,
-				DBC80E941E4B840E00A3CCBC /* Main.storyboard in Resources */,
+				DBC80E941E4B840E00A3CCBC /* Login.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,6 +451,7 @@
 			files = (
 				DBC80E911E4B840E00A3CCBC /* LoginController.swift in Sources */,
 				DBC80E8F1E4B840E00A3CCBC /* AppDelegate.swift in Sources */,
+				DBFA247D1E57F29B00224898 /* HomeController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -479,12 +487,12 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		DBC80E921E4B840E00A3CCBC /* Main.storyboard */ = {
+		DBC80E921E4B840E00A3CCBC /* Login.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				DBC80E931E4B840E00A3CCBC /* Base */,
 			);
-			name = Main.storyboard;
+			name = Login.storyboard;
 			sourceTree = "<group>";
 		};
 		DBC80E971E4B840E00A3CCBC /* LaunchScreen.storyboard */ = {

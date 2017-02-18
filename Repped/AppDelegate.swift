@@ -24,6 +24,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         requestAppleMusicPermission() // should this also be called in ApplicationDidBecomeActive?
         
+        // Uncomment to allow app to remember login info
+        let loginStoryboard = UIStoryboard(name: "Login", bundle: nil)
+        let homeStoryboard = UIStoryboard(name: "Home", bundle: nil)
+        
+        if let window = self.window {
+            if (FBSDKAccessToken.current() != nil) {
+                // User has already been authenticated
+                let homeNavController = homeStoryboard.instantiateViewController(withIdentifier: "homeNavController")
+                window.rootViewController = homeNavController
+                
+                //user = FIRAuth.auth()?.currentUser
+            } else {
+                // User must login
+                let loginController = loginStoryboard.instantiateViewController(withIdentifier: "loginController")
+                window.rootViewController = loginController
+            }
+        }
         
         return true
     }

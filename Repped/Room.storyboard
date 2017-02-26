@@ -32,13 +32,28 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hMT-rg-fxV">
+                                <rect key="frame" x="151" y="387" width="73" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="6Ll-Wf-uAn"/>
+                                    <constraint firstAttribute="width" constant="73" id="Nt9-k4-ZdV"/>
+                                </constraints>
+                                <state key="normal" title="Play Nav"/>
+                                <connections>
+                                    <action selector="playNav:" destination="Eoo-5b-bBO" eventType="touchUpInside" id="E8Z-6D-mXO"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="hMT-rg-fxV" secondAttribute="trailing" constant="135" id="AI3-9i-t6x"/>
                             <constraint firstAttribute="trailingMargin" secondItem="89V-d9-aMH" secondAttribute="trailing" constant="120" id="HuH-RM-Pkb"/>
                             <constraint firstItem="3EV-wT-Tm7" firstAttribute="top" secondItem="89V-d9-aMH" secondAttribute="bottom" constant="323" id="Pdk-SL-sMB"/>
                             <constraint firstItem="89V-d9-aMH" firstAttribute="leading" secondItem="ox0-oE-Ouy" secondAttribute="leadingMargin" constant="120" id="Uej-U8-WQ7"/>
                             <constraint firstItem="89V-d9-aMH" firstAttribute="top" secondItem="xcp-pi-nXl" secondAttribute="bottom" constant="303" id="g8d-jK-fB1"/>
+                            <constraint firstItem="3EV-wT-Tm7" firstAttribute="top" secondItem="hMT-rg-fxV" secondAttribute="bottom" constant="250" id="jvD-cF-31V"/>
+                            <constraint firstItem="hMT-rg-fxV" firstAttribute="top" secondItem="89V-d9-aMH" secondAttribute="bottom" constant="43" id="u4b-wC-7m2"/>
+                            <constraint firstItem="hMT-rg-fxV" firstAttribute="leading" secondItem="ox0-oE-Ouy" secondAttribute="leadingMargin" constant="135" id="xcb-qj-1nL"/>
                         </constraints>
                     </view>
                 </viewController>

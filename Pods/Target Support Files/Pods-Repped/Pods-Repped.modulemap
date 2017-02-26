@@ -1,6 +1,0 @@
-framework module Pods_Repped {
-  umbrella header "Pods-Repped-umbrella.h"
-
-  export *
-  module * { export * }
-}

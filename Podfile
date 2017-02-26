@@ -10,7 +10,9 @@ target 'Repped' do
   pod 'Firebase/Auth'
 
   # Facebook
-  pod 'FBSDKLoginKit'  
+  pod 'FBSDKLoginKit'
+  pod 'FBSDKCoreKit'
+  pod 'FBSDKShareKit'
 
   target 'ReppedTests' do
     inherit! :search_paths

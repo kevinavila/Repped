@@ -1,5 +1,5 @@
 # Uncomment this line to define a global platform for your project
-# platform :ios, '9.0'
+# platform :ios, '10.0'
 
 target 'Repped' do
   # Comment this line if you're not using Swift and don't want to use dynamic frameworks
@@ -10,7 +10,10 @@ target 'Repped' do
   pod 'Firebase/Auth'
 
   # Facebook
-  pod 'FBSDKLoginKit'  
+  pod 'FBSDKLoginKit'
+
+  # Networking
+  pod 'Alamofire'
 
   target 'ReppedTests' do
     inherit! :search_paths

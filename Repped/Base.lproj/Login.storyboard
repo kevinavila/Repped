@@ -51,7 +51,7 @@
         <!--Home-->
         <scene sceneID="ieX-NJ-FNO">
             <objects>
-                <viewControllerPlaceholder storyboardIdentifier="homeController" storyboardName="Home" id="B4r-8S-f64" userLabel="Home" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="Home" id="B4r-8S-f64" userLabel="Home" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1zm-En-cFr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="737" y="-22"/>

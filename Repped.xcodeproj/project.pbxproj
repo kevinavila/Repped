@@ -10,6 +10,8 @@
 		0162560C90FDED289D8E4047 /* Pods_ReppedTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9F0FE0FA5ADD3716E537AAE /* Pods_ReppedTests.framework */; };
 		A519A1FE2FC3F82D10F6206E /* Pods_Repped.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7201FADE3B5AD43D57FE985E /* Pods_Repped.framework */; };
 		C89F9DEB8D56D48322769E84 /* Pods_ReppedUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BEE666B8E8AC1F90BDD6477 /* Pods_ReppedUITests.framework */; };
+		DB1F47021E62607400F0FFEC /* Room.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB1F47011E62607400F0FFEC /* Room.storyboard */; };
+		DB1F47041E6261FA00F0FFEC /* RoomController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1F47031E6261FA00F0FFEC /* RoomController.swift */; };
 		DB3A775E1E52AE9A001D3B15 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB3A775D1E52AE9A001D3B15 /* GoogleService-Info.plist */; };
 		DBC80E8F1E4B840E00A3CCBC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC80E8E1E4B840E00A3CCBC /* AppDelegate.swift */; };
 		DBC80E911E4B840E00A3CCBC /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC80E901E4B840E00A3CCBC /* LoginController.swift */; };
@@ -47,6 +49,8 @@
 		BC1E625F2B916793BCA58482 /* Pods-Repped.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Repped.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Repped/Pods-Repped.debug.xcconfig"; sourceTree = "<group>"; };
 		BDBCB15701519444437FA42C /* Pods-ReppedTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReppedTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReppedTests/Pods-ReppedTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D9F0FE0FA5ADD3716E537AAE /* Pods_ReppedTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReppedTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB1F47011E62607400F0FFEC /* Room.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Room.storyboard; sourceTree = "<group>"; };
+		DB1F47031E6261FA00F0FFEC /* RoomController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomController.swift; sourceTree = "<group>"; };
 		DB3A775D1E52AE9A001D3B15 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DB3A775F1E52C4DC001D3B15 /* BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
 		DBC80E8B1E4B840E00A3CCBC /* Repped.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Repped.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -147,7 +151,9 @@
 				DBC80E8E1E4B840E00A3CCBC /* AppDelegate.swift */,
 				DBC80E901E4B840E00A3CCBC /* LoginController.swift */,
 				DBFA247C1E57F29B00224898 /* HomeController.swift */,
+				DB1F47031E6261FA00F0FFEC /* RoomController.swift */,
 				DBFA247A1E57F25300224898 /* Home.storyboard */,
+				DB1F47011E62607400F0FFEC /* Room.storyboard */,
 				DBC80E921E4B840E00A3CCBC /* Login.storyboard */,
 				DBC80E971E4B840E00A3CCBC /* LaunchScreen.storyboard */,
 				DB3A775F1E52C4DC001D3B15 /* BridgingHeader.h */,
@@ -301,6 +307,7 @@
 				DBC80E991E4B840E00A3CCBC /* LaunchScreen.storyboard in Resources */,
 				DBFA247B1E57F25300224898 /* Home.storyboard in Resources */,
 				DB3A775E1E52AE9A001D3B15 /* GoogleService-Info.plist in Resources */,
+				DB1F47021E62607400F0FFEC /* Room.storyboard in Resources */,
 				DBC80E961E4B840E00A3CCBC /* Assets.xcassets in Resources */,
 				DBC80E941E4B840E00A3CCBC /* Login.storyboard in Resources */,
 			);
@@ -465,6 +472,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB1F47041E6261FA00F0FFEC /* RoomController.swift in Sources */,
 				DBC80E911E4B840E00A3CCBC /* LoginController.swift in Sources */,
 				DBC80E8F1E4B840E00A3CCBC /* AppDelegate.swift in Sources */,
 				DBFA247D1E57F29B00224898 /* HomeController.swift in Sources */,

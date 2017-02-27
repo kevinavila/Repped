@@ -8,6 +8,7 @@ target 'Repped' do
   # Database
   pod 'Firebase'
   pod 'Firebase/Auth'
+  pod 'Firebase/Database'
 
   # Facebook
   pod 'FBSDKLoginKit'

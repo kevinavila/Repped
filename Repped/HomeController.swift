@@ -19,6 +19,9 @@ class HomeController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        
         let newRoomRef = roomRef.childByAutoId()
         let roomItem = [
             "name": "TestRoom"

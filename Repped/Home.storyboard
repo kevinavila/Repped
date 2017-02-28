@@ -44,7 +44,13 @@
                             <outlet property="delegate" destination="ek9-al-Yi4" id="mwp-lf-0Qn"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="HI7-S8-Rbr"/>
+                    <navigationItem key="navigationItem" id="HI7-S8-Rbr">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="wQB-dZ-VLK">
+                            <connections>
+                                <action selector="createNewRoom:" destination="ek9-al-Yi4" id="bFi-DJ-Z7Y"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="uIQ-jJ-AuR" kind="show" identifier="showRoom" id="2lu-AX-BOi"/>
                     </connections>

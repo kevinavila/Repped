@@ -34,7 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let homeNavController = homeStoryboard.instantiateViewController(withIdentifier: "homeNavController")
                 window.rootViewController = homeNavController
                 
-                //user = FIRAuth.auth()?.currentUser
             } else {
                 // User must login
                 let loginController = loginStoryboard.instantiateViewController(withIdentifier: "loginController")

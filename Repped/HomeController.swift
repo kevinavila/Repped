@@ -22,12 +22,6 @@ class HomeController: UITableViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
-        let newRoomRef = roomRef.childByAutoId()
-        let roomItem = [
-            "name": "TestRoom"
-        ]
-        newRoomRef.setValue(roomItem)
-        
         observeRooms()
     }
     
@@ -44,7 +38,8 @@ class HomeController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let room = rooms[(indexPath as IndexPath).row]
+        self.performSegue(withIdentifier: "showRoom", sender: room)
     }
     
     // Firebase related methods

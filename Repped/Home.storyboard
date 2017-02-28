@@ -45,10 +45,21 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="HI7-S8-Rbr"/>
+                    <connections>
+                        <segue destination="uIQ-jJ-AuR" kind="show" identifier="showRoom" id="2lu-AX-BOi"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3hL-ic-9hg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1303.2" y="156.07196401799101"/>
+        </scene>
+        <!--Room-->
+        <scene sceneID="nJo-ge-kdv">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Room" id="uIQ-jJ-AuR" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2sj-94-S9S" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1954" y="80"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="9vj-pY-Bs0">

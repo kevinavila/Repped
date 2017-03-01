@@ -10,9 +10,13 @@ internal class Room {
     
     internal let id:String
     internal let name:String
+    internal var leader:String
+    internal var listeners:[String:String]
     
-    init(id:String, name:String) {
+    init(id:String, name:String, leader:String,  listeners:[String:String]) {
         self.id = id
         self.name = name
+        self.leader = leader
+        self.listeners = listeners
     }
 }

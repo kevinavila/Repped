@@ -24,6 +24,7 @@
 		DBC80EAF1E4B840F00A3CCBC /* ReppedUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC80EAE1E4B840F00A3CCBC /* ReppedUITests.swift */; };
 		DBFA247B1E57F25300224898 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBFA247A1E57F25300224898 /* Home.storyboard */; };
 		DBFA247D1E57F29B00224898 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFA247C1E57F29B00224898 /* HomeController.swift */; };
+		DBFBB8BA1E66749500C85C1C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFBB8B91E66749500C85C1C /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		DBC80EB01E4B840F00A3CCBC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DBFA247A1E57F25300224898 /* Home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		DBFA247C1E57F29B00224898 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
+		DBFBB8B91E66749500C85C1C /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DC6F11409791BEBA8BE1DEA9 /* Pods-ReppedUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReppedUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ReppedUITests/Pods-ReppedUITests.release.xcconfig"; sourceTree = "<group>"; };
 		F0C9986E9D4553657775FCD1 /* Pods-Repped.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Repped.release.xcconfig"; path = "Pods/Target Support Files/Pods-Repped/Pods-Repped.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -155,6 +157,7 @@
 				DBC80E8E1E4B840E00A3CCBC /* AppDelegate.swift */,
 				DBC80E901E4B840E00A3CCBC /* LoginController.swift */,
 				DBFA247C1E57F29B00224898 /* HomeController.swift */,
+				DBFBB8B91E66749500C85C1C /* User.swift */,
 				DB1F47031E6261FA00F0FFEC /* RoomController.swift */,
 				DB3B28DA1E63E0EC00AB6C18 /* Room.swift */,
 				DB3B28DC1E63E55000AB6C18 /* HomeViewCell.swift */,
@@ -484,6 +487,7 @@
 				DBFA247D1E57F29B00224898 /* HomeController.swift in Sources */,
 				DB3B28DB1E63E0EC00AB6C18 /* Room.swift in Sources */,
 				DB3B28DD1E63E55000AB6C18 /* HomeViewCell.swift in Sources */,
+				DBFBB8BA1E66749500C85C1C /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

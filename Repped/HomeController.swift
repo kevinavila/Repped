@@ -12,7 +12,7 @@ import Firebase
 class HomeController: UITableViewController {
     
     //MARK: Properties
-    var userName:String?
+    var user:User!
     private var rooms:[Room] = []
     private lazy var roomRef:FIRDatabaseReference = FIRDatabase.database().reference().child("rooms")
     private var roomRefHandle:FIRDatabaseHandle?
@@ -23,8 +23,12 @@ class HomeController: UITableViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
-        let user = FIRAuth.auth()?.currentUser
-        userName = user?.displayName
+        // Initialize user info
+        let currentUser = FIRAuth.auth()?.currentUser
+        let uid = currentUser?.uid
+        let name = currentUser?.displayName
+        self.user = User(uid: uid!, name: name!)
+        
         
         observeRooms()
     }
@@ -44,24 +48,55 @@ class HomeController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let room = rooms[(indexPath as IndexPath).row]
+        
+        if (self.user.currentRoom != nil) {
+            if (self.user.currentRoom?.id != room.id) { // user is joining a new room
+                
+                var oldRoomListeners = self.user.currentRoom?.listeners
+                oldRoomListeners!.removeValue(forKey: self.user.uid)
+                self.roomRef.child((self.user.currentRoom?.id)!+"/listeners").setValue(oldRoomListeners)
+                
+                //If there are no longer listeners in the room, destroy the room. Otherwise, app crashes in observe method
+                
+                self.user.currentRoom = room
+                room.listeners.updateValue(self.user.name, forKey: self.user.uid)
+                self.roomRef.child(room.id+"/listeners").setValue(room.listeners)
+            }
+        } else { // user is joining a room for first time
+            self.user.currentRoom = room
+            room.listeners.updateValue(self.user.name, forKey: self.user.uid)
+            self.roomRef.child(room.id+"/listeners").setValue(room.listeners)
+        }
+        
         self.performSegue(withIdentifier: "showRoom", sender: room)
     }
     
     //MARK: Create New Room
     @IBAction func createNewRoom(_ sender: Any) {
+        
+        if (self.user.currentRoom == nil) {
+            createRoomHelper()
+        } else if (self.user.currentRoom?.leader != self.user.uid) {
+            createRoomHelper()
+        } else {
+            // User cannot creat new room because he/she is currently leading the room they're in
+        }
+    }
+    
+    private func createRoomHelper() {
         let alertController = UIAlertController(title: "New Room", message: "Please enter a name for your room.", preferredStyle: .alert)
         
         let confirmAction = UIAlertAction(title: "Create", style: .default) { (_) in
             if let field = alertController.textFields?[0] {
                 // store room in database
                 let name = field.text
-                let listeners = [self.userName]
+                let listeners:[String:String] = [self.user.uid : self.user.name]
                 let newRoomRef = self.roomRef.childByAutoId()
                 let roomItem = [
                     "name": name!,
-                    "leader": self.userName!,
+                    "leader": self.user.uid,
                     "listeners": listeners
-                ] as [String:Any]
+                    ] as [String:Any]
                 newRoomRef.setValue(roomItem)
                 
             } else {
@@ -81,7 +116,6 @@ class HomeController: UITableViewController {
         self.present(alertController, animated: true, completion: nil)
     }
     
-    
     //MARK: Firebase Functions
     private func observeRooms() {
         // Observe for any changes made to the rooms in the Firebase DB
@@ -93,7 +127,12 @@ class HomeController: UITableViewController {
                 let roomData = snapshot.value as! Dictionary<String, AnyObject>
                 let id = snapshot.key
                 let name = roomData["name"] as! String
-                let room = Room(id: id, name: name)
+                let leader = roomData["leader"] as! String
+                let listeners = roomData["listeners"] as! [String:String]
+                let room = Room(id: id, name: name, leader: leader, listeners: listeners)
+                if (leader == self.user.uid) { //BAD: leader's current room will be assigned during segue to room screen
+                    self.user.currentRoom = room
+                }
                 updatedRooms.append(room)
             }
             

@@ -47,7 +47,7 @@ class HomeController: UITableViewController {
         self.performSegue(withIdentifier: "showRoom", sender: room)
     }
     
-    // Create new room
+    //MARK: Create New Room
     @IBAction func createNewRoom(_ sender: Any) {
         let alertController = UIAlertController(title: "New Room", message: "Please enter a name for your room.", preferredStyle: .alert)
         
@@ -79,26 +79,26 @@ class HomeController: UITableViewController {
         alertController.addAction(cancelAction)
         
         self.present(alertController, animated: true, completion: nil)
-        
-        
     }
     
     
-    // Firebase related methods
-    
+    //MARK: Firebase Functions
     private func observeRooms() {
-        // Use the observe method to listen for new rooms being written to the Firebase DB
-        roomRefHandle = roomRef.observe(.childAdded, with: { (snapshot) -> Void in
-            print(snapshot.value)
-            let roomData = snapshot.value as! Dictionary<String, AnyObject>
-            let id = snapshot.key
-            if let name = roomData["name"] as! String!, name.characters.count > 0 {
-                self.rooms.append(Room(id: id, name: name))
-                print(self.rooms)
-                self.tableView.reloadData()
-            } else {
-                print("Error! Could not decode room data")
+        // Observe for any changes made to the rooms in the Firebase DB
+        roomRefHandle = roomRef.observe(.value, with: { (snapshot) -> Void in
+            var updatedRooms:[Room] = []
+            
+            for item in snapshot.children {
+                let snapshot = item as! FIRDataSnapshot
+                let roomData = snapshot.value as! Dictionary<String, AnyObject>
+                let id = snapshot.key
+                let name = roomData["name"] as! String
+                let room = Room(id: id, name: name)
+                updatedRooms.append(room)
             }
+            
+            self.rooms = updatedRooms
+            self.tableView.reloadData()
         })
     }
     

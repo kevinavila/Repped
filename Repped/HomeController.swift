@@ -76,9 +76,10 @@ class HomeController: UITableViewController {
         
         if (self.user.currentRoom == nil) {
             createRoomHelper()
+            // Segue to room
         } else if (self.user.currentRoom?.leader != self.user.uid) {
-            // remove user from current room
             createRoomHelper()
+            // Segue to room
         } else {
             // User cannot creat new room because he/she is currently leading the room they're in
         }
@@ -99,6 +100,10 @@ class HomeController: UITableViewController {
                     "listeners": listeners
                     ] as [String:Any]
                 newRoomRef.setValue(roomItem)
+                
+                if (self.user.currentRoom != nil) {
+                    self.userLeavingRoom()
+                }
                 
             } else {
                 // user did not fill field

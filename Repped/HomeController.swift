@@ -50,25 +50,25 @@ class HomeController: UITableViewController {
         let room = rooms[(indexPath as IndexPath).row]
         
         if (self.user.currentRoom != nil) {
-            if (self.user.currentRoom?.id != room.id) { // user is joining a new room
-                
-                var oldRoomListeners = self.user.currentRoom?.listeners
-                oldRoomListeners!.removeValue(forKey: self.user.uid)
-                self.roomRef.child((self.user.currentRoom?.id)!+"/listeners").setValue(oldRoomListeners)
-                
-                //If there are no longer listeners in the room, destroy the room. Otherwise, app crashes in observe method
-                
-                self.user.currentRoom = room
-                room.listeners.updateValue(self.user.name, forKey: self.user.uid)
-                self.roomRef.child(room.id+"/listeners").setValue(room.listeners)
+            if (self.user.currentRoom?.rid != room.rid) {
+                // User is attempting to joining a new room
+                if (self.user.currentRoom?.leader != self.user.uid) {
+                    userLeavingRoom()
+                    userJoiningRoom(room: room)
+                    self.performSegue(withIdentifier: "showRoom", sender: room)
+                } else {
+                    // User is leader of their current room. Do something.
+                    
+                }
+            } else {
+                self.performSegue(withIdentifier: "showRoom", sender: room)
             }
-        } else { // user is joining a room for first time
-            self.user.currentRoom = room
-            room.listeners.updateValue(self.user.name, forKey: self.user.uid)
-            self.roomRef.child(room.id+"/listeners").setValue(room.listeners)
+        } else {
+            // User is joining a room for first time
+            userJoiningRoom(room: room)
+            self.performSegue(withIdentifier: "showRoom", sender: room)
         }
         
-        self.performSegue(withIdentifier: "showRoom", sender: room)
     }
     
     //MARK: Create New Room
@@ -77,6 +77,7 @@ class HomeController: UITableViewController {
         if (self.user.currentRoom == nil) {
             createRoomHelper()
         } else if (self.user.currentRoom?.leader != self.user.uid) {
+            // remove user from current room
             createRoomHelper()
         } else {
             // User cannot creat new room because he/she is currently leading the room they're in
@@ -125,11 +126,12 @@ class HomeController: UITableViewController {
             for item in snapshot.children {
                 let snapshot = item as! FIRDataSnapshot
                 let roomData = snapshot.value as! Dictionary<String, AnyObject>
-                let id = snapshot.key
+                let rid = snapshot.key
                 let name = roomData["name"] as! String
                 let leader = roomData["leader"] as! String
+                //If there are no longer listeners in the room, destroy the room. Otherwise, app crashes in observe method
                 let listeners = roomData["listeners"] as! [String:String]
-                let room = Room(id: id, name: name, leader: leader, listeners: listeners)
+                let room = Room(rid: rid, name: name, leader: leader, listeners: listeners)
                 if (leader == self.user.uid) { //BAD: leader's current room will be assigned during segue to room screen
                     self.user.currentRoom = room
                 }
@@ -139,6 +141,18 @@ class HomeController: UITableViewController {
             self.rooms = updatedRooms
             self.tableView.reloadData()
         })
+    }
+    
+    private func userJoiningRoom(room: Room) {
+        self.user.currentRoom = room
+        room.listeners.updateValue(self.user.name, forKey: self.user.uid)
+        self.roomRef.child(room.rid+"/listeners").setValue(room.listeners)
+    }
+    
+    private func userLeavingRoom() {
+        var oldRoomListeners = self.user.currentRoom?.listeners
+        oldRoomListeners!.removeValue(forKey: self.user.uid)
+        self.roomRef.child((self.user.currentRoom?.rid)!+"/listeners").setValue(oldRoomListeners)
     }
     
     deinit {

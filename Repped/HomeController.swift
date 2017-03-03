@@ -15,6 +15,7 @@ class HomeController: UITableViewController {
     var user:User!
     private var rooms:[Room] = []
     private lazy var roomRef:FIRDatabaseReference = FIRDatabase.database().reference().child("rooms")
+    private lazy var joinRef:FIRDatabaseReference = FIRDatabase.database().reference().child("joinTable")
     private var roomRefHandle:FIRDatabaseHandle?
     
     override func viewDidLoad() {
@@ -92,12 +93,10 @@ class HomeController: UITableViewController {
             if let field = alertController.textFields?[0] {
                 // store room in database
                 let name = field.text
-                let listeners:[String:String] = [self.user.uid : self.user.name]
                 let newRoomRef = self.roomRef.childByAutoId()
                 let roomItem = [
                     "name": name!,
                     "leader": self.user.uid,
-                    "listeners": listeners
                     ] as [String:Any]
                 newRoomRef.setValue(roomItem)
                 
@@ -135,10 +134,9 @@ class HomeController: UITableViewController {
                 let name = roomData["name"] as! String
                 let leader = roomData["leader"] as! String
                 //If there are no longer listeners in the room, destroy the room. Otherwise, app crashes in observe method
-                let listeners = roomData["listeners"] as! [String:String]
-                let room = Room(rid: rid, name: name, leader: leader, listeners: listeners)
+                let room = Room(rid: rid, name: name, leader: leader)
                 if (leader == self.user.uid) { //BAD: leader's current room will be assigned during segue to room screen
-                    self.user.currentRoom = room
+                    self.userJoiningRoom(room: room)
                 }
                 updatedRooms.append(room)
             }
@@ -150,14 +148,12 @@ class HomeController: UITableViewController {
     
     private func userJoiningRoom(room: Room) {
         self.user.currentRoom = room
-        room.listeners.updateValue(self.user.name, forKey: self.user.uid)
-        self.roomRef.child(room.rid+"/listeners").setValue(room.listeners)
+        self.joinRef.child(self.user.uid).setValue(room.rid)
+        
     }
     
     private func userLeavingRoom() {
-        var oldRoomListeners = self.user.currentRoom?.listeners
-        oldRoomListeners!.removeValue(forKey: self.user.uid)
-        self.roomRef.child((self.user.currentRoom?.rid)!+"/listeners").setValue(oldRoomListeners)
+        self.joinRef.child(self.user.uid).removeValue()
     }
     
     deinit {

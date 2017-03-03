@@ -15,6 +15,7 @@ class HomeController: UITableViewController {
     var user:User!
     private var rooms:[Room] = []
     private lazy var roomRef:FIRDatabaseReference = FIRDatabase.database().reference().child("rooms")
+    private lazy var joinRef:FIRDatabaseReference = FIRDatabase.database().reference().child("joinTable")
     private var roomRefHandle:FIRDatabaseHandle?
     
     override func viewDidLoad() {
@@ -28,7 +29,6 @@ class HomeController: UITableViewController {
         let uid = currentUser?.uid
         let name = currentUser?.displayName
         self.user = User(uid: uid!, name: name!)
-        
         
         observeRooms()
     }
@@ -92,12 +92,10 @@ class HomeController: UITableViewController {
             if let field = alertController.textFields?[0] {
                 // store room in database
                 let name = field.text
-                let listeners:[String:String] = [self.user.uid : self.user.name]
                 let newRoomRef = self.roomRef.childByAutoId()
                 let roomItem = [
                     "name": name!,
-                    "leader": self.user.uid,
-                    "listeners": listeners
+                    "leader": self.user.uid
                     ] as [String:Any]
                 newRoomRef.setValue(roomItem)
                 
@@ -125,44 +123,41 @@ class HomeController: UITableViewController {
     //MARK: Firebase Functions
     private func observeRooms() {
         // Observe for any changes made to the rooms in the Firebase DB
-        roomRefHandle = roomRef.observe(.value, with: { (snapshot) -> Void in
-            var updatedRooms:[Room] = []
+        // What about when a room is destroyed?
+        roomRefHandle = roomRef.observe(.childAdded, with: { (snapshot) -> Void in
             
-            for item in snapshot.children {
-                let snapshot = item as! FIRDataSnapshot
-                let roomData = snapshot.value as! Dictionary<String, AnyObject>
-                let rid = snapshot.key
-                let name = roomData["name"] as! String
-                let leader = roomData["leader"] as! String
-                //If there are no longer listeners in the room, destroy the room. Otherwise, app crashes in observe method
-                let listeners = roomData["listeners"] as! [String:String]
-                let room = Room(rid: rid, name: name, leader: leader, listeners: listeners)
-                if (leader == self.user.uid) { //BAD: leader's current room will be assigned during segue to room screen
-                    self.user.currentRoom = room
-                }
-                updatedRooms.append(room)
+            let roomData = snapshot.value as! Dictionary<String, AnyObject>
+            let rid = snapshot.key
+            let name = roomData["name"] as! String
+            let leader = roomData["leader"] as! String
+            let room = Room(rid: rid, name: name, leader: leader)
+            if (leader == self.user.uid) {
+                self.userJoiningRoom(room: room)
             }
             
-            self.rooms = updatedRooms
+            self.rooms.append(room)
             self.tableView.reloadData()
         })
     }
     
     private func userJoiningRoom(room: Room) {
         self.user.currentRoom = room
-        room.listeners.updateValue(self.user.name, forKey: self.user.uid)
-        self.roomRef.child(room.rid+"/listeners").setValue(room.listeners)
+        self.joinRef.child(self.user.uid).setValue(room.rid)
     }
     
     private func userLeavingRoom() {
-        var oldRoomListeners = self.user.currentRoom?.listeners
-        oldRoomListeners!.removeValue(forKey: self.user.uid)
-        self.roomRef.child((self.user.currentRoom?.rid)!+"/listeners").setValue(oldRoomListeners)
+        self.joinRef.child(self.user.uid).removeValue()
     }
     
     deinit {
         if let refHandle = roomRefHandle {
             roomRef.removeObserver(withHandle: refHandle)
         }
+    }
+    
+    //MARK: Segue
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
     }
 }

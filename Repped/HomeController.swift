@@ -157,7 +157,12 @@ class HomeController: UITableViewController {
     
     //MARK: Segue
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//       print("wes_ prepareing for showroom seque")
+//        if segue.identifier == "showRoom", let nextScene = segue.destination as? RoomController{
+//            nextScene.user = self.user
+//            print("wes_ added user to show room segue")
+//        }
+//
+//    }
 }

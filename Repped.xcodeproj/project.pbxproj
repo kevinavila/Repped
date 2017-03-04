@@ -274,7 +274,7 @@
 				TargetAttributes = {
 					DBC80E8A1E4B840E00A3CCBC = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = 23BHDPQ4LF;
+						DevelopmentTeam = 3CFHANQN39;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -648,10 +648,11 @@
 			baseConfigurationReference = BC1E625F2B916793BCA58482 /* Pods-Repped.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 23BHDPQ4LF;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 3CFHANQN39;
 				INFOPLIST_FILE = Repped/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.utapps.Repped;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.utapps-wes.Repped";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -662,10 +663,11 @@
 			baseConfigurationReference = F0C9986E9D4553657775FCD1 /* Pods-Repped.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 23BHDPQ4LF;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 3CFHANQN39;
 				INFOPLIST_FILE = Repped/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.utapps.Repped;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.utapps-wes.Repped";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

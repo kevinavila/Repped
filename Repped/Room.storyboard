@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ywV-Bp-ju1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ywV-Bp-ju1">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Item-->
+        <!--Room-->
         <scene sceneID="kBP-Vi-iZJ">
             <objects>
                 <viewController storyboardIdentifier="roomController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Eoo-5b-bBO" customClass="RoomController" customModule="Repped" customModuleProvider="target" sceneMemberID="viewController">
@@ -22,7 +22,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Room Screen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="89V-d9-aMH">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Room Screen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="89V-d9-aMH">
                                 <rect key="frame" x="136" y="274" width="103" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="J1H-F8-gIX"/>
@@ -32,7 +32,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hMT-rg-fxV">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hMT-rg-fxV">
                                 <rect key="frame" x="151" y="338" width="73" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="6Ll-Wf-uAn"/>
@@ -56,7 +56,7 @@
                             <constraint firstItem="hMT-rg-fxV" firstAttribute="leading" secondItem="ox0-oE-Ouy" secondAttribute="leadingMargin" constant="135" id="xcb-qj-1nL"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="o6p-OO-wyw"/>
+                    <tabBarItem key="tabBarItem" title="Room" image="roomIcon" id="o6p-OO-wyw"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KFl-68-Pj7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -93,7 +93,7 @@
                             <constraint firstItem="lTj-fb-BS9" firstAttribute="top" secondItem="hMh-bV-IMR" secondAttribute="bottom" constant="274" id="fhR-WH-yoQ"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="6EZ-sK-vsW"/>
+                    <tabBarItem key="tabBarItem" title="Music" image="musicIcon" id="6EZ-sK-vsW"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uCW-TS-mKW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -118,4 +118,8 @@
             <point key="canvasLocation" x="-396" y="-146"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="musicIcon" width="30" height="30"/>
+        <image name="roomIcon" width="30" height="30"/>
+    </resources>
 </document>

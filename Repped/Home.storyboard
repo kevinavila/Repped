@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,11 +23,11 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uLC-im-s7F" id="uL7-oD-Sqe">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ys7-lm-wE3">
-                                            <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
+                                            <rect key="frame" x="15" y="0.0" width="345" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -45,6 +46,14 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="HI7-S8-Rbr">
+                        <leftBarButtonItems>
+                            <barButtonItem title="Profile" id="G0n-43-ZLg"/>
+                            <barButtonItem title="Add Friends" id="srL-Fa-dtW">
+                                <connections>
+                                    <segue destination="ojj-HA-gR3" kind="show" identifier="showAddFriends" id="RAI-rE-gtB"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="wQB-dZ-VLK">
                             <connections>
                                 <action selector="createNewRoom:" destination="ek9-al-Yi4" id="bFi-DJ-Z7Y"/>
@@ -58,6 +67,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3hL-ic-9hg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1303.2" y="156.07196401799101"/>
+        </scene>
+        <!--AddFriends-->
+        <scene sceneID="r6I-aY-7BO">
+            <objects>
+                <viewControllerPlaceholder storyboardName="AddFriends" id="ojj-HA-gR3" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="EZm-Jw-69E"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ntO-Sd-HAk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1937" y="-5"/>
         </scene>
         <!--Room-->
         <scene sceneID="nJo-ge-kdv">

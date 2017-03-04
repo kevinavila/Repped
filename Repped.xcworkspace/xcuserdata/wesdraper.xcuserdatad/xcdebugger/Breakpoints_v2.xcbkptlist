@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Repped/HomeViewCell.swift"
+            timestampString = "510356796.175918"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "9"
+            endingLineNumber = "9">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Repped.HomeViewCell.__deallocating_deinit"
+                  moduleName = "Repped"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wesdraper/Documents/Repped/Repped/HomeViewCell.swift"
+                  timestampString = "510356797.095408"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "12">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Repped.HomeViewCell.init (style : __C.UITableViewCellStyle, reuseIdentifier : Swift.Optional&lt;Swift.String&gt;) -&gt; Repped.HomeViewCell"
+                  moduleName = "Repped"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wesdraper/Documents/Repped/Repped/HomeViewCell.swift"
+                  timestampString = "510356797.09904"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "96">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Repped.HomeViewCell.__allocating_init (style : __C.UITableViewCellStyle, reuseIdentifier : Swift.Optional&lt;Swift.String&gt;) -&gt; Repped.HomeViewCell"
+                  moduleName = "Repped"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wesdraper/Documents/Repped/Repped/HomeViewCell.swift"
+                  timestampString = "510356797.101007"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "28">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Repped.HomeViewCell.__allocating_init (coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;Repped.HomeViewCell&gt;"
+                  moduleName = "Repped"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wesdraper/Documents/Repped/Repped/HomeViewCell.swift"
+                  timestampString = "510356797.103647"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "12">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Repped.HomeViewCell.init (coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;Repped.HomeViewCell&gt;"
+                  moduleName = "Repped"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/wesdraper/Documents/Repped/Repped/HomeViewCell.swift"
+                  timestampString = "510356797.105688"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "60">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0162560C90FDED289D8E4047 /* Pods_ReppedTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9F0FE0FA5ADD3716E537AAE /* Pods_ReppedTests.framework */; };
 		A519A1FE2FC3F82D10F6206E /* Pods_Repped.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7201FADE3B5AD43D57FE985E /* Pods_Repped.framework */; };
+		BC749A061E6B6D22001E21D9 /* RoomViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC749A051E6B6D22001E21D9 /* RoomViewCell.swift */; };
 		BC9ED4281E6B5731002A8FBE /* MusicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9ED4271E6B5731002A8FBE /* MusicController.swift */; };
 		C89F9DEB8D56D48322769E84 /* Pods_ReppedUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BEE666B8E8AC1F90BDD6477 /* Pods_ReppedUITests.framework */; };
 		DB1F47021E62607400F0FFEC /* Room.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB1F47011E62607400F0FFEC /* Room.storyboard */; };
@@ -53,6 +54,7 @@
 		7201FADE3B5AD43D57FE985E /* Pods_Repped.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Repped.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8F83473F98DA110ADD37539 /* Pods-ReppedTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReppedTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ReppedTests/Pods-ReppedTests.release.xcconfig"; sourceTree = "<group>"; };
 		BC1E625F2B916793BCA58482 /* Pods-Repped.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Repped.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Repped/Pods-Repped.debug.xcconfig"; sourceTree = "<group>"; };
+		BC749A051E6B6D22001E21D9 /* RoomViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomViewCell.swift; sourceTree = "<group>"; };
 		BC9ED4271E6B5731002A8FBE /* MusicController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicController.swift; sourceTree = "<group>"; };
 		BDBCB15701519444437FA42C /* Pods-ReppedTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReppedTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReppedTests/Pods-ReppedTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D9F0FE0FA5ADD3716E537AAE /* Pods_ReppedTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReppedTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -168,6 +170,7 @@
 				BC9ED4271E6B5731002A8FBE /* MusicController.swift */,
 				DB3B28DA1E63E0EC00AB6C18 /* Room.swift */,
 				DB3B28DC1E63E55000AB6C18 /* HomeViewCell.swift */,
+				BC749A051E6B6D22001E21D9 /* RoomViewCell.swift */,
 				DB8B7E0C1E6A57F000FFAC57 /* AddFriendsController.swift */,
 				DBFA247A1E57F25300224898 /* Home.storyboard */,
 				DB8B7E0E1E6A5E1200FFAC57 /* AddFriends.storyboard */,
@@ -500,6 +503,7 @@
 				DB8B7E0D1E6A57F000FFAC57 /* AddFriendsController.swift in Sources */,
 				DB3B28DD1E63E55000AB6C18 /* HomeViewCell.swift in Sources */,
 				DBFBB8BA1E66749500C85C1C /* User.swift in Sources */,
+				BC749A061E6B6D22001E21D9 /* RoomViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

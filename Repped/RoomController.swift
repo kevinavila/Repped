@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import MediaPlayer
 
 
 class RoomController: UITableViewController  {
@@ -15,9 +16,13 @@ class RoomController: UITableViewController  {
     var user:User!
     var listeners: [User] = []
     private lazy var roomRef:FIRDatabaseReference = FIRDatabase.database().reference().child("rooms")
+    private var roomRefHandle:FIRDatabaseHandle?
     private lazy var userRef:FIRDatabaseReference = FIRDatabase.database().reference().child("users")
     private lazy var joinRef:FIRDatabaseReference = FIRDatabase.database().reference().child("joinTable")
     private var joinRefHandle:FIRDatabaseHandle?
+    let systemMusicPlayer = MPMusicPlayerController.systemMusicPlayer()
+    
+    var currentRoom: Room = Room(rid: "-KeKxweex6TnUeKYtqEb", name: "ghhj", leader: "P47ZSoFZF3OSonLUKgIn9e0kXEV2") //this needs to get passed in through segue
     
 
     
@@ -30,7 +35,7 @@ class RoomController: UITableViewController  {
         self.tableView.dataSource = self
         
         observeListeners()
-        print(listeners)
+        observeRooms()
     }
     
 //    MARK: Table View Functions
@@ -72,6 +77,30 @@ class RoomController: UITableViewController  {
             self.listeners = updateListener
             print ("wes_ listeners ", self.listeners.description)
             self.tableView.reloadData()
+        })
+    }
+    
+    //MARK: Firebase Functions
+    private func observeRooms() {
+        print("wes_ in oserveroom")
+        // Listening for changes to y room for sonf
+        roomRefHandle = roomRef.observe(.childAdded, with: { (snapshot) -> Void in
+            
+            let roomData = snapshot.value as! Dictionary<String, AnyObject>
+            let rid = snapshot.key
+            if rid == self.currentRoom.rid {
+                print("wes_ found room")
+                self.currentRoom.leader =  roomData["leader"] as! String
+                //might need to do something if leader changed
+                
+                if (roomData["songID"] as! String) != self.currentRoom.songID {
+                    print("wes_ seting new song")
+                    self.currentRoom.songID = roomData["songID"] as! String
+                    self.systemMusicPlayer.setQueueWithStoreIDs([self.currentRoom.songID])
+                    self.systemMusicPlayer.play()
+                }
+
+            }
         })
     }
     

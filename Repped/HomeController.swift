@@ -15,6 +15,7 @@ class HomeController: UITableViewController {
     var user:User!
     private var rooms:[Room] = []
     private lazy var roomRef:FIRDatabaseReference = FIRDatabase.database().reference().child("rooms")
+    private lazy var userRef:FIRDatabaseReference = FIRDatabase.database().reference().child("users")
     private lazy var joinRef:FIRDatabaseReference = FIRDatabase.database().reference().child("joinTable")
     private var roomRefHandle:FIRDatabaseHandle?
     
@@ -29,6 +30,8 @@ class HomeController: UITableViewController {
         let uid = currentUser?.uid
         let name = currentUser?.displayName
         self.user = User(uid: uid!, name: name!)
+        
+//        postUser()
         
         observeRooms()
     }
@@ -153,6 +156,12 @@ class HomeController: UITableViewController {
         if let refHandle = roomRefHandle {
             roomRef.removeObserver(withHandle: refHandle)
         }
+    }
+    
+    
+    private func postUser(){
+        let userEntry = ["name": self.user.name] //, "rep": String(self.user.rep)
+        self.roomRef.child(self.user.uid).setValue(userEntry)
     }
     
     //MARK: Segue

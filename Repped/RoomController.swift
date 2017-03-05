@@ -15,6 +15,7 @@ class RoomController: UITableViewController  {
     var user:User!
     var listeners: [User] = []
     private lazy var roomRef:FIRDatabaseReference = FIRDatabase.database().reference().child("rooms")
+    private lazy var userRef:FIRDatabaseReference = FIRDatabase.database().reference().child("users")
     private lazy var joinRef:FIRDatabaseReference = FIRDatabase.database().reference().child("joinTable")
     private var joinRefHandle:FIRDatabaseHandle?
 
@@ -64,20 +65,19 @@ class RoomController: UITableViewController  {
                 print ("wes_  uid: " + uid + " rid: " + rid)
                 if rid == "-KeKxweex6TnUeKYtqEb" {
                     print("wes_ appending to listeners")
-                    updateListener.append(User(uid: uid, name: uid))
+                    updateListener.append(User(uid: uid, name: uid)) //self.getUserName(uid)
                 }
             }
             self.listeners = updateListener
-            print ("wes_ lestners ", self.listeners.description)
+            print ("wes_ listeners ", self.listeners.description)
             self.tableView.reloadData()
         })
     }
     
-    deinit {
-        if let refHandle = joinRefHandle {
-            joinRef.removeObserver(withHandle: refHandle)
-        }
-    }
+//    private func getUserName(_ uid: String) -> String{
+//        let name = userRef.value(forKey: uid) as? String
+//        return name!
+//    }
 
 
 }

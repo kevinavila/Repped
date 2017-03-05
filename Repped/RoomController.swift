@@ -38,12 +38,10 @@ class RoomController: UITableViewController  {
     
     //when I try to implement the custom cell it brakes. cant figure out why
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = RoomViewCell()
-        if (indexPath.row < listeners.count) {
-            print("wes_ try")
-//            cell.listenerLabel.text = listeners[(indexPath as IndexPath).row].name
-            print("wes_ name of listener", listeners[(indexPath as IndexPath).row].name)
-            
+        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: nil)
+        if let rowData: User = self.listeners[(indexPath as IndexPath).row]{
+            cell.textLabel?.text = rowData.name
+            cell.detailTextLabel?.text = rowData.uid
         }
         return cell
     }

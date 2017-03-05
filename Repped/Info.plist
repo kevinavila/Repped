@@ -40,6 +40,11 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>That way you can play and listen to songs from Apple Music.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

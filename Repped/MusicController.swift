@@ -91,11 +91,11 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
     //Display iTunes search results
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: nil)
-        if let rowData: NSDictionary = self.tableData?[indexPath.row]{
-//            let urlString = rowData["artworkUrl60"] as? String,
-//            let imgURL = URL(string: urlString),
-//            let imgData = try? Data(contentsOf: imgURL) {
-//            cell.imageView?.image = UIImage(data: imgData)
+        if let rowData: NSDictionary = self.tableData?[indexPath.row],
+            let urlString = rowData["artworkUrl60"] as? String,
+            let imgURL = URL(string: urlString),
+            let imgData = try? Data(contentsOf: imgURL) {
+            cell.imageView?.image = UIImage(data: imgData)
             cell.textLabel?.text = rowData["trackName"] as? String
             cell.detailTextLabel?.text = rowData["artistName"] as? String
         }

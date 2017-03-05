@@ -95,6 +95,7 @@
                             <constraint firstItem="lTj-fb-BS9" firstAttribute="top" secondItem="Rke-SZ-obk" secondAttribute="bottom" constant="8" symbolic="YES" id="ALY-s0-Znb"/>
                             <constraint firstItem="z3n-1f-Nai" firstAttribute="leading" secondItem="BNJ-TN-kIY" secondAttribute="leading" id="K4P-Hw-qjk"/>
                             <constraint firstItem="z3n-1f-Nai" firstAttribute="trailing" secondItem="BNJ-TN-kIY" secondAttribute="trailing" id="KYA-VR-93P"/>
+                            <constraint firstItem="BNJ-TN-kIY" firstAttribute="top" secondItem="z3n-1f-Nai" secondAttribute="bottom" id="L9j-Ao-nVC"/>
                             <constraint firstAttribute="trailing" secondItem="z3n-1f-Nai" secondAttribute="trailing" id="Oyo-oW-kUF"/>
                             <constraint firstItem="BNJ-TN-kIY" firstAttribute="top" secondItem="z3n-1f-Nai" secondAttribute="bottom" id="aeg-og-erG"/>
                             <constraint firstItem="hMh-bV-IMR" firstAttribute="top" secondItem="jCW-jk-qpP" secondAttribute="bottom" constant="8" symbolic="YES" id="azP-eE-wpC"/>
@@ -102,6 +103,7 @@
                             <constraint firstItem="hMh-bV-IMR" firstAttribute="leading" secondItem="Rke-SZ-obk" secondAttribute="leading" id="fuY-wW-LD6"/>
                             <constraint firstItem="z3n-1f-Nai" firstAttribute="leading" secondItem="Svu-8s-A13" secondAttribute="leading" id="iAh-9a-d3F"/>
                             <constraint firstItem="BNJ-TN-kIY" firstAttribute="centerY" secondItem="Svu-8s-A13" secondAttribute="centerY" id="nwh-Sl-PB2"/>
+                            <constraint firstItem="BNJ-TN-kIY" firstAttribute="top" secondItem="z3n-1f-Nai" secondAttribute="bottom" id="p2m-LA-fXh"/>
                             <constraint firstItem="hMh-bV-IMR" firstAttribute="centerX" secondItem="z3n-1f-Nai" secondAttribute="centerX" id="xnr-G1-Nuo"/>
                         </constraints>
                     </view>

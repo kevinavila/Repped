@@ -31,7 +31,7 @@ class HomeController: UITableViewController {
         let name = currentUser?.displayName
         self.user = User(uid: uid!, name: name!)
         
-//        postUser()
+        self.userRef.child(self.user.uid).setValue(self.user.name)
         
         observeRooms()
     }
@@ -158,11 +158,6 @@ class HomeController: UITableViewController {
         }
     }
     
-    
-    private func postUser(){
-        let userEntry = ["name": self.user.name] //, "rep": String(self.user.rep)
-        self.roomRef.child(self.user.uid).setValue(userEntry)
-    }
     
     //MARK: Segue
     

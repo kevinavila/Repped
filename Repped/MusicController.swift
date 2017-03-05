@@ -31,8 +31,14 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
 
     @IBAction func playButtonClicked(_ sender: Any) {
-        systemMusicPlayer.setQueueWithStoreIDs(["1207859520"])
-        systemMusicPlayer.play()
+        if queue.isEmpty {
+            toast("First add a song to the queue")
+            
+        } else {
+            let song = queue.remove(at: 0)
+            systemMusicPlayer.setQueueWithStoreIDs([song.trackId!])
+            systemMusicPlayer.play()
+        }
     }
     
     
@@ -101,6 +107,36 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
         }
         return cell
     }
+    
+    
+    //Add song to playback queue if user selects a cell
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let indexPath = tableView.indexPathForSelectedRow
+        if let rowData: NSDictionary = self.tableData?[indexPath!.row], let urlString = rowData["artworkUrl60"] as? String,
+            let imgURL = URL(string: urlString),
+            let imgData = try? Data(contentsOf: imgURL)  {
+            queue.append(Song(artWork: UIImage(data: imgData), trackName: rowData["trackName"] as? String, artistName: rowData["artistName"] as? String, trackId: String (describing: rowData["trackId"]!)))
+//            systemMusicPlayer.setQueueWithStoreIDs([rowData["trackId"] as! String])
+//            dont know if it is better to just add the song to the queue
+            toast("Added track!")
+            
+                       tableView.deselectRow(at: indexPath!, animated: true)
+        }
+    }
+    
+    func toast(_ toast: String){
+        //Show alert telling the user the song was added to the playback queue
+        let addedTrackAlert = UIAlertController(title: nil, message: toast, preferredStyle: .alert)
+        self.present(addedTrackAlert, animated: true, completion: nil)
+        let delay = 0.5 * Double(NSEC_PER_SEC)
+        let time = DispatchTime.now() + Double(Int64(delay)) / Double(NSEC_PER_SEC)
+        DispatchQueue.main.asyncAfter(deadline: time, execute: {
+            addedTrackAlert.dismiss(animated: true, completion: nil)
+        })
+
+    }
+    
+    
     
     //Dialogue showing error
     func showAlert(_ title: String, error: String) {

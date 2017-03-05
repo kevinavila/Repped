@@ -18,6 +18,7 @@ class RoomController: UITableViewController  {
     private lazy var userRef:FIRDatabaseReference = FIRDatabase.database().reference().child("users")
     private lazy var joinRef:FIRDatabaseReference = FIRDatabase.database().reference().child("joinTable")
     private var joinRefHandle:FIRDatabaseHandle?
+    
 
     
     

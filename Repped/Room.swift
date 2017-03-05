@@ -11,10 +11,12 @@ internal class Room {
     internal let rid:String
     internal let name:String
     internal var leader:String
+    internal var songID:String
     
     init(rid:String, name:String, leader:String) {
         self.rid = rid
         self.name = name
         self.leader = leader
+        self.songID = ""
     }
 }

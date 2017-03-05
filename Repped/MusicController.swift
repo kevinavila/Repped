@@ -10,14 +10,17 @@ import UIKit
 import MediaPlayer
 import StoreKit
 import Alamofire
+import Firebase
 
 class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate{
     
     @IBOutlet weak var searchBarLabel: UISearchBar!
     @IBOutlet weak var musicTable: UITableView!
     var queue: [Song] = []
+    var currentRoom: Room = Room(rid: "-KeKxweex6TnUeKYtqEb", name: "ghhj", leader: "P47ZSoFZF3OSonLUKgIn9e0kXEV2") //this needs to get passed in through segue
     var tableData = [] as? [NSDictionary]
     let systemMusicPlayer = MPMusicPlayerController.systemMusicPlayer()
+    private lazy var roomRef:FIRDatabaseReference = FIRDatabase.database().reference().child("rooms")
 
     
     override func viewDidLoad() {
@@ -36,9 +39,20 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
             
         } else {
             let song = queue.remove(at: 0)
+            currentRoom.songID = song.trackId!
             systemMusicPlayer.setQueueWithStoreIDs([song.trackId!])
             systemMusicPlayer.play()
+            songChange()
         }
+    }
+    
+    private func songChange(){
+        let roomItem = [
+            "name": self.currentRoom.name,
+            "leader": self.currentRoom.leader,
+            "songID": self.currentRoom.songID
+            ] as [String:String]
+        self.roomRef.child(self.currentRoom.rid).setValue(roomItem)
     }
     
     

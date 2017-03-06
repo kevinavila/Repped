@@ -15,8 +15,8 @@ class RoomController: UITableViewController  {
         
     var user:User!
     var listeners: [User] = []
-    private lazy var roomRef:FIRDatabaseReference = FIRDatabase.database().reference().child("rooms")
-    private var roomRefHandle:FIRDatabaseHandle?
+    private var currentRoomRef:FIRDatabaseReference?
+    private var currentRoomRefHandle:FIRDatabaseHandle?
     private lazy var userRef:FIRDatabaseReference = FIRDatabase.database().reference().child("users")
     private var userRefHandle:FIRDatabaseHandle?
     private lazy var joinRef:FIRDatabaseReference = FIRDatabase.database().reference().child("joinTable")
@@ -33,6 +33,8 @@ class RoomController: UITableViewController  {
         
         print("wes_ user: %@", self.user)
         self.currentRoom = self.user.currentRoom!
+        self.currentRoomRef = FIRDatabase.database().reference().child("rooms/"+self.currentRoom.rid)
+        
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -85,7 +87,7 @@ class RoomController: UITableViewController  {
     private func observeRooms() {
         print("wes_ in oserveroom")
         // Listening for changes to y room for sonf
-        roomRefHandle = roomRef.observe(.childAdded, with: { (snapshot) -> Void in
+        currentRoomRefHandle = currentRoomRef?.observe(.value, with: { (snapshot) -> Void in
             
             let roomData = snapshot.value as! Dictionary<String, AnyObject>
             let rid = snapshot.key

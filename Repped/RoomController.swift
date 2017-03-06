@@ -18,24 +18,28 @@ class RoomController: UITableViewController  {
     private lazy var roomRef:FIRDatabaseReference = FIRDatabase.database().reference().child("rooms")
     private var roomRefHandle:FIRDatabaseHandle?
     private lazy var userRef:FIRDatabaseReference = FIRDatabase.database().reference().child("users")
+    private var userRefHandle:FIRDatabaseHandle?
     private lazy var joinRef:FIRDatabaseReference = FIRDatabase.database().reference().child("joinTable")
     private var joinRefHandle:FIRDatabaseHandle?
     let systemMusicPlayer = MPMusicPlayerController.systemMusicPlayer()
     
-    var currentRoom: Room = Room(rid: "-KeKxweex6TnUeKYtqEb", name: "ghhj", leader: "P47ZSoFZF3OSonLUKgIn9e0kXEV2") //this needs to get passed in through segue
-    
-
+    var currentRoom:Room!
+//        = Room(rid: "-KeKxweex6TnUeKYtqEb", name: "ghhj", leader: "P47ZSoFZF3OSonLUKgIn9e0kXEV2") //this needs to get passed in through segue
     
     
     override func viewDidLoad() {
         print("wes_   in RoomController viewDidLoad")
         super.viewDidLoad()
         
+        print("wes_ user: %@", self.user)
+        self.currentRoom = self.user.currentRoom!
+        
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
         observeListeners()
         observeRooms()
+        fillOutListeners()
     }
     
 //    MARK: Table View Functions
@@ -45,14 +49,12 @@ class RoomController: UITableViewController  {
     
     //when I try to implement the custom cell it brakes. cant figure out why
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: nil)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "roomViewCell", for: indexPath) as! RoomViewCell
         if let rowData: User = self.listeners[(indexPath as IndexPath).row]{
-            cell.textLabel?.text = rowData.name
-            cell.detailTextLabel?.text = rowData.uid
+            cell.listenerLabel.text = rowData.name
         }
         return cell
     }
-
 
 
 
@@ -69,13 +71,12 @@ class RoomController: UITableViewController  {
                 let uid = snapshot.key
                 let rid = snapshot.value as! String
                 print ("wes_  uid: " + uid + " rid: " + rid)
-                if rid == "-KeKxweex6TnUeKYtqEb" {
+                if rid == self.currentRoom.rid {
                     print("wes_ appending to listeners")
-                    updateListener.append(User(uid: uid, name: uid)) //self.getUserName(uid)
+                    updateListener.append(User(uid: uid, name: ""))
                 }
             }
             self.listeners = updateListener
-            print ("wes_ listeners ", self.listeners.description)
             self.tableView.reloadData()
         })
     }
@@ -94,7 +95,7 @@ class RoomController: UITableViewController  {
                 //might need to do something if leader changed
                 
                 if (roomData["songID"] as! String) != self.currentRoom.songID {
-                    print("wes_ seting new song")
+                    print("wes_ seting new song0")
                     self.currentRoom.songID = roomData["songID"] as! String
                     self.systemMusicPlayer.setQueueWithStoreIDs([self.currentRoom.songID])
                     self.systemMusicPlayer.play()
@@ -104,10 +105,23 @@ class RoomController: UITableViewController  {
         })
     }
     
-//    private func getUserName(_ uid: String) -> String{
-//        let name = userRef.value(forKey: uid) as? String
-//        return name!
-//    }
-
+    //MARK: Firebase Functions
+    private func fillOutListeners() {
+        print("wes_ in fill out")
+        // Listening for changes to y room for sonf
+        userRefHandle = userRef.observe(.childAdded, with: { (snapshot) -> Void in
+            
+            let uid = snapshot.key
+            let name = snapshot.value
+            //TODO figure out why this doesnt work on the first time
+            for curUser in self.listeners {
+                if curUser.uid == uid {
+                    curUser.name = (name as? String)!
+                }
+            }
+        })
+    }
+    
+   //TODO need deinits
 
 }

@@ -137,7 +137,7 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
                        tableView.deselectRow(at: indexPath!, animated: true)
         }
     }
-    
+        
     func toast(_ toast: String){
         //Show alert telling the user the song was added to the playback queue
         let addedTrackAlert = UIAlertController(title: nil, message: toast, preferredStyle: .alert)

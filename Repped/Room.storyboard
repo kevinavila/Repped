@@ -18,11 +18,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="2Er-ci-haa" customClass="RoomViewCell" customModule="Repped" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="roomViewCell" id="2Er-ci-haa" customClass="RoomViewCell" customModule="Repped" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2Er-ci-haa" id="pSR-7J-vyr">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Wes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M6m-OX-X7E">
@@ -53,7 +53,7 @@
         <!--Music-->
         <scene sceneID="7Hx-oR-8hJ">
             <objects>
-                <viewController title="Music" id="2VA-21-Wfp" customClass="MusicController" customModule="Repped" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Music" automaticallyAdjustsScrollViewInsets="NO" id="2VA-21-Wfp" customClass="MusicController" customModule="Repped" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jCW-jk-qpP"/>
                         <viewControllerLayoutGuide type="bottom" id="lTj-fb-BS9"/>
@@ -62,16 +62,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BNJ-TN-kIY">
-                                <rect key="frame" x="0.0" y="107" width="375" height="453"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="z3n-1f-Nai">
                                 <rect key="frame" x="0.0" y="63" width="375" height="44"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="l3B-ua-JKE">
+                                <rect key="frame" x="0.0" y="107" width="375" height="473"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rke-SZ-obk">
-                                <rect key="frame" x="118" y="568" width="139" height="42"/>
+                                <rect key="frame" x="118" y="580" width="139" height="30"/>
                                 <state key="normal" title="Play"/>
                                 <connections>
                                     <action selector="playButtonClicked:" destination="2VA-21-Wfp" eventType="touchUpInside" id="nM7-x0-HIh"/>
@@ -90,26 +90,23 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Rke-SZ-obk" firstAttribute="top" secondItem="BNJ-TN-kIY" secondAttribute="bottom" constant="8" symbolic="YES" id="8sF-Bk-2PI"/>
                             <constraint firstItem="z3n-1f-Nai" firstAttribute="top" secondItem="hMh-bV-IMR" secondAttribute="bottom" constant="14" id="9uZ-UF-j2N"/>
                             <constraint firstItem="lTj-fb-BS9" firstAttribute="top" secondItem="Rke-SZ-obk" secondAttribute="bottom" constant="8" symbolic="YES" id="ALY-s0-Znb"/>
-                            <constraint firstItem="z3n-1f-Nai" firstAttribute="leading" secondItem="BNJ-TN-kIY" secondAttribute="leading" id="K4P-Hw-qjk"/>
-                            <constraint firstItem="z3n-1f-Nai" firstAttribute="trailing" secondItem="BNJ-TN-kIY" secondAttribute="trailing" id="KYA-VR-93P"/>
-                            <constraint firstItem="BNJ-TN-kIY" firstAttribute="top" secondItem="z3n-1f-Nai" secondAttribute="bottom" id="L9j-Ao-nVC"/>
                             <constraint firstAttribute="trailing" secondItem="z3n-1f-Nai" secondAttribute="trailing" id="Oyo-oW-kUF"/>
-                            <constraint firstItem="BNJ-TN-kIY" firstAttribute="top" secondItem="z3n-1f-Nai" secondAttribute="bottom" id="aeg-og-erG"/>
+                            <constraint firstItem="l3B-ua-JKE" firstAttribute="leading" secondItem="Svu-8s-A13" secondAttribute="leading" id="VeD-YK-Ufv"/>
+                            <constraint firstAttribute="trailing" secondItem="l3B-ua-JKE" secondAttribute="trailing" id="Zsu-Nz-H5Q"/>
                             <constraint firstItem="hMh-bV-IMR" firstAttribute="top" secondItem="jCW-jk-qpP" secondAttribute="bottom" constant="8" symbolic="YES" id="azP-eE-wpC"/>
+                            <constraint firstItem="l3B-ua-JKE" firstAttribute="top" secondItem="z3n-1f-Nai" secondAttribute="bottom" id="dcE-Wy-KXa"/>
                             <constraint firstItem="hMh-bV-IMR" firstAttribute="trailing" secondItem="Rke-SZ-obk" secondAttribute="trailing" id="eJ8-SS-sIk"/>
                             <constraint firstItem="hMh-bV-IMR" firstAttribute="leading" secondItem="Rke-SZ-obk" secondAttribute="leading" id="fuY-wW-LD6"/>
                             <constraint firstItem="z3n-1f-Nai" firstAttribute="leading" secondItem="Svu-8s-A13" secondAttribute="leading" id="iAh-9a-d3F"/>
-                            <constraint firstItem="BNJ-TN-kIY" firstAttribute="centerY" secondItem="Svu-8s-A13" secondAttribute="centerY" id="nwh-Sl-PB2"/>
-                            <constraint firstItem="BNJ-TN-kIY" firstAttribute="top" secondItem="z3n-1f-Nai" secondAttribute="bottom" id="p2m-LA-fXh"/>
+                            <constraint firstItem="Rke-SZ-obk" firstAttribute="top" secondItem="l3B-ua-JKE" secondAttribute="bottom" id="xRH-uD-N75"/>
                             <constraint firstItem="hMh-bV-IMR" firstAttribute="centerX" secondItem="z3n-1f-Nai" secondAttribute="centerX" id="xnr-G1-Nuo"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Music" image="musicIcon" id="6EZ-sK-vsW"/>
                     <connections>
-                        <outlet property="musicTable" destination="BNJ-TN-kIY" id="8VD-qK-dlx"/>
+                        <outlet property="musicTable" destination="l3B-ua-JKE" id="mrY-oD-Ffh"/>
                         <outlet property="searchBarLabel" destination="z3n-1f-Nai" id="20W-6L-HEB"/>
                     </connections>
                 </viewController>

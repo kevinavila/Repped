@@ -161,12 +161,22 @@ class HomeController: UITableViewController {
     
     //MARK: Segue
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//       print("wes_ prepareing for showroom seque")
-//        if segue.identifier == "showRoom", let nextScene = segue.destination as? RoomController{
-//            nextScene.user = self.user
-//            print("wes_ added user to show room segue")
-//        }
-//
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+       print("wes_ prepareing for showroom seque user ->%@ id %@ destination %@", self.user, segue.identifier ?? "tits", segue.destination)
+        if segue.identifier == "showRoom", let nextScene = segue.destination as? UITabBarController{
+            if let roomVC = nextScene.viewControllers?.first as? RoomController {
+                print("wont get here befiore viewdidload")
+                roomVC.user = self.user
+                print("wes_ added user to show room segue %@ user-> ", nextScene, self.user)
+            }
+            else {
+                
+            }
+            
+        }
+        else {
+            
+        }
+
+    }
 }

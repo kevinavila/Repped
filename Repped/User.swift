@@ -9,7 +9,7 @@
 internal class User {
     
     internal let uid:String
-    internal let name:String
+    internal var name:String
     internal var rep:Int = 0
     internal var currentRoom:Room?
     

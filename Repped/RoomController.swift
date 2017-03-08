@@ -24,7 +24,6 @@ class RoomController: UITableViewController  {
     let systemMusicPlayer = MPMusicPlayerController.systemMusicPlayer()
     
     var currentRoom:Room!
-//        = Room(rid: "-KeKxweex6TnUeKYtqEb", name: "ghhj", leader: "P47ZSoFZF3OSonLUKgIn9e0kXEV2") //this needs to get passed in through segue
     
     
     override func viewDidLoad() {
@@ -79,8 +78,8 @@ class RoomController: UITableViewController  {
                 }
             }
             self.listeners = updateListener
-            self.tableView.reloadData()
         })
+        self.tableView.reloadData()
     }
     
     //MARK: Firebase Functions
@@ -105,6 +104,7 @@ class RoomController: UITableViewController  {
 
             }
         })
+        self.tableView.reloadData()
     }
     
     //MARK: Firebase Functions
@@ -122,6 +122,7 @@ class RoomController: UITableViewController  {
                 }
             }
         })
+        self.tableView.reloadData()
     }
     
    //TODO need deinits

@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FBSDKCoreKit
 
 class HomeController: UITableViewController {
     
@@ -33,8 +34,25 @@ class HomeController: UITableViewController {
         
         self.userRef.child(self.user.uid).setValue(self.user.name)
         
+        fillInUser()
+        
         observeRooms()
     }
+    
+        private func fillInUser(){
+            if true{
+                 self.userRef.child(self.user.uid).setValue(self.user.name)
+            }
+            if true{
+                if((FBSDKAccessToken.current()) != nil){
+                    FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email"]).start(completionHandler: { (connection, result, error) -> Void in
+                        if (error == nil){
+                            print(result)
+                        }
+                    })
+                }}
+        }
+    
     
     //MARK: Table View Functions
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

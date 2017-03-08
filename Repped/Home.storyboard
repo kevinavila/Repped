@@ -23,11 +23,11 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uLC-im-s7F" id="uL7-oD-Sqe">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ys7-lm-wE3">
-                                            <rect key="frame" x="15" y="0.0" width="345" height="43"/>
+                                            <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -50,7 +50,7 @@
                             <barButtonItem title="Profile" id="G0n-43-ZLg"/>
                             <barButtonItem title="Add Friends" id="srL-Fa-dtW">
                                 <connections>
-                                    <segue destination="ojj-HA-gR3" kind="show" id="okZ-OM-Aly"/>
+                                    <segue destination="ojj-HA-gR3" kind="show" id="fVp-5M-hPV"/>
                                 </connections>
                             </barButtonItem>
                         </leftBarButtonItems>
@@ -76,7 +76,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ntO-Sd-HAk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1937" y="-5"/>
+            <point key="canvasLocation" x="2011" y="-19"/>
         </scene>
         <!--Room-->
         <scene sceneID="nJo-ge-kdv">

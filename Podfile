@@ -12,6 +12,7 @@ target 'Repped' do
 
   # Facebook
   pod 'FBSDKLoginKit'
+  pod 'FBSDKCoreKit'
 
   # Networking
   pod 'Alamofire'

@@ -13,12 +13,13 @@ import FBSDKCoreKit
 class HomeController: UITableViewController {
     
     //MARK: Properties
-    var user:User!
     private var rooms:[Room] = []
     private lazy var roomRef:FIRDatabaseReference = FIRDatabase.database().reference().child("rooms")
     private lazy var userRef:FIRDatabaseReference = FIRDatabase.database().reference().child("users")
     private lazy var joinRef:FIRDatabaseReference = FIRDatabase.database().reference().child("joinTable")
     private var roomRefHandle:FIRDatabaseHandle?
+    
+    var global:Global = Global.sharedGlobal
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,9 +31,7 @@ class HomeController: UITableViewController {
         let currentUser = FIRAuth.auth()?.currentUser
         let uid = currentUser?.uid
         let name = currentUser?.displayName
-        self.user = User(uid: uid!, name: name!)
-        
-        self.userRef.child(self.user.uid).setValue(self.user.name)
+        self.global.user = User(uid: uid!, name: name!)
         
         fillInUser()
         
@@ -40,18 +39,38 @@ class HomeController: UITableViewController {
     }
     
         private func fillInUser(){
-            if true{
-                 self.userRef.child(self.user.uid).setValue(self.user.name)
-            }
-            if true{
+                // gonna need to check if i already exist to not override rep score TODO
                 if((FBSDKAccessToken.current()) != nil){
                     FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email"]).start(completionHandler: { (connection, result, error) -> Void in
+                        let fBData = result as! [String:Any]
                         if (error == nil){
                             print(result)
+                            let user = [
+                                "name": fBData["name"],
+                                "email": fBData["email"],
+                                "rep": 0,
+                                "id": fBData["id"]
+                                ] as [String:Any]
+                            self.userRef.child(fBData["id"] as! String).setValue(user)
+                            self.global.user = User(uid: fBData["id"] as! String, name: fBData["name"] as! String)
+                            self.global.user?.email =  fBData["email"] as! String
+                            self.global.user?.profilePicture = self.returnProfilePic(fBData["id"] as! String)
                         }
                     })
-                }}
+                }
         }
+    
+    private func returnProfilePic(_ id:String) -> UIImage{
+       let facebookProfileUrl = NSURL(string: "http://graph.facebook.com/\(id)/picture?type=large")
+        
+        let image:UIImage
+        if let data = NSData(contentsOf: facebookProfileUrl as! URL) {
+            image = UIImage(data: data as Data)!
+        } else {
+            image = #imageLiteral(resourceName: "noprofile")
+        }
+        return image
+    }
     
     
     //MARK: Table View Functions
@@ -70,10 +89,13 @@ class HomeController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let room = rooms[(indexPath as IndexPath).row]
         
-        if (self.user.currentRoom != nil) {
-            if (self.user.currentRoom?.rid != room.rid) {
+        print("self.global.room", self.global.room?.rid)
+        if (self.global.room != nil) {
+            if (self.global.room?.rid != room.rid) {
+                print("joing room not already in")
                 // User is attempting to joining a new room
-                if (self.user.currentRoom?.leader != self.user.uid) {
+                if (self.global.room?.leader != self.global.user?.uid) {
+                    
                     userLeavingRoom()
                     userJoiningRoom(room: room)
                     self.performSegue(withIdentifier: "showRoom", sender: room)
@@ -95,10 +117,10 @@ class HomeController: UITableViewController {
     //MARK: Create New Room
     @IBAction func createNewRoom(_ sender: Any) {
         
-        if (self.user.currentRoom == nil) {
+        if (self.global.room == nil) {
             createRoomHelper()
             // Segue to room
-        } else if (self.user.currentRoom?.leader != self.user.uid) {
+        } else if (self.global.room?.leader != self.global.user?.uid) {
             createRoomHelper()
             // Segue to room
         } else {
@@ -116,11 +138,11 @@ class HomeController: UITableViewController {
                 let newRoomRef = self.roomRef.childByAutoId()
                 let roomItem = [
                     "name": name!,
-                    "leader": self.user.uid
+                    "leader": self.global.user?.uid
                     ] as [String:Any]
                 newRoomRef.setValue(roomItem)
                 
-                if (self.user.currentRoom != nil) {
+                if (self.global.room != nil) {
                     self.userLeavingRoom()
                 }
                 
@@ -152,7 +174,7 @@ class HomeController: UITableViewController {
             let name = roomData["name"] as! String
             let leader = roomData["leader"] as! String
             let room = Room(rid: rid, name: name, leader: leader)
-            if (leader == self.user.uid) {
+            if (leader == self.global.user?.uid) {
                 self.userJoiningRoom(room: room)
             }
             
@@ -162,12 +184,14 @@ class HomeController: UITableViewController {
     }
     
     private func userJoiningRoom(room: Room) {
-        self.user.currentRoom = room
-        self.joinRef.child(self.user.uid).setValue(room.rid)
+        print("joing room_ ", room.rid)
+        self.global.room = Room(rid: room.rid, name: room.name, leader: room.leader)
+        print("should have a room", self.global.room?.rid)
+        self.joinRef.child((self.global.user?.uid)!).setValue(room.rid)
     }
     
     private func userLeavingRoom() {
-        self.joinRef.child(self.user.uid).removeValue()
+        self.joinRef.child((self.global.user?.uid)!).removeValue()
     }
     
     deinit {
@@ -179,22 +203,22 @@ class HomeController: UITableViewController {
     
     //MARK: Segue
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-       print("wes_ prepareing for showroom seque user ->%@ id %@ destination %@", self.user, segue.identifier ?? "tits", segue.destination)
-        if segue.identifier == "showRoom", let nextScene = segue.destination as? UITabBarController{
-            if let roomVC = nextScene.viewControllers?.first as? RoomController {
-                print("wont get here befiore viewdidload")
-                roomVC.user = self.user
-                print("wes_ added user to show room segue %@ user-> ", nextScene, self.user)
-            }
-            else {
-                
-            }
-            
-        }
-        else {
-            
-        }
-
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//       print("wes_ prepareing for showroom seque user ->%@ id %@ destination %@", self.global.user, segue.identifier ?? "tits", segue.destination)
+//        if segue.identifier == "showRoom", let nextScene = segue.destination as? UITabBarController{
+//            if let roomVC = nextScene.viewControllers?.first as? RoomController {
+//                print("wont get here befiore viewdidload")
+//                roomVC.user = self.global.user
+//                print("wes_ added user to show room segue %@ user-> ", nextScene, self.global.user)
+//            }
+//            else {
+//                
+//            }
+//            
+//        }
+//        else {
+//            
+//        }
+//
+//    }
 }

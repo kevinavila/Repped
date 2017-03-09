@@ -16,12 +16,16 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     @IBOutlet weak var searchBarLabel: UISearchBar!
     @IBOutlet weak var musicTable: UITableView!
+    var global:Global = Global.sharedGlobal
+    
     var queue: [Song] = []
-    var currentRoom: Room = Room(rid: "-KeKxweex6TnUeKYtqEb", name: "ghhj", leader: "P47ZSoFZF3OSonLUKgIn9e0kXEV2") //this needs to get passed in through segue
+    var currentRoom: Room? = nil
     var tableData = [] as? [NSDictionary]
     let systemMusicPlayer = MPMusicPlayerController.systemMusicPlayer()
+    
     private lazy var roomRef:FIRDatabaseReference = FIRDatabase.database().reference().child("rooms")
 
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +34,8 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
         musicTable.delegate = self
         musicTable.dataSource = self
         
-        searchBarLabel.placeholder = "Start typing to add tracks to playlist"    }
+        searchBarLabel.placeholder = "Start typing to add tracks to playlist"
+    }
     
 
     @IBAction func playButtonClicked(_ sender: Any) {
@@ -39,7 +44,7 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
             
         } else {
             let song = queue.remove(at: 0)
-            currentRoom.songID = song.trackId!
+            self.global.room?.songID = song.trackId!
             systemMusicPlayer.setQueueWithStoreIDs([song.trackId!])
             systemMusicPlayer.play()
             songChange()
@@ -48,13 +53,12 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     private func songChange(){
         let roomItem = [
-            "name": self.currentRoom.name,
-            "leader": self.currentRoom.leader,
-            "songID": self.currentRoom.songID
+            "name": (self.global.room?.name)!,
+            "leader": (self.global.room?.leader)!,
+            "songID": (self.global.room?.songID)!
             ] as [String:String]
-        self.roomRef.child(self.currentRoom.rid).setValue(roomItem)
+        self.roomRef.child((self.global.room?.rid)!).setValue(roomItem)
     }
-    
     
     // Fetch the user's storefront ID
     func appleMusicFetchStorefrontRegion() {
@@ -129,7 +133,7 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
         if let rowData: NSDictionary = self.tableData?[indexPath!.row], let urlString = rowData["artworkUrl60"] as? String,
             let imgURL = URL(string: urlString),
             let imgData = try? Data(contentsOf: imgURL)  {
-            queue.append(Song(artWork: UIImage(data: imgData), trackName: rowData["trackName"] as? String, artistName: rowData["artistName"] as? String, trackId: String (describing: rowData["trackId"]!)))
+            self.queue.append(Song(artWork: UIImage(data: imgData), trackName: rowData["trackName"] as? String, artistName: rowData["artistName"] as? String, trackId: String (describing: rowData["trackId"]!)))
 //            systemMusicPlayer.setQueueWithStoreIDs([rowData["trackId"] as! String])
 //            dont know if it is better to just add the song to the queue
             toast("Added track!")
@@ -149,8 +153,6 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
         })
 
     }
-    
-    
     
     //Dialogue showing error
     func showAlert(_ title: String, error: String) {

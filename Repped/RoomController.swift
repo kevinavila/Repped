@@ -23,6 +23,8 @@ class RoomController: UITableViewController  {
     private var joinRefHandle:FIRDatabaseHandle?
     let systemMusicPlayer = MPMusicPlayerController.systemMusicPlayer()
     
+    var global:Global = Global.sharedGlobal
+    
     var currentRoom:Room!
     
     
@@ -30,10 +32,12 @@ class RoomController: UITableViewController  {
         print("wes_   in RoomController viewDidLoad")
         super.viewDidLoad()
         
-        print("wes_ user: %@", self.user)
-        self.currentRoom = self.user.currentRoom!
-        self.currentRoomRef = FIRDatabase.database().reference().child("rooms/"+self.currentRoom.rid)
+        self.user = self.global.user
         
+        print("wes_ user: %@", self.global.room?.rid)
+        self.currentRoomRef = FIRDatabase.database().reference().child("rooms/"+(self.global.room?.rid)!)
+        
+   
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -50,6 +54,7 @@ class RoomController: UITableViewController  {
     
     //when I try to implement the custom cell it brakes. cant figure out why
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        print("here")
         let cell = tableView.dequeueReusableCell(withIdentifier: "roomViewCell", for: indexPath) as! RoomViewCell
         if let rowData: User = self.listeners[(indexPath as IndexPath).row]{
             cell.listenerLabel.text = rowData.name
@@ -71,15 +76,14 @@ class RoomController: UITableViewController  {
                 let snapshot = item as! FIRDataSnapshot
                 let uid = snapshot.key
                 let rid = snapshot.value as! String
-                print ("wes_  uid: " + uid + " rid: " + rid)
-                if rid == self.currentRoom.rid {
+                if rid == self.global.room?.rid {
                     print("wes_ appending to listeners")
+                    print ("wes_  uid: " + uid + " rid: " + rid)
                     updateListener.append(User(uid: uid, name: ""))
                 }
             }
             self.listeners = updateListener
         })
-        self.tableView.reloadData()
     }
     
     //MARK: Firebase Functions
@@ -90,39 +94,63 @@ class RoomController: UITableViewController  {
             
             let roomData = snapshot.value as! Dictionary<String, AnyObject>
             let rid = snapshot.key
-            if rid == self.currentRoom.rid {
+            if rid == self.global.room?.rid {
                 print("wes_ found room")
-                self.currentRoom.leader =  roomData["leader"] as! String
+                self.global.room?.leader =  roomData["leader"] as! String
                 //might need to do something if leader changed
-                
-                if (roomData["songID"] as! String) != self.currentRoom.songID {
-                    print("wes_ seting new song0")
-                    self.currentRoom.songID = roomData["songID"] as! String
-                    self.systemMusicPlayer.setQueueWithStoreIDs([self.currentRoom.songID])
-                    self.systemMusicPlayer.play()
+                if let _ = roomData["songID"] {
+                    if (roomData["songID"] as! String) != self.global.room?.songID {
+                        print("wes_ seting new song0")
+                        self.global.room?.songID = roomData["songID"] as! String
+                        self.systemMusicPlayer.setQueueWithStoreIDs([(self.global.room?.songID)!])
+                        self.systemMusicPlayer.play()
+                    }
                 }
 
             }
         })
-        self.tableView.reloadData()
     }
     
     //MARK: Firebase Functions
     private func fillOutListeners() {
-        print("wes_ in fill out")
         // Listening for changes to y room for sonf
         userRefHandle = userRef.observe(.childAdded, with: { (snapshot) -> Void in
             
             let uid = snapshot.key
-            let name = snapshot.value
+            let value = snapshot.value
+            
+            
+            let userData = value as! [String:Any]
+            let user = [
+                "name": userData["name"] as! String,
+                "email": userData["email"] as! String,
+                "rep": 0,
+                "id": userData["id"] as! String
+            ] as [String:Any]
+            
             //TODO figure out why this doesnt work on the first time
             for curUser in self.listeners {
                 if curUser.uid == uid {
-                    curUser.name = (name as? String)!
+                    curUser.name = (user["name"] as? String)!
+                    print("listner name_ ", curUser.name)
+                    curUser.profilePicture = self.returnProfilePic(uid)
                 }
             }
+            self.tableView.reloadData()
+            print("reload Table")
         })
-        self.tableView.reloadData()
+    }
+    
+    private func returnProfilePic(_ id:String) -> UIImage{
+        let facebookProfileUrl = NSURL(string: "http://graph.facebook.com/\(id)/picture?type=large")
+        
+        let image:UIImage
+        if let data = NSData(contentsOf: facebookProfileUrl as! URL) {
+            image = UIImage(data: data as Data)!
+        } else {
+            image = #imageLiteral(resourceName: "noprofile")
+        }
+        return image
     }
     
    //TODO need deinits

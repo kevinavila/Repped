@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2Er-ci-haa" id="pSR-7J-vyr">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Wes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M6m-OX-X7E">
@@ -45,10 +45,21 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Room" image="roomIcon" id="PPn-QH-RKS"/>
+                    <connections>
+                        <segue destination="mSY-BO-WAf" kind="show" identifier="showProfile" id="7Dh-sc-eUi"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eey-uN-ZVr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="544.79999999999995" y="-319.79010494752629"/>
+        </scene>
+        <!--Profile-->
+        <scene sceneID="X9f-fr-hTN">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="w0p-7a-oOc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewControllerPlaceholder storyboardName="Profile" id="mSY-BO-WAf" sceneMemberID="viewController"/>
+            </objects>
+            <point key="canvasLocation" x="1120" y="-551"/>
         </scene>
         <!--Music-->
         <scene sceneID="7Hx-oR-8hJ">

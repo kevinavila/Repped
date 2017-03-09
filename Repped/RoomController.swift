@@ -62,6 +62,15 @@ class RoomController: UITableViewController  {
         return cell
     }
 
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedUser: User = self.listeners[(indexPath as IndexPath).row]
+        
+        print("selectedUser", selectedUser.name)
+        self.performSegue(withIdentifier: "showProfile", sender: selectedUser)
+        
+    }
+    
 
 
 //        MARK: Firebase Functions
@@ -153,6 +162,15 @@ class RoomController: UITableViewController  {
         return image
     }
     
-   //TODO need deinits
+//   TODO need deinits
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showProfile"{
+            if let nextScene = segue.destination as? ProfileController{
+                nextScene.user = sender as! User
+                
+            }
+        }
+    }
 
+    
 }

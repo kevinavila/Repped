@@ -35,31 +35,50 @@ class HomeController: UITableViewController {
         self.global.user = User(uid: uid!, name: name!)
         
         fillInUser()
+        getFriends()
         
         observeRooms()
     }
-    
-        private func fillInUser(){
-                // gonna need to check if i already exist to not override rep score TODO
-                if((FBSDKAccessToken.current()) != nil){
-                    FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email"]).start(completionHandler: { (connection, result, error) -> Void in
-                        let fBData = result as! [String:Any]
-                        if (error == nil){
-                            print(result)
-                            let user = [
-                                "name": fBData["name"],
-                                "email": fBData["email"],
-                                "rep": 0,
-                                "id": fBData["id"]
-                                ] as [String:Any]
-                            self.userRef.child(fBData["id"] as! String).setValue(user)
-                            self.global.user = User(uid: fBData["id"] as! String, name: fBData["name"] as! String)
-                            self.global.user?.email =  fBData["email"] as! String
-                            self.global.user?.profilePicture = self.returnProfilePic(fBData["id"] as! String)
-                        }
-                    })
-                }
+ 
+    private func getFriends(){
+        let params = ["fields": "id, name"]
+        FBSDKGraphRequest(graphPath: "me/friends", parameters: params).start { (connection, result , error) -> Void in
+            
+            if error != nil {
+                print("wes_ error: ", error!)
+            }
+            else {
+                print("friend lsit")
+                print("wes_ friemds", result!) //has the friends need to just get the ids
+                //Do further work with response
+            }
         }
+    }
+    
+    
+    
+    
+    private func fillInUser(){
+        // gonna need to check if i already exist to not override rep score TODO
+        if((FBSDKAccessToken.current()) != nil){
+            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email"]).start(completionHandler: { (connection, result, error) -> Void in
+                let fBData = result as! [String:Any]
+                if (error == nil){
+                    print(result)
+                    let user = [
+                        "name": fBData["name"],
+                        "email": fBData["email"],
+                        "rep": 0,
+                        "id": fBData["id"]
+                        ] as [String:Any]
+                    self.userRef.child(fBData["id"] as! String).setValue(user)
+                    self.global.user = User(uid: fBData["id"] as! String, name: fBData["name"] as! String)
+                    self.global.user?.email =  fBData["email"] as! String
+                    self.global.user?.profilePicture = self.returnProfilePic(fBData["id"] as! String)
+                }
+            })
+        }
+    }
     
     private func returnProfilePic(_ id:String) -> UIImage{
        let facebookProfileUrl = NSURL(string: "http://graph.facebook.com/\(id)/picture?type=large")

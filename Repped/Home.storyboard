@@ -23,11 +23,11 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uLC-im-s7F" id="uL7-oD-Sqe">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ys7-lm-wE3">
-                                            <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
+                                            <rect key="frame" x="15" y="0.0" width="345" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -47,7 +47,11 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="HI7-S8-Rbr">
                         <leftBarButtonItems>
-                            <barButtonItem title="Profile" id="G0n-43-ZLg"/>
+                            <barButtonItem title="Profile" id="G0n-43-ZLg">
+                                <connections>
+                                    <action selector="profileClicked:" destination="ek9-al-Yi4" id="Zi8-TI-VeS"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem title="Add Friends" id="srL-Fa-dtW">
                                 <connections>
                                     <segue destination="ojj-HA-gR3" kind="show" id="fVp-5M-hPV"/>
@@ -62,11 +66,20 @@
                     </navigationItem>
                     <connections>
                         <segue destination="uIQ-jJ-AuR" kind="show" identifier="showRoom" id="2lu-AX-BOi"/>
+                        <segue destination="Cg8-QH-sKC" kind="show" identifier="showProfile" id="hv9-T5-FSL"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3hL-ic-9hg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1303.2" y="156.07196401799101"/>
+        </scene>
+        <!--Profile-->
+        <scene sceneID="b3a-x3-Les">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Profile" id="Cg8-QH-sKC" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="S7W-bV-gJV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1880" y="-107"/>
         </scene>
         <!--AddFriends-->
         <scene sceneID="r6I-aY-7BO">

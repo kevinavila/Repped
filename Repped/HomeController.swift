@@ -24,6 +24,7 @@ class HomeController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
@@ -200,7 +201,18 @@ class HomeController: UITableViewController {
         }
     }
     
+    @IBAction func profileClicked(_ sender: Any) {
+        self.performSegue(withIdentifier: "showProfile", sender: self.global.user)
+    }
     
     //MARK: Segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showProfile"{
+            if let nextScene = segue.destination as? ProfileController{
+                nextScene.user = self.global.user
+                
+            }
+        }
+    }
     
 }

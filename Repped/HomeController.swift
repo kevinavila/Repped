@@ -10,6 +10,14 @@ import UIKit
 import Firebase
 import FBSDKCoreKit
 
+extension Dictionary {
+    mutating func update(other:Dictionary) {
+        for (key,value) in other {
+            self.updateValue(value, forKey:key)
+        }
+    }
+}
+
 class HomeController: UITableViewController {
     
     //MARK: Properties
@@ -34,47 +42,65 @@ class HomeController: UITableViewController {
         let name = currentUser?.displayName
         self.global.user = User(uid: uid!, name: name!)
         
-        fillInUser()
-        getFriends()
-        
-        observeRooms()
+        self.getFriends()
+        self.fillInUser()
+
+        self.observeRooms()
     }
  
     private func getFriends(){
         let params = ["fields": "id, name"]
         FBSDKGraphRequest(graphPath: "me/friends", parameters: params).start { (connection, result , error) -> Void in
             
+            var friendList: [String:String] = [:]
+            
             if error != nil {
                 print("wes_ error: ", error!)
+            } else {
+                let resultdict = result as! NSDictionary
+                let data : NSArray = resultdict.object(forKey: "data") as! NSArray
+  
+                for entry in data {
+                    let valueDict : NSDictionary = entry as! NSDictionary
+                    let id = valueDict.object(forKey: "id") as! String
+                    let name = valueDict.object(forKey: "name") as! String
+                    friendList[id] = name
+                }
             }
-            else {
-                print("friend lsit")
-                print("wes_ friemds", result!) //has the friends need to just get the ids
-                //Do further work with response
-            }
+            self.global.user?.friendList.update(other: friendList)
+            
+            //update firbase
+            self.userRef.child("\((self.global.user?.uid)!)/friends").setValue(friendList)
         }
+        
+        
     }
     
     
     
     
     private func fillInUser(){
+        //either pull from firebase or from facebook depending on is user is existing
         // gonna need to check if i already exist to not override rep score TODO
+        print(((FBSDKAccessToken.current()) != nil))
         if((FBSDKAccessToken.current()) != nil){
             FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email"]).start(completionHandler: { (connection, result, error) -> Void in
                 let fBData = result as! [String:Any]
                 if (error == nil){
-                    print(result)
-                    let user = [
-                        "name": fBData["name"],
-                        "email": fBData["email"],
-                        "rep": 0,
-                        "id": fBData["id"]
-                        ] as [String:Any]
-                    self.userRef.child(fBData["id"] as! String).setValue(user)
+                    //Set user info locally
                     self.global.user = User(uid: fBData["id"] as! String, name: fBData["name"] as! String)
                     self.global.user?.email =  fBData["email"] as! String
                     self.global.user?.profilePicture = self.returnProfilePic(fBData["id"] as! String)
+                    
+                    //set user info in firebase
+                    let user = [
+                        "name": fBData["name"]!,
+                        "email": fBData["email"]!,
+                        "rep": 0,
+                        "id": fBData["id"]!,
+                        ] as [String:Any]
+                    self.userRef.child(fBData["id"] as! String).setValue(user)
+                    
                 }
             })
         }

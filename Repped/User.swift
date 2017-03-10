@@ -15,6 +15,7 @@ internal class User {
     internal var email:String = ""
     internal var profilePicture:UIImage = #imageLiteral(resourceName: "noprofile")
     internal var currentRoom:Room?
+    internal var friendList:[String:String] = [:]
     
     init(uid:String, name:String) {
         self.uid = uid

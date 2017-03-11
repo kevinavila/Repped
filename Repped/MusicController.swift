@@ -11,6 +11,7 @@ import MediaPlayer
 import StoreKit
 import Alamofire
 import Firebase
+import LNPopupController
 
 class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate{
     
@@ -37,6 +38,8 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
         searchBarLabel.placeholder = "Start typing to add tracks to playlist"
     }
     
+    
+    
 
     @IBAction func playButtonClicked(_ sender: Any) {
         if queue.isEmpty {
@@ -44,11 +47,25 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
             
         } else {
             let song = queue.remove(at: 0)
+            self.global.song = song
             self.global.room?.songID = song.trackId!
             systemMusicPlayer.setQueueWithStoreIDs([song.trackId!])
             systemMusicPlayer.play()
             songChange()
+            showPop()
         }
+    }
+    
+    
+    private func showPop(){
+        let popupContentController = storyboard?.instantiateViewController(withIdentifier: "MusicPlayerController") as! MusicPlayerController
+
+        popupContentController.popupItem.accessibilityHint = NSLocalizedString("Double Tap to Expand the Mini Player", comment: "")
+        
+        tabBarController?.popupContentView.popupCloseButton.accessibilityLabel = NSLocalizedString("Dismiss Now Playing Screen", comment: "")
+        
+        tabBarController?.presentPopupBar(withContentViewController: popupContentController, animated: true, completion: nil)
+        tabBarController?.popupBar.tintColor = UIColor(white: 38.0 / 255.0, alpha: 1.0)
     }
     
     private func songChange(){

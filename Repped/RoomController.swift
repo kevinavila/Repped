@@ -128,7 +128,7 @@ class RoomController: UITableViewController  {
             let uid = snapshot.key
             let value = snapshot.value
             
-            
+            //need to hanbdle errors for optionals -> if let ...
             let userData = value as! [String:Any]
             let user = [
                 "name": userData["name"] as! String,

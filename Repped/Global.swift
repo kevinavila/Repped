@@ -25,5 +25,7 @@ class Global {
     
     var room:Room? = nil
     
+    var song:Song? = nil
+    
 }
 

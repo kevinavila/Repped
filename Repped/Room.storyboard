@@ -6,6 +6,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,7 +24,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2Er-ci-haa" id="pSR-7J-vyr">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Wes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M6m-OX-X7E">
@@ -56,15 +58,15 @@
         <!--Profile-->
         <scene sceneID="X9f-fr-hTN">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="w0p-7a-oOc" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewControllerPlaceholder storyboardName="Profile" id="mSY-BO-WAf" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="w0p-7a-oOc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1120" y="-551"/>
         </scene>
         <!--Music-->
         <scene sceneID="7Hx-oR-8hJ">
             <objects>
-                <viewController title="Music" automaticallyAdjustsScrollViewInsets="NO" id="2VA-21-Wfp" customClass="MusicController" customModule="Repped" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Music" id="2VA-21-Wfp" customClass="MusicController" customModule="Repped" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jCW-jk-qpP"/>
                         <viewControllerLayoutGuide type="bottom" id="lTj-fb-BS9"/>
@@ -143,9 +145,139 @@
             </objects>
             <point key="canvasLocation" x="-396" y="-146"/>
         </scene>
+        <!--Music Player Controller-->
+        <scene sceneID="A9P-MA-7Cs">
+            <objects>
+                <viewController storyboardIdentifier="MusicPlayerController" id="zz5-W1-pft" customClass="MusicPlayerController" customModule="Repped" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2Ca-d7-hmL"/>
+                        <viewControllerLayoutGuide type="bottom" id="D7C-tG-h5N"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="4BS-qX-Juz">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="WSc-2T-ay3">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="no_music" translatesAutoresizingMaskIntoConstraints="NO" id="VrC-Xn-U5D">
+                                        <rect key="frame" x="32" y="55" width="311" height="311"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="VrC-Xn-U5D" secondAttribute="height" multiplier="1:1" priority="900" id="Kez-Zy-plC"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </imageView>
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="r7H-FJ-JYi">
+                                        <rect key="frame" x="32" y="398" width="311" height="2.5"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="2" id="cix-fu-Nu0"/>
+                                        </constraints>
+                                    </progressView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nft-T7-oQC">
+                                        <rect key="frame" x="0.0" y="400" width="375" height="267"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HNp-CW-eRO" userLabel="Play">
+                                                <rect key="frame" x="180" y="125" width="16" height="18"/>
+                                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" image="nowPlaying_pause"/>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vPJ-bH-i8d" userLabel="Next">
+                                                <rect key="frame" x="273" y="125" width="16" height="18"/>
+                                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" image="nowPlaying_next"/>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cfm-T5-K28" userLabel="Prev">
+                                                <rect key="frame" x="86" y="125" width="16" height="18"/>
+                                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" image="nowPlaying_prev"/>
+                                            </button>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" minimumValueImage="volDown" maximumValueImage="volUp" translatesAutoresizingMaskIntoConstraints="NO" id="pnJ-2j-GaY">
+                                                <rect key="frame" x="30" y="185" width="315" height="31"/>
+                                            </slider>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Demo Song" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="isL-4C-aTr">
+                                                <rect key="frame" x="32" y="30" width="311" height="28"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="23"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Demo Album" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="soX-Rt-rE7">
+                                                <rect key="frame" x="32" y="62" width="311" height="27"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="22"/>
+                                                <color key="textColor" red="0.91372549020000005" green="0.27058823529999998" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="soX-Rt-rE7" firstAttribute="top" secondItem="isL-4C-aTr" secondAttribute="bottom" constant="4" id="0Ls-LT-r7V"/>
+                                            <constraint firstItem="soX-Rt-rE7" firstAttribute="leading" secondItem="Nft-T7-oQC" secondAttribute="leading" constant="32" id="5Ao-Zj-2aW"/>
+                                            <constraint firstItem="isL-4C-aTr" firstAttribute="centerY" secondItem="Nft-T7-oQC" secondAttribute="centerY" multiplier="1:3" id="Er8-NF-iQG"/>
+                                            <constraint firstItem="pnJ-2j-GaY" firstAttribute="centerY" secondItem="Nft-T7-oQC" secondAttribute="centerY" multiplier="1.5:1" id="K3i-yE-jxm"/>
+                                            <constraint firstItem="isL-4C-aTr" firstAttribute="leading" secondItem="Nft-T7-oQC" secondAttribute="leading" constant="32" id="NhN-TJ-EcW"/>
+                                            <constraint firstAttribute="trailing" secondItem="soX-Rt-rE7" secondAttribute="trailing" constant="32" id="ToQ-9F-2f9"/>
+                                            <constraint firstItem="HNp-CW-eRO" firstAttribute="centerY" secondItem="Nft-T7-oQC" secondAttribute="centerY" id="YYc-H0-TSp"/>
+                                            <constraint firstItem="vPJ-bH-i8d" firstAttribute="centerY" secondItem="Nft-T7-oQC" secondAttribute="centerY" id="Z1R-WF-GZl"/>
+                                            <constraint firstItem="HNp-CW-eRO" firstAttribute="centerX" secondItem="Nft-T7-oQC" secondAttribute="centerX" id="ac1-Dx-Vum"/>
+                                            <constraint firstItem="isL-4C-aTr" firstAttribute="centerX" secondItem="Nft-T7-oQC" secondAttribute="centerX" id="dNn-Wg-JBv"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="elq-IQ-qmH"/>
+                                            <constraint firstAttribute="trailing" secondItem="pnJ-2j-GaY" secondAttribute="trailing" constant="32" id="i0L-Dv-pWY"/>
+                                            <constraint firstItem="vPJ-bH-i8d" firstAttribute="centerX" secondItem="Nft-T7-oQC" secondAttribute="centerX" multiplier="1.5:1" id="j6E-3g-Ocb"/>
+                                            <constraint firstItem="pnJ-2j-GaY" firstAttribute="leading" secondItem="Nft-T7-oQC" secondAttribute="leading" constant="32" id="qv3-7c-sWK"/>
+                                            <constraint firstAttribute="trailing" secondItem="isL-4C-aTr" secondAttribute="trailing" constant="32" id="ru7-6D-oie"/>
+                                            <constraint firstItem="cfm-T5-K28" firstAttribute="centerX" secondItem="Nft-T7-oQC" secondAttribute="centerX" multiplier="3:6" id="sJU-GK-nve"/>
+                                            <constraint firstItem="cfm-T5-K28" firstAttribute="centerY" secondItem="Nft-T7-oQC" secondAttribute="centerY" id="zkN-G2-kIJ"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="Nft-T7-oQC" firstAttribute="top" secondItem="r7H-FJ-JYi" secondAttribute="bottom" id="3EE-8J-42e"/>
+                                    <constraint firstItem="VrC-Xn-U5D" firstAttribute="leading" secondItem="WSc-2T-ay3" secondAttribute="leading" constant="32" id="7k6-58-Cg2"/>
+                                    <constraint firstItem="r7H-FJ-JYi" firstAttribute="leading" secondItem="WSc-2T-ay3" secondAttribute="leading" constant="32" id="CT3-WG-zbf"/>
+                                    <constraint firstAttribute="trailing" secondItem="r7H-FJ-JYi" secondAttribute="trailing" constant="32" id="DO9-eU-HSb"/>
+                                    <constraint firstAttribute="trailing" secondItem="Nft-T7-oQC" secondAttribute="trailing" id="ELx-Rq-kut"/>
+                                    <constraint firstItem="Nft-T7-oQC" firstAttribute="leading" secondItem="WSc-2T-ay3" secondAttribute="leading" id="bi0-Y5-OVS"/>
+                                    <constraint firstAttribute="bottom" secondItem="Nft-T7-oQC" secondAttribute="bottom" id="brB-jd-RMO"/>
+                                    <constraint firstAttribute="trailing" secondItem="VrC-Xn-U5D" secondAttribute="trailing" constant="32" id="k4m-Gi-l59"/>
+                                    <constraint firstItem="VrC-Xn-U5D" firstAttribute="top" secondItem="WSc-2T-ay3" secondAttribute="top" constant="55" id="tyA-Tq-0Wp"/>
+                                    <constraint firstItem="r7H-FJ-JYi" firstAttribute="top" secondItem="VrC-Xn-U5D" secondAttribute="bottom" constant="32" id="y9d-Bf-AdI"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="WSc-2T-ay3" firstAttribute="leading" secondItem="4BS-qX-Juz" secondAttribute="leading" id="1oL-bg-V7a"/>
+                            <constraint firstAttribute="bottom" secondItem="WSc-2T-ay3" secondAttribute="bottom" id="3La-wi-PhX"/>
+                            <constraint firstAttribute="trailing" secondItem="WSc-2T-ay3" secondAttribute="trailing" id="B0Q-wf-Liw"/>
+                            <constraint firstAttribute="top" secondItem="WSc-2T-ay3" secondAttribute="top" id="V47-fo-rZm"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="albumArtImageView" destination="VrC-Xn-U5D" id="ftp-l4-ImT"/>
+                        <outlet property="albumNameLabel" destination="soX-Rt-rE7" id="RNG-9h-uCJ"/>
+                        <outlet property="progressView" destination="pnJ-2j-GaY" id="pNm-5s-4Hm"/>
+                        <outlet property="songNameLabel" destination="isL-4C-aTr" id="xVI-ql-EFQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pMo-LC-LaS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1425" y="332"/>
+        </scene>
     </scenes>
     <resources>
         <image name="musicIcon" width="30" height="30"/>
+        <image name="no_music" width="88" height="88"/>
+        <image name="nowPlaying_next" width="16" height="16"/>
+        <image name="nowPlaying_pause" width="16" height="16"/>
+        <image name="nowPlaying_prev" width="16" height="16"/>
         <image name="roomIcon" width="30" height="30"/>
+        <image name="volDown" width="16" height="16"/>
+        <image name="volUp" width="16" height="16"/>
     </resources>
 </document>

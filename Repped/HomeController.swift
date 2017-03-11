@@ -42,9 +42,12 @@ class HomeController: UITableViewController {
         let name = currentUser?.displayName
         self.global.user = User(uid: uid!, name: name!)
         
-        self.getFriends()
+        
         self.fillInUser()
-
+        //fillinuser needs to run first
+        
+        self.getFriends()
+        
         self.observeRooms()
     }
  
@@ -75,8 +78,6 @@ class HomeController: UITableViewController {
         
         
     }
-    
-    
     
     
     private func fillInUser(){

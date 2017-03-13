@@ -7,11 +7,15 @@
 //
 
 import UIKit
+import MediaPlayer
 
 class Global {
     
     // Now Global.sharedGlobal is your singleton, no need to use nested or other classes
     static let sharedGlobal = Global()
+    
+    var queue: [Song] = []
+    let systemMusicPlayer = MPMusicPlayerController.systemMusicPlayer()
     
     private init() {
         print("MyClass Initialized")

@@ -21,6 +21,8 @@ class RoomController: UITableViewController  {
     private var userRefHandle:FIRDatabaseHandle?
     private lazy var joinRef:FIRDatabaseReference = FIRDatabase.database().reference().child("joinTable")
     private var joinRefHandle:FIRDatabaseHandle?
+     
+    
     let systemMusicPlayer = MPMusicPlayerController.systemMusicPlayer()
     
     var global:Global = Global.sharedGlobal

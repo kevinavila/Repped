@@ -32,21 +32,26 @@ class HomeController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
+        
         // Initialize user info
-        let currentUser = FIRAuth.auth()?.currentUser
-        let uid = currentUser?.uid
-        let name = currentUser?.displayName
-        self.global.user = User(uid: uid!, name: name!)
+        if self.global.user == nil{
+            print("Login Controller did not make gloabl user, must make it in Home Controller")
+            let currentUser = FIRAuth.auth()?.currentUser
+            let uid = currentUser?.uid
+            let name = currentUser?.displayName
+            self.global.user = User(uid: uid!, name: name!)// could change to just set the user ui as a variable in global global.firebaseUId = ... TODO
+        }
+       
         
-        
+        // Initialize user inf
         self.fillInUser()
-        //fillinuser needs to run first
         
+        //fillinuser needs to run first
         self.getFriends()
+        
         
         self.observeRooms()
     }
@@ -88,6 +93,9 @@ class HomeController: UITableViewController {
             FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email"]).start(completionHandler: { (connection, result, error) -> Void in
                 let fBData = result as! [String:Any]
                 if (error == nil){
+//                    if (self.global.user?.uid)! == fBData["id"] {
+//                        local user is correct, need to check if firbase user is
+//                    }
                     //Set user info locally
                     self.global.user = User(uid: fBData["id"] as! String, name: fBData["name"] as! String)
                     self.global.user?.email =  fBData["email"] as! String

@@ -19,10 +19,8 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
     @IBOutlet weak var musicTable: UITableView!
     var global:Global = Global.sharedGlobal
     
-    var queue: [Song] = []
     var currentRoom: Room? = nil
     var tableData = [] as? [NSDictionary]
-    let systemMusicPlayer = MPMusicPlayerController.systemMusicPlayer()
     
     private lazy var roomRef:FIRDatabaseReference = FIRDatabase.database().reference().child("rooms")
 
@@ -42,15 +40,15 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
 
     @IBAction func playButtonClicked(_ sender: Any) {
-        if queue.isEmpty {
+        if self.global.queue.isEmpty {
             toast("First add a song to the queue")
             
         } else {
-            let song = queue.remove(at: 0)
+            let song = self.global.queue.remove(at: 0)
             self.global.song = song
             self.global.room?.songID = song.trackId!
-            systemMusicPlayer.setQueueWithStoreIDs([song.trackId!])
-            systemMusicPlayer.play()
+            self.global.systemMusicPlayer.setQueueWithStoreIDs([song.trackId!])
+            self.global.systemMusicPlayer.play()
             songChange()
             showPop()
         }
@@ -143,16 +141,13 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
         return cell
     }
     
-    
     //Add song to playback queue if user selects a cell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let indexPath = tableView.indexPathForSelectedRow
         if let rowData: NSDictionary = self.tableData?[indexPath!.row], let urlString = rowData["artworkUrl60"] as? String,
             let imgURL = URL(string: urlString),
             let imgData = try? Data(contentsOf: imgURL)  {
-            self.queue.append(Song(artWork: UIImage(data: imgData), trackName: rowData["trackName"] as? String, artistName: rowData["artistName"] as? String, trackId: String (describing: rowData["trackId"]!)))
-//            systemMusicPlayer.setQueueWithStoreIDs([rowData["trackId"] as! String])
-//            dont know if it is better to just add the song to the queue
+            self.global.queue.append(Song(artWork: UIImage(data: imgData), trackName: rowData["trackName"] as? String, artistName: rowData["artistName"] as? String, trackId: String (describing: rowData["trackId"]!)))
             toast("Added track!")
             
                        tableView.deselectRow(at: indexPath!, animated: true)

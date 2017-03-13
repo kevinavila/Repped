@@ -10,8 +10,11 @@ import UIKit
 import LNPopupController
 
 class MusicPlayerController: UIViewController {
-    @IBOutlet weak var songNameLabel: UILabel!
     
+
+    
+    
+    @IBOutlet weak var songNameLabel: UILabel!
     @IBOutlet weak var albumNameLabel: UILabel!
     @IBOutlet weak var albumArtImageView: UIImageView!
     
@@ -24,17 +27,20 @@ class MusicPlayerController: UIViewController {
     var timer : Timer?
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         songNameLabel.text = (self.global.song?.trackName)!
         albumArtImageView.image = (self.global.song?.artWork)!
         albumNameLabel.text = (self.global.song?.artistName)!
+        
+        popupItem.image = (self.global.song?.artWork)!
         
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        
+        //Need to check for if user is the leader -> show different Controls TODO
         let pause = UIBarButtonItem(image: UIImage(named: "pause"), style: .plain, target: nil, action: nil)
         pause.accessibilityLabel = NSLocalizedString("Pause", comment: "")
         let next = UIBarButtonItem(image: UIImage(named: "nextFwd"), style: .plain, target: nil, action: nil)

@@ -48,9 +48,9 @@ class HomeController: UITableViewController {
         
         // Initialize user inf
         self.fillInUser()
-        
-        //fillinuser needs to run first
-        self.getFriends()
+
+        //only run if user already exists in Firebase, checking for new friends
+        //self.getFriends()
         
         
         self.observeRooms()
@@ -83,23 +83,36 @@ class HomeController: UITableViewController {
         
         
     }
-    
-    
+
+
     private func fillInUser(){
         //either pull from firebase or from facebook depending on is user is existing
         // gonna need to check if i already exist to not override rep score TODO
         print(((FBSDKAccessToken.current()) != nil))
         if((FBSDKAccessToken.current()) != nil){
-            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email"]).start(completionHandler: { (connection, result, error) -> Void in
+            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email, friends"]).start(completionHandler: { (connection, result, error) -> Void in
                 let fBData = result as! [String:Any]
                 if (error == nil){
-//                    if (self.global.user?.uid)! == fBData["id"] {
-//                        local user is correct, need to check if firbase user is
-//                    }
-                    //Set user info locally
                     self.global.user = User(uid: fBData["id"] as! String, name: fBData["name"] as! String)
                     self.global.user?.email =  fBData["email"] as! String
                     self.global.user?.profilePicture = self.returnProfilePic(fBData["id"] as! String)
+                    
+                    //build friendlist
+                    var friendList: [String:String] = [:]
+                    
+                    if let resultdict = fBData["friends"]{
+                        let data : NSArray = (resultdict as AnyObject).object(forKey: "data") as! NSArray
+                        
+                        for entry in data {
+                            let valueDict : NSDictionary = entry as! NSDictionary
+                            let id = valueDict.object(forKey: "id") as! String
+                            let name = valueDict.object(forKey: "name") as! String
+                            friendList[id] = name
+                        }
+                    }
+                    
+                    self.global.user?.friendList.update(other: friendList)
+                    
                     
                     //set user info in firebase
                     let user = [
@@ -107,6 +120,7 @@ class HomeController: UITableViewController {
                         "email": fBData["email"]!,
                         "rep": 0,
                         "id": fBData["id"]!,
+                        "friends": friendList,
                         ] as [String:Any]
                     self.userRef.child(fBData["id"] as! String).setValue(user)
                     

@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -20,12 +21,31 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ReppedLogoFinal.png" translatesAutoresizingMaskIntoConstraints="NO" id="04y-fZ-5HY">
+                                <rect key="frame" x="36" y="155" width="303" height="292"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="292" id="O0S-gD-cfG"/>
+                                    <constraint firstAttribute="width" constant="303" id="kXp-We-YUf"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="bottomMargin" secondItem="04y-fZ-5HY" secondAttribute="bottom" constant="220" id="LcJ-fU-hXy"/>
+                            <constraint firstItem="04y-fZ-5HY" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="20" id="NKv-j7-gSt"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="04y-fZ-5HY" secondAttribute="trailing" constant="20" id="ut1-Q4-06c"/>
+                            <constraint firstItem="04y-fZ-5HY" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="topMargin" constant="155" id="ydK-9y-XzN"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ReppedLogoFinal.png" width="1536" height="1536"/>
+    </resources>
 </document>

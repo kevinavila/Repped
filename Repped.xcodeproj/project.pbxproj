@@ -12,7 +12,12 @@
 		BC749A061E6B6D22001E21D9 /* RoomViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC749A051E6B6D22001E21D9 /* RoomViewCell.swift */; };
 		BC749A081E6B827E001E21D9 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC749A071E6B827E001E21D9 /* Song.swift */; };
 		BC9ED4281E6B5731002A8FBE /* MusicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9ED4271E6B5731002A8FBE /* MusicController.swift */; };
+		C86C8E281E82C9E100D83560 /* ReppedLogoFinal.png in Resources */ = {isa = PBXBuildFile; fileRef = C86C8E271E82C9E100D83560 /* ReppedLogoFinal.png */; };
 		C89F9DEB8D56D48322769E84 /* Pods_ReppedUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BEE666B8E8AC1F90BDD6477 /* Pods_ReppedUITests.framework */; };
+		C8D495E51E8038B100E3DB04 /* Orbitron-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8D495E11E8038B100E3DB04 /* Orbitron-Black.ttf */; };
+		C8D495E61E8038B100E3DB04 /* Orbitron-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8D495E21E8038B100E3DB04 /* Orbitron-Bold.ttf */; };
+		C8D495E71E8038B100E3DB04 /* Orbitron-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8D495E31E8038B100E3DB04 /* Orbitron-Medium.ttf */; };
+		C8D495E81E8038B100E3DB04 /* Orbitron-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8D495E41E8038B100E3DB04 /* Orbitron-Regular.ttf */; };
 		DB1F47021E62607400F0FFEC /* Room.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB1F47011E62607400F0FFEC /* Room.storyboard */; };
 		DB1F47041E6261FA00F0FFEC /* RoomController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1F47031E6261FA00F0FFEC /* RoomController.swift */; };
 		DB3A775E1E52AE9A001D3B15 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB3A775D1E52AE9A001D3B15 /* GoogleService-Info.plist */; };
@@ -59,6 +64,11 @@
 		BC749A071E6B827E001E21D9 /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 		BC9ED4271E6B5731002A8FBE /* MusicController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicController.swift; sourceTree = "<group>"; };
 		BDBCB15701519444437FA42C /* Pods-ReppedTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReppedTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReppedTests/Pods-ReppedTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C86C8E271E82C9E100D83560 /* ReppedLogoFinal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ReppedLogoFinal.png; path = ../../ReppedLogoFinal.png; sourceTree = "<group>"; };
+		C8D495E11E8038B100E3DB04 /* Orbitron-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Orbitron-Black.ttf"; path = "../../../../Downloads/orbitron/Orbitron-Black.ttf"; sourceTree = "<group>"; };
+		C8D495E21E8038B100E3DB04 /* Orbitron-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Orbitron-Bold.ttf"; path = "../../../../Downloads/orbitron/Orbitron-Bold.ttf"; sourceTree = "<group>"; };
+		C8D495E31E8038B100E3DB04 /* Orbitron-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Orbitron-Medium.ttf"; path = "../../../../Downloads/orbitron/Orbitron-Medium.ttf"; sourceTree = "<group>"; };
+		C8D495E41E8038B100E3DB04 /* Orbitron-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Orbitron-Regular.ttf"; path = "../../../../Downloads/orbitron/Orbitron-Regular.ttf"; sourceTree = "<group>"; };
 		D9F0FE0FA5ADD3716E537AAE /* Pods_ReppedTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReppedTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB1F47011E62607400F0FFEC /* Room.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Room.storyboard; sourceTree = "<group>"; };
 		DB1F47031E6261FA00F0FFEC /* RoomController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomController.swift; sourceTree = "<group>"; };
@@ -180,6 +190,11 @@
 				DB1F47011E62607400F0FFEC /* Room.storyboard */,
 				DBC80E921E4B840E00A3CCBC /* Login.storyboard */,
 				DBC80E971E4B840E00A3CCBC /* LaunchScreen.storyboard */,
+				C8D495E11E8038B100E3DB04 /* Orbitron-Black.ttf */,
+				C8D495E21E8038B100E3DB04 /* Orbitron-Bold.ttf */,
+				C8D495E31E8038B100E3DB04 /* Orbitron-Medium.ttf */,
+				C8D495E41E8038B100E3DB04 /* Orbitron-Regular.ttf */,
+				C86C8E271E82C9E100D83560 /* ReppedLogoFinal.png */,
 				DB3A775F1E52C4DC001D3B15 /* BridgingHeader.h */,
 				DBC80E951E4B840E00A3CCBC /* Assets.xcassets */,
 				DBC80E9A1E4B840E00A3CCBC /* Info.plist */,
@@ -328,8 +343,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8D495E71E8038B100E3DB04 /* Orbitron-Medium.ttf in Resources */,
 				DBC80E991E4B840E00A3CCBC /* LaunchScreen.storyboard in Resources */,
+				C8D495E61E8038B100E3DB04 /* Orbitron-Bold.ttf in Resources */,
+				C86C8E281E82C9E100D83560 /* ReppedLogoFinal.png in Resources */,
 				DBFA247B1E57F25300224898 /* Home.storyboard in Resources */,
+				C8D495E51E8038B100E3DB04 /* Orbitron-Black.ttf in Resources */,
+				C8D495E81E8038B100E3DB04 /* Orbitron-Regular.ttf in Resources */,
 				DB3A775E1E52AE9A001D3B15 /* GoogleService-Info.plist in Resources */,
 				DB1F47021E62607400F0FFEC /* Room.storyboard in Resources */,
 				DB8B7E0F1E6A5E1200FFAC57 /* AddFriends.storyboard in Resources */,

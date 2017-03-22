@@ -17,7 +17,7 @@
 		BC7B49901E73923F00D56AF4 /* MusicPlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7B498F1E73923F00D56AF4 /* MusicPlayerController.swift */; };
 		BC89AB5C1E71E2FD003244FA /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC89AB5B1E71E2FD003244FA /* Global.swift */; };
 		BC95F5831E7219FC003011B3 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC95F5821E7219FC003011B3 /* Profile.storyboard */; };
-		BC95F5851E721CF0003011B3 /* ProfileConroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC95F5841E721CF0003011B3 /* ProfileConroller.swift */; };
+		BC95F5851E721CF0003011B3 /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC95F5841E721CF0003011B3 /* ProfileController.swift */; };
 		BC9ED4281E6B5731002A8FBE /* MusicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9ED4271E6B5731002A8FBE /* MusicController.swift */; };
 		C89F9DEB8D56D48322769E84 /* Pods_ReppedUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BEE666B8E8AC1F90BDD6477 /* Pods_ReppedUITests.framework */; };
 		DB1F47021E62607400F0FFEC /* Room.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB1F47011E62607400F0FFEC /* Room.storyboard */; };
@@ -83,7 +83,7 @@
 		BC7B498F1E73923F00D56AF4 /* MusicPlayerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicPlayerController.swift; sourceTree = "<group>"; };
 		BC89AB5B1E71E2FD003244FA /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		BC95F5821E7219FC003011B3 /* Profile.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
-		BC95F5841E721CF0003011B3 /* ProfileConroller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileConroller.swift; sourceTree = "<group>"; };
+		BC95F5841E721CF0003011B3 /* ProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
 		BC9ED4271E6B5731002A8FBE /* MusicController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicController.swift; sourceTree = "<group>"; };
 		BDBCB15701519444437FA42C /* Pods-ReppedTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReppedTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReppedTests/Pods-ReppedTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D9F0FE0FA5ADD3716E537AAE /* Pods_ReppedTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReppedTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -200,7 +200,7 @@
 				DB1F47031E6261FA00F0FFEC /* RoomController.swift */,
 				BC9ED4271E6B5731002A8FBE /* MusicController.swift */,
 				DB8B7E0C1E6A57F000FFAC57 /* AddFriendsController.swift */,
-				BC95F5841E721CF0003011B3 /* ProfileConroller.swift */,
+				BC95F5841E721CF0003011B3 /* ProfileController.swift */,
 				BC7B498D1E73912500D56AF4 /* PortraitTabBarController.swift */,
 				BC7B498F1E73923F00D56AF4 /* MusicPlayerController.swift */,
 				DBFBB8B91E66749500C85C1C /* User.swift */,
@@ -539,7 +539,7 @@
 				DB1F47041E6261FA00F0FFEC /* RoomController.swift in Sources */,
 				DBC80E911E4B840E00A3CCBC /* LoginController.swift in Sources */,
 				BC9ED4281E6B5731002A8FBE /* MusicController.swift in Sources */,
-				BC95F5851E721CF0003011B3 /* ProfileConroller.swift in Sources */,
+				BC95F5851E721CF0003011B3 /* ProfileController.swift in Sources */,
 				DBC80E8F1E4B840E00A3CCBC /* AppDelegate.swift in Sources */,
 				BC7B49901E73923F00D56AF4 /* MusicPlayerController.swift in Sources */,
 				DBFA247D1E57F29B00224898 /* HomeController.swift in Sources */,

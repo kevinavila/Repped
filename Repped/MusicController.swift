@@ -63,6 +63,9 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
         tabBarController?.popupContentView.popupCloseButton.accessibilityLabel = NSLocalizedString("Dismiss Now Playing Screen", comment: "")
         
         tabBarController?.presentPopupBar(withContentViewController: popupContentController, animated: true, completion: nil)
+        
+        self.navigationController!.view.bringSubview(toFront: self.navigationController!.popupContentView)
+        
         tabBarController?.popupBar.tintColor = UIColor(white: 38.0 / 255.0, alpha: 1.0)
     }
     

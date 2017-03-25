@@ -28,6 +28,8 @@ class HomeController: UITableViewController {
     private var roomRefHandle:FIRDatabaseHandle?
     
     var global:Global = Global.sharedGlobal
+    //Use for Testing only
+    let sampleData:SampleData = SampleData.sharedSample
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +47,9 @@ class HomeController: UITableViewController {
             self.global.user = User(uid: uid!, name: name!)// could change to just set the user ui as a variable in global global.firebaseUId = ... TODO
         }
        
+        //Use for testing
+        //sampleData.makeSampleUsers()
+        
         
         // Initialize user inf
         self.fillInUser()
@@ -111,6 +116,11 @@ class HomeController: UITableViewController {
                         }
                     }
                     
+                    //TODO REMOVE ADDINGMORE FRIENDS 
+                    //for (key,value) in self.sampleData.testFriendList {
+                    //  friendList.updateValue(value, forKey:key)
+                    //}
+                
                     self.global.user?.friendList.update(other: friendList)
                     
                     

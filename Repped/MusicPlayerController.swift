@@ -11,8 +11,6 @@ import LNPopupController
 
 class MusicPlayerController: UIViewController {
     
-
-    
     
     @IBOutlet weak var songNameLabel: UILabel!
     @IBOutlet weak var albumNameLabel: UILabel!
@@ -34,7 +32,6 @@ class MusicPlayerController: UIViewController {
         albumNameLabel.text = (self.global.song?.artistName)!
         
         popupItem.image = (self.global.song?.artWork)!
-        
     }
     
     required init?(coder aDecoder: NSCoder) {

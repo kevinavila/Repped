@@ -36,24 +36,22 @@ class HomeController: UITableViewController {
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        
-        
-        // Initialize user info
-        if self.global.user == nil{
-            print("Login Controller did not make gloabl user, must make it in Home Controller")
-            let currentUser = FIRAuth.auth()?.currentUser
-            let uid = currentUser?.uid
-            let name = currentUser?.displayName
-            self.global.user = User(uid: uid!, name: name!)// could change to just set the user ui as a variable in global global.firebaseUId = ... TODO
-        }
        
         //Use for testing
         //sampleData.makeSampleUsers()
         
         
-        // Initialize user inf
-        self.fillInUser()
-
+        self.userRef.observeSingleEvent(of: .value, with: { (snapshot) -> Void in
+            
+            if (snapshot.hasChild(FBSDKAccessToken.current().userID)) {
+                let userData = snapshot.value as! Dictionary<String, AnyObject>
+                self.setUser(userData: userData)
+            } else {
+                // initialize new user
+                self.newUser()
+            }
+        })
+        
         //only run if user already exists in Firebase, checking for new friends
         //self.getFriends()
         
@@ -80,22 +78,30 @@ class HomeController: UITableViewController {
                     friendList[id] = name
                 }
             }
-            self.global.user?.friendList.update(other: friendList)
+            self.global.user?.friendsList.update(other: friendList)
             
-            //update firbase
+            //update firebase
             self.userRef.child("\((self.global.user?.uid)!)/friends").setValue(friendList)
         }
         
         
     }
 
-
-    private func fillInUser(){
+    
+    private func setUser(userData: Dictionary<String, AnyObject>) {
+        self.global.user = User(uid: userData["id"] as! String, name: userData["name"] as! String)
+        self.global.user?.email =  userData["email"] as! String
+        self.global.user?.rep = userData["rep"] as! Int
+        self.global.user?.friendsList = userData["friends"] as! [String : String] // what if user has no friends?
+        self.global.user?.profilePicture = self.returnProfilePic(userData["id"] as! String)
+    }
+    
+    private func newUser(){
         //either pull from firebase or from facebook depending on is user is existing
         // gonna need to check if i already exist to not override rep score TODO
         print(((FBSDKAccessToken.current()) != nil))
         if((FBSDKAccessToken.current()) != nil){
-            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email, friends"]).start(completionHandler: { (connection, result, error) -> Void in
+            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email"]).start(completionHandler: { (connection, result, error) -> Void in
                 let fBData = result as! [String:Any]
                 if (error == nil){
                     self.global.user = User(uid: fBData["id"] as! String, name: fBData["name"] as! String)
@@ -103,25 +109,25 @@ class HomeController: UITableViewController {
                     self.global.user?.profilePicture = self.returnProfilePic(fBData["id"] as! String)
                     
                     //build friendlist
-                    var friendList: [String:String] = [:]
-                    
-                    if let resultdict = fBData["friends"]{
-                        let data : NSArray = (resultdict as AnyObject).object(forKey: "data") as! NSArray
-                        
-                        for entry in data {
-                            let valueDict : NSDictionary = entry as! NSDictionary
-                            let id = valueDict.object(forKey: "id") as! String
-                            let name = valueDict.object(forKey: "name") as! String
-                            friendList[id] = name
-                        }
-                    }
+//                    var friendList: [String:String] = [:]
+//                    
+//                    if let resultdict = fBData["friends"]{
+//                        let data : NSArray = (resultdict as AnyObject).object(forKey: "data") as! NSArray
+//                        
+//                        for entry in data {
+//                            let valueDict : NSDictionary = entry as! NSDictionary
+//                            let id = valueDict.object(forKey: "id") as! String
+//                            let name = valueDict.object(forKey: "name") as! String
+//                            friendList[id] = name
+//                        }
+//                    }
                     
                     //TODO REMOVE ADDINGMORE FRIENDS 
                     //for (key,value) in self.sampleData.testFriendList {
                     //  friendList.updateValue(value, forKey:key)
                     //}
                 
-                    self.global.user?.friendList.update(other: friendList)
+                    //self.global.user?.facebookFriendsList.update(other: friendList)
                     
                     
                     //set user info in firebase
@@ -130,7 +136,7 @@ class HomeController: UITableViewController {
                         "email": fBData["email"]!,
                         "rep": 0,
                         "id": fBData["id"]!,
-                        "friends": friendList,
+                        "friends": [:]
                         ] as [String:Any]
                     self.userRef.child(fBData["id"] as! String).setValue(user)
                     
@@ -285,10 +291,13 @@ class HomeController: UITableViewController {
     
     //MARK: Segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showProfile"{
-            if let nextScene = segue.destination as? ProfileController{
+        if segue.identifier == "showProfile" {
+            if let nextScene = segue.destination as? ProfileController {
                 nextScene.user = self.global.user
-                
+            }
+        } else if segue.identifier == "showAddFriends" {
+            if let nextScene = segue.destination as? AddFriendsController {
+                nextScene.user = self.global.user
             }
         }
     }

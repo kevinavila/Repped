@@ -36,7 +36,7 @@ class SampleData {
             "email": user.email,
             "rep": user.rep,
             "id": user.uid,
-            "friends": user.friendList,
+            "friends": user.friendsList,
             ] as [String:Any]
         self.userRef.child(user.uid).setValue(newUser)
     }
@@ -55,7 +55,7 @@ class SampleData {
             let newUser = User(uid: entry["id"]!, name: entry["name"]!)
             newUser.email = "fake@mail.com"
             newUser.rep = Int(arc4random_uniform(50))
-            newUser.friendList = self.testFriendList
+            newUser.friendsList = self.testFriendList
             self.userList.append(newUser)
         }
 

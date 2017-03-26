@@ -44,7 +44,8 @@ class HomeController: UITableViewController {
         self.userRef.observeSingleEvent(of: .value, with: { (snapshot) -> Void in
             
             if (snapshot.hasChild(FBSDKAccessToken.current().userID)) {
-                let userData = snapshot.value as! Dictionary<String, AnyObject>
+                let results = snapshot.value as! Dictionary<String, AnyObject>
+                let userData = results[FBSDKAccessToken.current().userID] as! Dictionary<String, AnyObject>
                 self.setUser(userData: userData)
             } else {
                 // initialize new user
@@ -92,13 +93,13 @@ class HomeController: UITableViewController {
         self.global.user = User(uid: userData["id"] as! String, name: userData["name"] as! String)
         self.global.user?.email =  userData["email"] as! String
         self.global.user?.rep = userData["rep"] as! Int
-        self.global.user?.friendsList = userData["friends"] as! [String : String] // what if user has no friends?
+        if (userData["friends"] != nil) {
+            self.global.user?.friendsList = userData["friends"] as! [String : String]
+        }
         self.global.user?.profilePicture = self.returnProfilePic(userData["id"] as! String)
     }
     
     private func newUser(){
-        //either pull from firebase or from facebook depending on is user is existing
-        // gonna need to check if i already exist to not override rep score TODO
         print(((FBSDKAccessToken.current()) != nil))
         if((FBSDKAccessToken.current()) != nil){
             FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email"]).start(completionHandler: { (connection, result, error) -> Void in

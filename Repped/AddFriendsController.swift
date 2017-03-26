@@ -12,7 +12,8 @@ import FBSDKCoreKit
 class AddFriendsController: UITableViewController {
     
     var user:User? = nil
-    var facebookFriends:[String:String] = [:]
+    var facebookFriends:[String] = []
+    var facebookFriendNames:[String:String] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +30,9 @@ class AddFriendsController: UITableViewController {
                         let valueDict : NSDictionary = entry as! NSDictionary
                         let id = valueDict.object(forKey: "id") as! String
                         let name = valueDict.object(forKey: "name") as! String
-                        self.facebookFriends[id] = name
+                        
+                        self.facebookFriends.append(id)
+                        self.facebookFriendNames[id] = name
                     }
                 }
                 
@@ -45,10 +48,15 @@ class AddFriendsController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: "addFriendsCell", for: indexPath) as! AddFriendsCell
+        if (indexPath.row < facebookFriends.count) {
+            let id = facebookFriends[(indexPath as IndexPath).row]
+            cell.friendNameLabel.text = facebookFriendNames[id]
+        }
+        return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        // Route to user's profile
     }
 }

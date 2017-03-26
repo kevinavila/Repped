@@ -27,6 +27,7 @@
 		DB3A775E1E52AE9A001D3B15 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB3A775D1E52AE9A001D3B15 /* GoogleService-Info.plist */; };
 		DB3B28DB1E63E0EC00AB6C18 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3B28DA1E63E0EC00AB6C18 /* Room.swift */; };
 		DB3B28DD1E63E55000AB6C18 /* HomeViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3B28DC1E63E55000AB6C18 /* HomeViewCell.swift */; };
+		DB686E381E873A6C0068A11F /* AddFriendsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB686E371E873A6C0068A11F /* AddFriendsCell.swift */; };
 		DB8B7E0D1E6A57F000FFAC57 /* AddFriendsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8B7E0C1E6A57F000FFAC57 /* AddFriendsController.swift */; };
 		DB8B7E0F1E6A5E1200FFAC57 /* AddFriends.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB8B7E0E1E6A5E1200FFAC57 /* AddFriends.storyboard */; };
 		DBC80E8F1E4B840E00A3CCBC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC80E8E1E4B840E00A3CCBC /* AppDelegate.swift */; };
@@ -96,6 +97,7 @@
 		DB3A775F1E52C4DC001D3B15 /* BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
 		DB3B28DA1E63E0EC00AB6C18 /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		DB3B28DC1E63E55000AB6C18 /* HomeViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewCell.swift; sourceTree = "<group>"; };
+		DB686E371E873A6C0068A11F /* AddFriendsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendsCell.swift; sourceTree = "<group>"; };
 		DB8B7E0C1E6A57F000FFAC57 /* AddFriendsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendsController.swift; sourceTree = "<group>"; };
 		DB8B7E0E1E6A5E1200FFAC57 /* AddFriends.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AddFriends.storyboard; sourceTree = "<group>"; };
 		DBC80E8B1E4B840E00A3CCBC /* Repped.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Repped.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -212,6 +214,7 @@
 				BC749A051E6B6D22001E21D9 /* RoomViewCell.swift */,
 				BC89AB5B1E71E2FD003244FA /* Global.swift */,
 				BC810C7B1E85A7F100DC8493 /* SampleData.swift */,
+				DB686E371E873A6C0068A11F /* AddFriendsCell.swift */,
 				DBFA247A1E57F25300224898 /* Home.storyboard */,
 				DB8B7E0E1E6A5E1200FFAC57 /* AddFriends.storyboard */,
 				DB1F47011E62607400F0FFEC /* Room.storyboard */,
@@ -549,6 +552,7 @@
 				BC810C7C1E85A7F100DC8493 /* SampleData.swift in Sources */,
 				BC749A081E6B827E001E21D9 /* Song.swift in Sources */,
 				DB3B28DB1E63E0EC00AB6C18 /* Room.swift in Sources */,
+				DB686E381E873A6C0068A11F /* AddFriendsCell.swift in Sources */,
 				DB8B7E0D1E6A57F000FFAC57 /* AddFriendsController.swift in Sources */,
 				BC89AB5C1E71E2FD003244FA /* Global.swift in Sources */,
 				BC7B498E1E73912500D56AF4 /* PortraitTabBarController.swift in Sources */,

@@ -27,8 +27,14 @@ class SampleData {
         "1553550286": "Andrew McDonald",
         "875928805754296": "Peter Ten Eyck",
         "100001971649787": "Frank Long",
+        "1624563487": "Holly Draper",
+        "1168097412": "Ben Barnes",
+        "100000088426355": "Michael Guarino",
+        "1334023507": "Dever Lorenz",
+        "1314841404": "John Nettles",
+        "100008870675443": "Will McMullin",
+        "1115521061": "Alexander Stewart",
         ]
-    
     
     private func addUserToFireBase(_ user: User){
         let newUser = [
@@ -50,6 +56,13 @@ class SampleData {
             ["id": "1553550286", "name": "Andrew McDonald"],
             ["id": "875928805754296", "name": "Peter Ten Eyck"],
             ["id": "100001971649787", "name": "Frank Long"],
+            ["id": "1624563487", "name": "Holly Draper"],
+            ["id": "1168097412", "name": "Ben Barnes"],
+            ["id": "100000088426355", "name": "Michael Guarino"],
+            ["id": "1334023507", "name": "Dever Lorenz"],
+            ["id": "1314841404", "name": "John Nettles"],
+            ["id": "100008870675443", "name": "Will McMullin"],
+            ["id": "1115521061", "name": "Alexander Stewart"],
             ]
         for entry in data {
             let newUser = User(uid: entry["id"]!, name: entry["name"]!)
@@ -97,7 +110,7 @@ class SampleData {
     }
     
     public func addUserToMyRoom(_ rid: String){
-        for index in 6...6 {
+        for index in 6...8 {
             addUserToRoom(self.userList[index], rid: rid)
         }
     }

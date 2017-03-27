@@ -9,7 +9,9 @@
 import UIKit
 import Firebase
 
-class ProfileController: UIViewController{
+class ProfileController: UIViewController {
+    
+    private lazy var joinRef:FIRDatabaseReference = FIRDatabase.database().reference().child("joinTable")
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var profileImage: UIImageView!
@@ -24,6 +26,7 @@ class ProfileController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //TODO: move returnProfilePic function to user class so it's dynamic for all users.
         self.profileImage.image = self.user?.profilePicture
         self.profileImage.layer.cornerRadius = self.profileImage.frame.size.width / 2
         self.profileImage.clipsToBounds = true
@@ -32,6 +35,22 @@ class ProfileController: UIViewController{
         self.nameLabel.text = self.user?.name
         self.repLabel.text = String(describing: (self.user?.rep)!)
         
+        isUserLive()
+        
+    }
+    
+    private func isUserLive() {
+        self.liveSymbol.layer.cornerRadius = self.liveSymbol.frame.size.width / 2
+        self.liveSymbol.clipsToBounds = true
+        self.liveSymbol.layer.borderWidth = 2.0
+        self.liveSymbol.backgroundColor = UIColor.white
+        
+        self.joinRef.observeSingleEvent(of: .value, with: { (snapshot) -> Void in
+            if (snapshot.hasChild((self.user?.uid)!)) {
+                // User is online
+                self.liveSymbol.backgroundColor = UIColor.green
+            }
+        })
     }
     
     

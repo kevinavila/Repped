@@ -52,6 +52,7 @@ class AddFriendsController: UITableViewController {
         if (indexPath.row < facebookFriends.count) {
             let id = facebookFriends[(indexPath as IndexPath).row]
             cell.friendNameLabel.text = facebookFriendNames[id]
+            cell.friendProfilePicture.image = returnProfilePic(id)
         }
         return cell
     }
@@ -59,4 +60,19 @@ class AddFriendsController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Route to user's profile
     }
+    
+    //MARK: Facebook Functions
+    private func returnProfilePic(_ id:String) -> UIImage{
+        let facebookProfileUrl = NSURL(string: "http://graph.facebook.com/\(id)/picture?type=large")
+        
+        let image:UIImage
+        if let data = NSData(contentsOf: facebookProfileUrl as! URL) {
+            image = UIImage(data: data as Data)!
+        } else {
+            image = #imageLiteral(resourceName: "noprofile")
+        }
+        return image
+    }
+    
+    //MARK: Add Function
 }

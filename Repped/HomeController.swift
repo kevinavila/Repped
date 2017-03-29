@@ -22,10 +22,13 @@ class HomeController: UITableViewController {
     
     //MARK: Properties
     private var rooms:[Room] = []
+    private var onlinefriends:[User] = []
+    private var friendList:[String:String] = [:]
     private lazy var roomRef:FIRDatabaseReference = FIRDatabase.database().reference().child("rooms")
     private lazy var userRef:FIRDatabaseReference = FIRDatabase.database().reference().child("users")
     private lazy var joinRef:FIRDatabaseReference = FIRDatabase.database().reference().child("joinTable")
     private var roomRefHandle:FIRDatabaseHandle?
+    private var joinRefHandle:FIRDatabaseHandle?
     
     var global:Global = Global.sharedGlobal
     //Use for Testing only
@@ -39,8 +42,12 @@ class HomeController: UITableViewController {
        
         //Use for testing
         //sampleData.makeSampleUsers()
+        //breaking because I dont have the friend list first
+        self.friendList = self.sampleData.testFriendList
         
-        
+        //TODO we need to figure out have to save the user info instead of pulling all this info
+        //takes to long each time
+        //AND/OR move this to appdelagete
         self.userRef.observeSingleEvent(of: .value, with: { (snapshot) -> Void in
             
             if (snapshot.hasChild(FBSDKAccessToken.current().userID)) {
@@ -58,6 +65,9 @@ class HomeController: UITableViewController {
         
         
         self.observeRooms()
+        
+        
+        self.observeJoinTable()
     }
  
     private func getFriends(){
@@ -95,6 +105,12 @@ class HomeController: UITableViewController {
         self.global.user?.rep = userData["rep"] as! Int
         if (userData["friends"] != nil) {
             self.global.user?.friendsList = userData["friends"] as! [String : String]
+            
+            //TODO REMOVE ADDINGMORE FRIENDS
+            //for (key,value) in self.sampleData.testFriendList {
+            //  self.global.user?.friendsList.updateValue(value, forKey:key)
+            //}
+            self.friendList = (self.global.user?.friendsList)!
         }
         self.global.user?.profilePicture = self.returnProfilePic(userData["id"] as! String)
     }
@@ -161,29 +177,65 @@ class HomeController: UITableViewController {
     
     //MARK: Table View Functions
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return rooms.count
+        if section == 0 {
+            return onlinefriends.count
+        } else {
+            return friendList.count
+        }
+//        return rooms.count
     }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "homeViewCell", for: indexPath) as! HomeViewCell
-        if (indexPath.row < rooms.count) {
-            cell.roomName.text = rooms[(indexPath as IndexPath).row].name
+        if indexPath.section == 0 {
+            if (indexPath.row < onlinefriends.count) {
+                cell.friendName.text = onlinefriends[(indexPath as IndexPath).row].name
+                cell.roomName.text = onlinefriends[(indexPath as IndexPath).row].rid
+            }
+        } else {
+            if (indexPath.row < friendList.count) {
+                cell.friendName.text = Array(friendList.values)[indexPath.row]
+                cell.roomName.text = ""
+            }
         }
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Live"
+        } else {
+            return "Offline"
+        }
+    }
+    
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let room = rooms[(indexPath as IndexPath).row]
+        if indexPath.section == 0 {
+        let friend = onlinefriends[(indexPath as IndexPath).row]
+        
+        var room:Room?
+        for indexedRoom in rooms {
+            if friend.rid == indexedRoom.rid {
+                room = indexedRoom
+            }
+        }
         
         print("self.global.room", self.global.room?.rid)
         if (self.global.room != nil) {
-            if (self.global.room?.rid != room.rid) {
+            if (self.global.room?.rid != room?.rid) {
                 print("joing room not already in")
                 // User is attempting to joining a new room
                 if (self.global.room?.leader != self.global.user?.uid) {
                     
                     userLeavingRoom()
-                    userJoiningRoom(room: room)
+                    userJoiningRoom(room: room!)
                     self.performSegue(withIdentifier: "showRoom", sender: room)
                 } else {
                     // User is leader of their current room. Do something.
@@ -194,8 +246,10 @@ class HomeController: UITableViewController {
             }
         } else {
             // User is joining a room for first time
-            userJoiningRoom(room: room)
+            userJoiningRoom(room: room!)
             self.performSegue(withIdentifier: "showRoom", sender: room)
+        }
+        } else {
         }
         
     }
@@ -269,6 +323,37 @@ class HomeController: UITableViewController {
         })
     }
     
+    //MARK: Firebase Functions
+    private func observeJoinTable() {
+        // Observe for any changes made to the rooms in the Firebase DB
+        // What about when a room is destroyed?
+        joinRefHandle = joinRef.observe(.childAdded, with: { (snapshot) -> Void in
+            
+            let rid = snapshot.value as! String
+            let uid = snapshot.key as! String
+
+            
+            if let name = self.friendList[uid] {
+                let friend = User(uid: uid, name: name)
+                friend.rid = rid
+                self.onlinefriends.append(friend)
+                print("added ", friend.name)
+                print(self.friendList.count)
+                self.friendList.removeValue(forKey: uid)
+                print(self.friendList.count)
+            }
+            
+            self.tableView.reloadData()
+        })
+        for friend in friendList{
+            print(friend)
+        }
+        for friend in onlinefriends{
+            print(friend.name)
+        }
+    }
+
+    
     private func userJoiningRoom(room: Room) {
         print("joing room_ ", room.rid)
         self.global.room = Room(rid: room.rid, name: room.name, leader: room.leader)
@@ -284,6 +369,10 @@ class HomeController: UITableViewController {
         if let refHandle = roomRefHandle {
             roomRef.removeObserver(withHandle: refHandle)
         }
+        if let refHandle = joinRefHandle {
+            joinRef.removeObserver(withHandle: refHandle)
+        }
+
     }
     
     @IBAction func profileClicked(_ sender: Any) {

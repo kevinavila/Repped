@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import MediaPlayer
+import LNPopupController
 
 
 class RoomController: UITableViewController  {
@@ -26,20 +27,22 @@ class RoomController: UITableViewController  {
     let systemMusicPlayer = MPMusicPlayerController.systemMusicPlayer()
     
     var global:Global = Global.sharedGlobal
+    let sampleData:SampleData = SampleData.sharedSample
     
     var currentRoom:Room!
     
     
     override func viewDidLoad() {
-        print("wes_   in RoomController viewDidLoad")
         super.viewDidLoad()
         
         self.user = self.global.user
         
-        print("wes_ user: %@", self.global.room?.rid)
         self.currentRoomRef = FIRDatabase.database().reference().child("rooms/"+(self.global.room?.rid)!)
         
-   
+        //Testing Adds Users to a room
+        //if self.global.isLeader{
+        //    self.sampleData.addUserToMyRoom((self.global.room?.rid)!)
+        //}
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -47,6 +50,21 @@ class RoomController: UITableViewController  {
         observeListeners()
         observeRooms()
         fillOutListeners()
+    }
+    
+    private func showPop(){
+        print("Show Popup Controller")
+        let popupContentController = storyboard?.instantiateViewController(withIdentifier: "MusicPlayerController") as! MusicPlayerController
+        
+        popupContentController.popupItem.accessibilityHint = NSLocalizedString("Double Tap to Expand the Mini Player", comment: "")
+        
+        tabBarController?.popupContentView.popupCloseButton.accessibilityLabel = NSLocalizedString("Dismiss Now Playing Screen", comment: "")
+        
+        tabBarController?.presentPopupBar(withContentViewController: popupContentController, animated: true, completion: nil)
+        
+        self.navigationController!.view.bringSubview(toFront: self.navigationController!.popupContentView)
+        
+        tabBarController?.popupBar.tintColor = UIColor(white: 38.0 / 255.0, alpha: 1.0)
     }
     
 //    MARK: Table View Functions
@@ -113,8 +131,9 @@ class RoomController: UITableViewController  {
                     if (roomData["songID"] as! String) != self.global.room?.songID {
                         print("wes_ seting new song0")
                         self.global.room?.songID = roomData["songID"] as! String
-                        self.systemMusicPlayer.setQueueWithStoreIDs([(self.global.room?.songID)!])
-                        self.systemMusicPlayer.play()
+                    self.global.systemMusicPlayer.setQueueWithStoreIDs([(self.global.room?.songID)!])
+                        self.global.systemMusicPlayer.play()
+                        //self.showPop()
                     }
                 }
 

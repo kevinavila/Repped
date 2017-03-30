@@ -56,6 +56,7 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     
     private func showPop(){
+        print("Show Popup Controller")
         let popupContentController = storyboard?.instantiateViewController(withIdentifier: "MusicPlayerController") as! MusicPlayerController
 
         popupContentController.popupItem.accessibilityHint = NSLocalizedString("Double Tap to Expand the Mini Player", comment: "")
@@ -104,7 +105,7 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     //Search iTunes and display results in table view
     func searchItunes(_ searchTerm: String) {
-        let urlstring = "https://itunes.apple.com/search?term=\(searchTerm)&entity=song"
+        let urlstring = "https://itunes.apple.com/lookup?id=\(searchTerm)"
         Alamofire.request(urlstring, method: .get)
             .validate()
             .responseJSON { response in

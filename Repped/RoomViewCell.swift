@@ -10,5 +10,9 @@ import UIKit
 
 class RoomViewCell: UITableViewCell {
     @IBOutlet weak var listenerLabel: UILabel!
+    @IBOutlet weak var makeLeaderLabel: UIButton!
+    @IBAction func makeLeader(_ sender: Any) {
+        print("mske ", listenerLabel.text ?? "friend", " new leader")
+    }
     
 }

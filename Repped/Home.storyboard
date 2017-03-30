@@ -73,7 +73,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="uIQ-jJ-AuR" kind="show" identifier="showRoom" id="2lu-AX-BOi"/>
+                        <segue destination="uIQ-jJ-AuR" kind="push" identifier="showRoom" id="2lu-AX-BOi"/>
                         <segue destination="Cg8-QH-sKC" kind="show" identifier="showProfile" id="hv9-T5-FSL"/>
                     </connections>
                 </tableViewController>
@@ -102,7 +102,9 @@
         <!--Room-->
         <scene sceneID="nJo-ge-kdv">
             <objects>
-                <viewControllerPlaceholder storyboardName="Room" id="uIQ-jJ-AuR" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="Room" id="uIQ-jJ-AuR" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="VPg-Q5-jgq"/>
+                </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2sj-94-S9S" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1954" y="80"/>

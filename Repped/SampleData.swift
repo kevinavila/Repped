@@ -110,6 +110,9 @@ class SampleData {
     }
     
     public func addUserToMyRoom(_ rid: String){
+        if userList.count < 9 {
+            makeUsersFromSampleUsers()
+        }
         for index in 6...8 {
             addUserToRoom(self.userList[index], rid: rid)
         }

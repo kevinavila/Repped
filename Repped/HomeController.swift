@@ -262,17 +262,12 @@ class HomeController: UITableViewController {
     
     //MARK: Create New Room
     @IBAction func createNewRoom(_ sender: Any) {
-        print("heloo dsfsdf create")
         if (self.global.room == nil) {
             print("option 1")
             createRoomHelper()
-            // Segue to room
-            self.performSegue(withIdentifier: "showRoom", sender: self.global.room)
         } else if (self.global.room?.leader != self.global.user?.uid) {
              print("option 2")
             createRoomHelper()
-            // Segue to room
-            self.performSegue(withIdentifier: "showRoom", sender: self.global.room)
         } else {
              print("option 3")
             if (self.global.room?.isEmpty)! {
@@ -280,8 +275,6 @@ class HomeController: UITableViewController {
                 let oldRid = self.global.room?.rid
                 createRoomHelper()
                 roomRef.child(oldRid!).removeValue()
-                print("will we segue")
-                self.performSegue(withIdentifier: "showRoom", sender: self.global.room)
             }
             // User is leader of their current room. Do something.
 
@@ -337,6 +330,8 @@ class HomeController: UITableViewController {
             if (leader == self.global.user?.uid) {
                 self.userJoiningRoom(room: room)
                 self.global.isLeader = true
+                // Segue to room
+                self.performSegue(withIdentifier: "showRoom", sender: self.global.room)
             }
             
             self.rooms.append(room)

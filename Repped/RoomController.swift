@@ -133,7 +133,10 @@ class RoomController: UITableViewController  {
                         self.global.room?.songID = roomData["songID"] as! String
                     self.global.systemMusicPlayer.setQueueWithStoreIDs([(self.global.room?.songID)!])
                         self.global.systemMusicPlayer.play()
-                        //self.showPop()
+                        self.global.song = Song(trackId: (self.global.room?.songID)!){
+                            print("completion handler?")
+                            self.showPop()
+                        }
                     }
                 }
 

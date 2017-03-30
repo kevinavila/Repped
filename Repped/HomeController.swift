@@ -24,6 +24,7 @@ class HomeController: UITableViewController {
     private var rooms:[Room] = []
     private var onlinefriends:[User] = []
     private var friendList:[String:String] = [:]
+    private var friendRequests:[String:String] = [:]
     private lazy var roomRef:FIRDatabaseReference = FIRDatabase.database().reference().child("rooms")
     private lazy var userRef:FIRDatabaseReference = FIRDatabase.database().reference().child("users")
     private lazy var joinRef:FIRDatabaseReference = FIRDatabase.database().reference().child("joinTable")
@@ -65,7 +66,6 @@ class HomeController: UITableViewController {
         
         
         self.observeRooms()
-        
         
         self.observeJoinTable()
     }
@@ -112,6 +112,10 @@ class HomeController: UITableViewController {
             //}
             self.friendList = (self.global.user?.friendsList)!
         }
+        if (userData["requests"] != nil) {
+            self.global.user?.friendRequests = userData["requests"] as! [String : String]
+            self.friendRequests = (self.global.user?.friendRequests)!
+        }
         self.global.user?.profilePicture = self.returnProfilePic(userData["id"] as! String)
     }
     
@@ -153,7 +157,8 @@ class HomeController: UITableViewController {
                         "email": fBData["email"]!,
                         "rep": 0,
                         "id": fBData["id"]!,
-                        "friends": [:]
+                        "friends": [:],
+                        "requests": [:],
                         ] as [String:Any]
                     self.userRef.child(fBData["id"] as! String).setValue(user)
                     
@@ -179,83 +184,94 @@ class HomeController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return onlinefriends.count
-        } else {
+        } else if section == 1 {
             return friendList.count
+        } else {
+            return self.friendRequests.count
         }
-//        return rooms.count
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
-    
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "homeViewCell", for: indexPath) as! HomeViewCell
         if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "homeViewCell", for: indexPath) as! HomeViewCell
             if (indexPath.row < onlinefriends.count) {
                 cell.friendName.text = onlinefriends[(indexPath as IndexPath).row].name
                 cell.roomName.text = onlinefriends[(indexPath as IndexPath).row].rid
+                return cell
             }
-        } else {
+        } else if indexPath.section == 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "homeViewCell", for: indexPath) as! HomeViewCell
             if (indexPath.row < friendList.count) {
                 cell.friendName.text = Array(friendList.values)[indexPath.row]
                 cell.roomName.text = ""
             }
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "homeViewRequestCell", for: indexPath) as! HomeViewRequestCell
+            if (indexPath.row < friendRequests.count) {
+                cell.pendingFriendLabel.text = Array(friendRequests.values)[indexPath.row]
+                return cell
+            }
         }
-        return cell
+        return UITableViewCell()
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
             return "Live"
-        } else {
+        } else if section == 1 {
             return "Offline"
+        } else {
+            return "Pending Requests"
         }
     }
     
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-        let friend = onlinefriends[(indexPath as IndexPath).row]
+            let friend = onlinefriends[(indexPath as IndexPath).row]
         
-        var room:Room?
-        for indexedRoom in rooms {
-            if friend.rid == indexedRoom.rid {
-                room = indexedRoom
+            var room:Room?
+            for indexedRoom in rooms {
+                if friend.rid == indexedRoom.rid {
+                    room = indexedRoom
+                }
             }
-        }
         
-        print("self.global.room", self.global.room?.rid)
-        if (self.global.room != nil) {
-            if (self.global.room?.rid != room?.rid) {
-                print("joing room not already in")
-                // User is attempting to joining a new room
-                if (self.global.room?.leader != self.global.user?.uid) {
+            print("self.global.room", self.global.room?.rid)
+            if (self.global.room != nil) {
+                if (self.global.room?.rid != room?.rid) {
+                    print("joing room not already in")
+                    // User is attempting to joining a new room
+                    if (self.global.room?.leader != self.global.user?.uid) {
                     
-                    userLeavingRoom()
-                    userJoiningRoom(room: room!)
-                    self.performSegue(withIdentifier: "showRoom", sender: room)
-                } else {
-                    if (self.global.room?.isEmpty)! {
-                        let oldRid = self.global.room?.rid
                         userLeavingRoom()
                         userJoiningRoom(room: room!)
-                        roomRef.child(oldRid!).removeValue()
-                        self.performSegue(withIdentifier: "showRoom", sender: room)                    }
-                    // User is leader of their current room. Do something.
+                        self.performSegue(withIdentifier: "showRoom", sender: room)
+                    } else {
+                        if (self.global.room?.isEmpty)! {
+                            let oldRid = self.global.room?.rid
+                            userLeavingRoom()
+                            userJoiningRoom(room: room!)
+                            roomRef.child(oldRid!).removeValue()
+                            self.performSegue(withIdentifier: "showRoom", sender: room)                    }
+                        // User is leader of their current room. Do something.
                     
+                    }
+                } else {
+                    self.performSegue(withIdentifier: "showRoom", sender: room)
                 }
             } else {
+                // User is joining a room for first time
+                userJoiningRoom(room: room!)
                 self.performSegue(withIdentifier: "showRoom", sender: room)
             }
         } else {
-            // User is joining a room for first time
-            userJoiningRoom(room: room!)
-            self.performSegue(withIdentifier: "showRoom", sender: room)
-        }
-        } else {
+            
         }
         
     }
@@ -339,7 +355,6 @@ class HomeController: UITableViewController {
         })
     }
     
-    //MARK: Firebase Functions
     private func observeJoinTable() {
         // Observe for any changes made to the rooms in the Firebase DB
         // What about when a room is destroyed?
@@ -381,6 +396,7 @@ class HomeController: UITableViewController {
         self.joinRef.child((self.global.user?.uid)!).removeValue()
     }
     
+    //MARK: De-initialization  of Firebase handles
     deinit {
         if let refHandle = roomRefHandle {
             roomRef.removeObserver(withHandle: refHandle)

@@ -8,8 +8,11 @@
 
 import UIKit
 import FBSDKCoreKit
+import Firebase
 
 class AddFriendsController: UITableViewController {
+    
+    private lazy var userRef:FIRDatabaseReference = FIRDatabase.database().reference().child("users")
     
     var user:User? = nil
     var facebookFriends:[String] = []
@@ -33,6 +36,9 @@ class AddFriendsController: UITableViewController {
                         
                         self.facebookFriends.append(id)
                         self.facebookFriendNames[id] = name
+                        
+                        //TODO: We need to make sure the friend is not already on our friendslist and that we havent
+                        //already sent them a friend request. But when grabbing from firebase we get a race condition.
                     }
                 }
                 
@@ -49,10 +55,12 @@ class AddFriendsController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "addFriendsCell", for: indexPath) as! AddFriendsCell
+        cell.requestSentLabel.isHidden = true
         if (indexPath.row < facebookFriends.count) {
             let id = facebookFriends[(indexPath as IndexPath).row]
             cell.friendNameLabel.text = facebookFriendNames[id]
             cell.friendProfilePicture.image = returnProfilePic(id)
+            cell.friendID = id
         }
         return cell
     }
@@ -75,4 +83,17 @@ class AddFriendsController: UITableViewController {
     }
     
     //MARK: Add Function
+    @IBAction func addFriend(_ sender: Any) {
+        let button = sender as! UIButton
+        let view = button.superview!
+        let cell = view.superview as! AddFriendsCell
+        let friendID = cell.friendID!
+        self.userRef.child("\(friendID)/requests/\((self.user?.uid)!)").setValue(self.user?.name)
+        print("SENT REQUEST TO: \(cell.friendNameLabel.text!) with id \(friendID)")
+        
+        //TODO: Display alert confirming request was sent
+        
+        //FUTURE: Have section for sent requests, and send push notification to user to notify them of the new request
+    }
+    
 }

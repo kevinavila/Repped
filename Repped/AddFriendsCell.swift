@@ -14,5 +14,7 @@ class AddFriendsCell: UITableViewCell {
     @IBOutlet weak var friendProfilePicture: UIImageView!
     @IBOutlet weak var friendNameLabel: UILabel!
     @IBOutlet weak var addFriendButton: UIButton!
+    @IBOutlet weak var requestSentLabel: UILabel!
+    var friendID: String!
     
 }

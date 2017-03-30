@@ -17,6 +17,7 @@ internal class User {
     internal var currentRoom:Room?
     internal var rid:String?
     internal var friendsList:[String:String] = [:]
+    internal var friendRequests:[String:String] = [:]
     
     init(uid:String, name:String) {
         self.uid = uid

@@ -43,13 +43,25 @@ PODS:
   - GoogleSymbolUtilities (1.1.2)
   - GoogleUtilities (1.3.2):
     - GoogleSymbolUtilities (~> 1.1)
+  - LNPopupController (0.1.0)
 
 DEPENDENCIES:
   - Alamofire
+  - FBSDKCoreKit
   - FBSDKLoginKit
   - Firebase
   - Firebase/Auth
   - Firebase/Database
+  - LNPopupController (from `https://github.com/WDraper/LNPopupController.git`)
+
+EXTERNAL SOURCES:
+  LNPopupController:
+    :git: https://github.com/WDraper/LNPopupController.git
+
+CHECKOUT OPTIONS:
+  LNPopupController:
+    :commit: 1d96c8b7cfc1d3f5de281674dc088d80f473a903
+    :git: https://github.com/WDraper/LNPopupController.git
 
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
@@ -66,7 +78,8 @@ SPEC CHECKSUMS:
   GoogleNetworkingUtilities: 3edd3a8161347494f2da60ea0deddc8a472d94cb
   GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
   GoogleUtilities: 8bbc733218aad26306f9d4a253823986110e3358
+  LNPopupController: be91d0839b2aa611a32542a59b196ca7032ef530
 
-PODFILE CHECKSUM: a26e38b954f9737eecd2c248965fa18dde3aff07
+PODFILE CHECKSUM: 609947178b210ee45300d7ea782af571e2859978
 
 COCOAPODS: 1.2.0

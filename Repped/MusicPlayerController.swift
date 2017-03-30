@@ -43,8 +43,20 @@ class MusicPlayerController: UIViewController {
         let next = UIBarButtonItem(image: UIImage(named: "nextFwd"), style: .plain, target: nil, action: nil)
         next.accessibilityLabel = NSLocalizedString("Next Track", comment: "")
         
-        self.popupItem.leftBarButtonItems = [ pause ]
-        self.popupItem.rightBarButtonItems = [ next ]
+        let rep = UIBarButtonItem(image: UIImage(named: "lovec"), style: .plain, target: nil, action: nil)
+        rep.accessibilityLabel = NSLocalizedString("Give Rep", comment: "")
+        
+        let mute = UIBarButtonItem(image: UIImage(named: "volDown"), style: .plain, target: nil, action: nil)
+        mute.accessibilityLabel = NSLocalizedString("Give Rep", comment: "")
+        
+        
+        if global.isLeader{
+            self.popupItem.leftBarButtonItems = [ pause ]
+            self.popupItem.rightBarButtonItems = [ next ]
+        } else {
+            self.popupItem.leftBarButtonItems = [ rep ]
+            self.popupItem.rightBarButtonItems = [ mute ]
+        }
         
         accessibilityDateComponentsFormatter.unitsStyle = .spellOut
         

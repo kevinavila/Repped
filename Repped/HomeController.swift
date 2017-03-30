@@ -66,7 +66,6 @@ class HomeController: UITableViewController {
         
         self.observeRooms()
         
-        
         self.observeJoinTable()
     }
  
@@ -112,6 +111,9 @@ class HomeController: UITableViewController {
             //}
             self.friendList = (self.global.user?.friendsList)!
         }
+        if (userData["requests"] != nil) {
+            self.global.user?.friendRequests = userData["requests"] as! [String : String]
+        }
         self.global.user?.profilePicture = self.returnProfilePic(userData["id"] as! String)
     }
     
@@ -153,7 +155,8 @@ class HomeController: UITableViewController {
                         "email": fBData["email"]!,
                         "rep": 0,
                         "id": fBData["id"]!,
-                        "friends": [:]
+                        "friends": [:],
+                        "requests": [:],
                         ] as [String:Any]
                     self.userRef.child(fBData["id"] as! String).setValue(user)
                     

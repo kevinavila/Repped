@@ -8,8 +8,11 @@
 
 import UIKit
 import FBSDKCoreKit
+import Firebase
 
 class AddFriendsController: UITableViewController {
+    
+    private lazy var userRef:FIRDatabaseReference = FIRDatabase.database().reference().child("users")
     
     var user:User? = nil
     var facebookFriends:[String] = []
@@ -53,6 +56,7 @@ class AddFriendsController: UITableViewController {
             let id = facebookFriends[(indexPath as IndexPath).row]
             cell.friendNameLabel.text = facebookFriendNames[id]
             cell.friendProfilePicture.image = returnProfilePic(id)
+            cell.friendID = id
         }
         return cell
     }
@@ -75,4 +79,15 @@ class AddFriendsController: UITableViewController {
     }
     
     //MARK: Add Function
+    @IBAction func addFriend(_ sender: Any) {
+        let button = sender as! UIButton
+        let view = button.superview!
+        let cell = view.superview as! AddFriendsCell
+        let friendID = cell.friendID!
+        self.userRef.child("\(friendID)/requests/\((self.user?.uid)!)").setValue(self.user?.name)
+        print("SENT REQUEST TO: \(cell.friendNameLabel.text!) with id \(friendID)")
+        
+        //FUTURE: Have section for sent requests, and send push notification to user to notify them of the new request
+    }
+    
 }

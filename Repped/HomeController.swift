@@ -195,27 +195,29 @@ class HomeController: UITableViewController {
         return 3
     }
     
-    
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "homeViewCell", for: indexPath) as! HomeViewCell
         if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "homeViewCell", for: indexPath) as! HomeViewCell
             if (indexPath.row < onlinefriends.count) {
                 cell.friendName.text = onlinefriends[(indexPath as IndexPath).row].name
                 cell.roomName.text = onlinefriends[(indexPath as IndexPath).row].rid
+                return cell
             }
         } else if indexPath.section == 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "homeViewCell", for: indexPath) as! HomeViewCell
             if (indexPath.row < friendList.count) {
                 cell.friendName.text = Array(friendList.values)[indexPath.row]
                 cell.roomName.text = ""
             }
+            return cell
         } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "homeViewRequestCell", for: indexPath) as! HomeViewRequestCell
             if (indexPath.row < friendRequests.count) {
-                cell.friendName.text = Array(friendRequests.values)[indexPath.row]
-                cell.roomName.text = ""
+                cell.pendingFriendLabel.text = Array(friendRequests.values)[indexPath.row]
+                return cell
             }
         }
-        return cell
+        return UITableViewCell()
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

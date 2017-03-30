@@ -148,6 +148,7 @@ class RoomController: UITableViewController  {
                 }
             }
             self.tableView.reloadData()
+            self.global.room?.isEmpty = (self.listeners.count > 1)
             print("reload Table")
         })
     }

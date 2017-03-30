@@ -31,5 +31,7 @@ class Global {
     
     var song:Song? = nil
     
+    var isLeader:Bool = false
+    
 }
 

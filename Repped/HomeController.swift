@@ -238,6 +238,12 @@ class HomeController: UITableViewController {
                     userJoiningRoom(room: room!)
                     self.performSegue(withIdentifier: "showRoom", sender: room)
                 } else {
+                    if (self.global.room?.isEmpty)! {
+                        let oldRid = self.global.room?.rid
+                        userLeavingRoom()
+                        userJoiningRoom(room: room!)
+                        roomRef.child(oldRid!).removeValue()
+                        self.performSegue(withIdentifier: "showRoom", sender: room)                    }
                     // User is leader of their current room. Do something.
                     
                 }
@@ -256,18 +262,32 @@ class HomeController: UITableViewController {
     
     //MARK: Create New Room
     @IBAction func createNewRoom(_ sender: Any) {
-        
+        print("heloo dsfsdf create")
         if (self.global.room == nil) {
+            print("option 1")
             createRoomHelper()
             // Segue to room
+            self.performSegue(withIdentifier: "showRoom", sender: self.global.room)
         } else if (self.global.room?.leader != self.global.user?.uid) {
+             print("option 2")
             createRoomHelper()
             // Segue to room
+            self.performSegue(withIdentifier: "showRoom", sender: self.global.room)
         } else {
-            // User cannot creat new room because he/she is currently leading the room they're in
+             print("option 3")
+            if (self.global.room?.isEmpty)! {
+                print("heloo dsfsdf here")
+                let oldRid = self.global.room?.rid
+                createRoomHelper()
+                roomRef.child(oldRid!).removeValue()
+                print("will we segue")
+                self.performSegue(withIdentifier: "showRoom", sender: self.global.room)
+            }
+            // User is leader of their current room. Do something.
+
         }
     }
-    
+
     private func createRoomHelper() {
         let alertController = UIAlertController(title: "New Room", message: "Please enter a name for your room.", preferredStyle: .alert)
         
@@ -316,6 +336,7 @@ class HomeController: UITableViewController {
             let room = Room(rid: rid, name: name, leader: leader)
             if (leader == self.global.user?.uid) {
                 self.userJoiningRoom(room: room)
+                self.global.isLeader = true
             }
             
             self.rooms.append(room)

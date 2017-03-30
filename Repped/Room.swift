@@ -12,6 +12,7 @@ internal class Room {
     internal let name:String
     internal var leader:String
     internal var songID:String
+    internal var isEmpty:Bool = true
     
     init(rid:String, name:String, leader:String) {
         self.rid = rid

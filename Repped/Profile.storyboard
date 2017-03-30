@@ -32,7 +32,7 @@
                                 <rect key="frame" x="107" y="133" width="160" height="160"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ReppedLaunchscreenLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="ol9-aO-BOH">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="repLogo" translatesAutoresizingMaskIntoConstraints="NO" id="ol9-aO-BOH">
                                 <rect key="frame" x="149" y="361" width="40" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -80,6 +80,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ReppedLaunchscreenLogo.png" width="1536" height="1536"/>
+        <image name="repLogo" width="120" height="120"/>
     </resources>
 </document>

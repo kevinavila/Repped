@@ -17,7 +17,7 @@ target 'Repped' do
   # Networking
   pod 'Alamofire'
 
-  pod 'LNPopupController’, :git => 'https://github.com/WDraper/LNPopupController.git'
+  pod 'LNPopupController', :git => 'https://github.com/WDraper/LNPopupController.git'
 
   target 'ReppedTests' do
     inherit! :search_paths

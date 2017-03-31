@@ -16,7 +16,6 @@ class RoomViewCell: UITableViewCell {
     
     @IBAction func makeLeader(_ sender: Any) {
         tapAction?(self)
-        print("mske ", listenerLabel.text ?? "friend", " new leader")
     }
     
 }

@@ -81,10 +81,19 @@ class RoomController: UITableViewController  {
         if let rowData: User = self.listeners[(indexPath as IndexPath).row]{
             cell.listenerLabel.text = rowData.name
             
-            //Make Leader Button
-            cell.tapAction = { (cell) in
-                print("just tapped the button for ", (indexPath as IndexPath).row)
-                self.makeLeader(rowData)
+            if (rowData.uid == self.global.user?.uid) {
+                cell.makeLeaderLabel.isHidden = true
+                
+            } else if(self.global.isLeader){
+                cell.makeLeaderLabel.isHidden = false
+                //Make Leader Button
+                cell.tapAction = { (cell) in
+                    print("just tapped the button for ", (indexPath as IndexPath).row)
+                    self.makeLeader(rowData)
+                    self.tableView.reloadData()
+                }
+            } else {
+                 cell.makeLeaderLabel.isHidden = true
             }
         }
         
@@ -138,13 +147,12 @@ class RoomController: UITableViewController  {
             let rid = snapshot.key
             if rid == self.global.room?.rid {
                 self.global.room?.leader =  roomData["leader"] as! String
-                self.global.isLeader = (self.global.room?.leader == self.global.user?.uid)
                 //might need to do something if leader changed
                 if let _ = roomData["songID"] {
                     if (roomData["songID"] as! String) != self.global.room?.songID {
                         print("wes_ seting new song0")
                         self.global.room?.songID = roomData["songID"] as! String
-                    self.global.systemMusicPlayer.setQueueWithStoreIDs([(self.global.room?.songID)!])
+                       self.global.systemMusicPlayer.setQueueWithStoreIDs([(self.global.room?.songID)!])
                         self.global.systemMusicPlayer.play()
                         self.global.song = Song(trackId: (self.global.room?.songID)!){
                             print("completion handler?")
@@ -152,7 +160,10 @@ class RoomController: UITableViewController  {
                         }
                     }
                 }
-
+                if self.global.isLeader != (self.global.room?.leader == self.global.user?.uid){
+                    self.global.isLeader = true
+                    self.tableView.reloadData()
+                }
             }
         })
     }

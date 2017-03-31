@@ -107,7 +107,7 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     //Search iTunes and display results in table view
     func searchItunes(_ searchTerm: String) {
-        let urlstring = "https://itunes.apple.com/lookup?id=\(searchTerm)"
+        let urlstring = "https://itunes.apple.com/search?term=\(searchTerm)&entity=song"
         Alamofire.request(urlstring, method: .get)
             .validate()
             .responseJSON { response in

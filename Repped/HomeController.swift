@@ -44,7 +44,6 @@ class HomeController: UITableViewController {
         //Use for testing
         //sampleData.makeSampleUsers()
         //breaking because I dont have the friend list first
-        print("init friendList")
         self.offlineFriendList = self.sampleData.testFriendList
         
         //TODO we need to figure out have to save the user info instead of pulling all this info

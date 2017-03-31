@@ -30,10 +30,13 @@ class MusicPlayerController: UIViewController {
         
         super.viewDidLoad()
         songNameLabel.text = (self.global.song?.trackName)!
+        popupItem.title = (self.global.song?.trackName)!
+        
         albumArtImageView.image = (self.global.song?.artWork)!
-        albumNameLabel.text = (self.global.song?.artistName)!
         popupItem.image = (self.global.song?.artWork)!
         
+        albumNameLabel.text = (self.global.song?.artistName)!
+        popupItem.subtitle = (self.global.song?.artistName)!
         
         self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.timerFired(_:)), userInfo: nil, repeats: true)
         self.timer?.tolerance = 0.1
@@ -67,6 +70,10 @@ class MusicPlayerController: UIViewController {
         
     }
     
+    private func clickNext()
+    {
+        
+    }
     
     
     //Function to pull track info and update labels

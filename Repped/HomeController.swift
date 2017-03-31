@@ -345,6 +345,7 @@ class HomeController: UITableViewController {
         self.userRef.child("\(friendID)/friends/\((self.global.user?.uid)!)").setValue(self.global.user?.name)
         self.userRef.child("\((self.global.user?.uid)!)/requests/\(friendID)").removeValue()
         
+        toast("You are now friends with \(self.friendRequests[friendID]!)!")
         self.friendRequests.removeValue(forKey: friendID)
         self.tableView.reloadData()
     }
@@ -358,9 +359,22 @@ class HomeController: UITableViewController {
         // Firebase updates
         self.userRef.child("\((self.global.user?.uid)!)/requests/\(friendID)").removeValue()
         
+        toast("Declined \(self.friendRequests[friendID]!).")
         self.friendRequests.removeValue(forKey: friendID)
         self.tableView.reloadData()
 
+    }
+    
+    func toast(_ toast: String){
+        //Show alert telling the user the song was added to the playback queue
+        let requestDecisionAlert = UIAlertController(title: nil, message: toast, preferredStyle: .alert)
+        self.present(requestDecisionAlert, animated: true, completion: nil)
+        let delay = 0.5 * Double(NSEC_PER_SEC)
+        let time = DispatchTime.now() + Double(Int64(delay)) / Double(NSEC_PER_SEC)
+        DispatchQueue.main.asyncAfter(deadline: time, execute: {
+            requestDecisionAlert.dismiss(animated: true, completion: nil)
+        })
+        
     }
     
     

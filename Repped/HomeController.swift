@@ -213,6 +213,7 @@ class HomeController: UITableViewController {
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "homeViewRequestCell", for: indexPath) as! HomeViewRequestCell
             if (indexPath.row < friendRequests.count) {
+                cell.friendID = Array(friendRequests.keys)[indexPath.row]
                 cell.pendingFriendLabel.text = Array(friendRequests.values)[indexPath.row]
                 return cell
             }
@@ -331,6 +332,37 @@ class HomeController: UITableViewController {
         
         self.present(alertController, animated: true, completion: nil)
     }
+    
+    //MARK: Accept Friend Requests
+    @IBAction func acceptingFriend(_ sender: Any) {
+        let button = sender as! UIButton
+        let view = button.superview!
+        let cell = view.superview as! HomeViewRequestCell
+        let friendID = cell.friendID!
+        
+        // Firebase updates
+        self.userRef.child("\((self.global.user?.uid)!)/friends/\(friendID)").setValue(self.friendRequests[friendID])
+        self.userRef.child("\(friendID)/friends/\((self.global.user?.uid)!)").setValue(self.global.user?.name)
+        self.userRef.child("\((self.global.user?.uid)!)/requests/\(friendID)").removeValue()
+        
+        self.friendRequests.removeValue(forKey: friendID)
+        self.tableView.reloadData()
+    }
+    
+    @IBAction func rejectingFriend(_ sender: Any) {
+        let button = sender as! UIButton
+        let view = button.superview!
+        let cell = view.superview as! HomeViewRequestCell
+        let friendID = cell.friendID!
+        
+        // Firebase updates
+        self.userRef.child("\((self.global.user?.uid)!)/requests/\(friendID)").removeValue()
+        
+        self.friendRequests.removeValue(forKey: friendID)
+        self.tableView.reloadData()
+
+    }
+    
     
     //MARK: Firebase Functions
     private func observeRooms() {

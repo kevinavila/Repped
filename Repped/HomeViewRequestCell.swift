@@ -11,5 +11,6 @@ import UIKit
 class HomeViewRequestCell: UITableViewCell {
     
     @IBOutlet weak var pendingFriendLabel: UILabel!
+    var friendID: String!
     
 }

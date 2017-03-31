@@ -66,12 +66,18 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" title="Button" image="Accept"/>
                                             <state key="highlighted" image="acceptHighlighted"/>
+                                            <connections>
+                                                <action selector="acceptingFriend:" destination="ek9-al-Yi4" eventType="touchUpInside" id="WGL-xt-n2U"/>
+                                            </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L6f-3H-fkc">
                                             <rect key="frame" x="330" y="6" width="30" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" title="Button" image="Reject"/>
                                             <state key="highlighted" image="rejectHighlighted"/>
+                                            <connections>
+                                                <action selector="rejectingFriend:" destination="ek9-al-Yi4" eventType="touchUpInside" id="iT4-GL-2xe"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                 </tableViewCellContentView>

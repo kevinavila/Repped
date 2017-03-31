@@ -29,16 +29,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let homeStoryboard = UIStoryboard(name: "Home", bundle: nil)
         
         if let window = self.window {
-            //if (FBSDKAccessToken.current() != nil) {
+            if (FBSDKAccessToken.current() != nil) {
                 // User has already been authenticated
-                //let homeNavController = homeStoryboard.instantiateViewController(withIdentifier: "homeNavController")
-                //window.rootViewController = homeNavController
+                let homeNavController = homeStoryboard.instantiateViewController(withIdentifier: "homeNavController")
+                window.rootViewController = homeNavController
                 
-            //} else {
+            } else {
                 // User must login
                 let loginController = loginStoryboard.instantiateViewController(withIdentifier: "loginController")
                 window.rootViewController = loginController
-            //}
+            }
         }
         
         return true

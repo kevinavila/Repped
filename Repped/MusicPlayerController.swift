@@ -8,6 +8,7 @@
 
 import UIKit
 import LNPopupController
+import MediaPlayer
 
 class MusicPlayerController: UIViewController {
     
@@ -16,6 +17,7 @@ class MusicPlayerController: UIViewController {
     @IBOutlet weak var albumNameLabel: UILabel!
     @IBOutlet weak var albumArtImageView: UIImageView!
     
+    @IBOutlet weak var songProgress: UIProgressView!
     @IBOutlet weak var progressView: UISlider!
     
     let global:Global = Global.sharedGlobal
@@ -30,8 +32,11 @@ class MusicPlayerController: UIViewController {
         songNameLabel.text = (self.global.song?.trackName)!
         albumArtImageView.image = (self.global.song?.artWork)!
         albumNameLabel.text = (self.global.song?.artistName)!
-        
         popupItem.image = (self.global.song?.artWork)!
+        
+        
+        self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.timerFired(_:)), userInfo: nil, repeats: true)
+        self.timer?.tolerance = 0.1
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -59,6 +64,32 @@ class MusicPlayerController: UIViewController {
         }
         
         accessibilityDateComponentsFormatter.unitsStyle = .spellOut
+        
+    }
+    
+    
+    
+    //Function to pull track info and update labels
+    func timerFired(_:AnyObject) {
+        
+        //Ensure the track exists before pulling the info
+        if let currentTrack = MPMusicPlayerController.systemMusicPlayer().nowPlayingItem {
+            
+            let trackDuration = currentTrack.playbackDuration
+            
+
+            //Find elapsed time by pulling currentPlaybackTime
+            let trackElapsed = self.global.systemMusicPlayer.currentPlaybackTime
+            
+            // avoid crash
+            if trackElapsed.isNaN
+            {
+                return
+            }
+            
+           //changes slider to as song progresses
+            songProgress.setProgress(Float(trackElapsed/trackDuration), animated: true)
+        }
         
     }
         

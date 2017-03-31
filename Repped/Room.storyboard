@@ -281,6 +281,7 @@
                         <outlet property="albumNameLabel" destination="soX-Rt-rE7" id="RNG-9h-uCJ"/>
                         <outlet property="progressView" destination="pnJ-2j-GaY" id="pNm-5s-4Hm"/>
                         <outlet property="songNameLabel" destination="isL-4C-aTr" id="xVI-ql-EFQ"/>
+                        <outlet property="songProgress" destination="r7H-FJ-JYi" id="eH1-PX-rt4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pMo-LC-LaS" userLabel="First Responder" sceneMemberID="firstResponder"/>

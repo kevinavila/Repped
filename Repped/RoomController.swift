@@ -181,7 +181,7 @@ class RoomController: UITableViewController  {
             let user = [
                 "name": userData["name"] as! String,
                 "email": userData["email"] as! String,
-                "rep": 0,
+                "rep":  userData["rep"] as! Int,
                 "id": userData["id"] as! String
             ] as [String:Any]
             
@@ -193,9 +193,9 @@ class RoomController: UITableViewController  {
                     curUser.profilePicture = self.returnProfilePic(uid)
                 }
             }
-            self.tableView.reloadData()
+            
             self.global.room?.isEmpty = (self.listeners.count > 1)
-            print("reload Table")
+            self.tableView.reloadData()
         })
     }
     

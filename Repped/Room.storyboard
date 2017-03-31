@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,22 +28,30 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Wes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M6m-OX-X7E">
-                                            <rect key="frame" x="8" y="14" width="185" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Wes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M6m-OX-X7E">
+                                            <rect key="frame" x="8" y="14" width="239" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KXT-e0-uDY">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KXT-e0-uDY">
                                             <rect key="frame" x="255" y="8" width="102" height="27"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="102" id="hqc-AP-ftV"/>
+                                            </constraints>
                                             <state key="normal" title="Make Leader"/>
                                             <connections>
                                                 <action selector="makeLeader:" destination="2Er-ci-haa" eventType="touchUpInside" id="bh5-Xp-Qib"/>
                                             </connections>
                                         </button>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="KXT-e0-uDY" secondAttribute="trailing" constant="10" id="Be4-9v-LHy"/>
+                                        <constraint firstItem="M6m-OX-X7E" firstAttribute="leading" secondItem="pSR-7J-vyr" secondAttribute="leadingMargin" id="cfS-a0-zn2"/>
+                                        <constraint firstItem="KXT-e0-uDY" firstAttribute="bottom" secondItem="pSR-7J-vyr" secondAttribute="bottomMargin" id="fs3-dn-3N3"/>
+                                        <constraint firstItem="KXT-e0-uDY" firstAttribute="bottom" secondItem="M6m-OX-X7E" secondAttribute="bottom" id="lnF-x3-K8J"/>
+                                        <constraint firstItem="KXT-e0-uDY" firstAttribute="top" secondItem="pSR-7J-vyr" secondAttribute="topMargin" id="qeT-XY-3fG"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="listenerLabel" destination="M6m-OX-X7E" id="jUE-WH-lza"/>

@@ -13,8 +13,7 @@ import LNPopupController
 
 
 class RoomController: UITableViewController  {
-        
-    var user:User!
+    
     var listeners: [User] = []
     private var currentRoomRef:FIRDatabaseReference?
     private var currentRoomRefHandle:FIRDatabaseHandle?
@@ -35,7 +34,10 @@ class RoomController: UITableViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.user = self.global.user
+        //cant figure out how to set a title TODO
+        //navigationController?.navigationBar.topItem?.title = "Listeners"
+
+        
         
         self.currentRoomRef = FIRDatabase.database().reference().child("rooms/"+(self.global.room?.rid)!)
         
@@ -78,7 +80,14 @@ class RoomController: UITableViewController  {
         let cell = tableView.dequeueReusableCell(withIdentifier: "roomViewCell", for: indexPath) as! RoomViewCell
         if let rowData: User = self.listeners[(indexPath as IndexPath).row]{
             cell.listenerLabel.text = rowData.name
+            
+            //Make Leader Button
+            cell.tapAction = { (cell) in
+                print("just tapped the button for ", (indexPath as IndexPath).row)
+                self.makeLeader(rowData)
+            }
         }
+        
         return cell
     }
 
@@ -89,6 +98,11 @@ class RoomController: UITableViewController  {
         print("selectedUser", selectedUser.name)
         self.performSegue(withIdentifier: "showProfile", sender: selectedUser)
         
+    }
+    
+    private func makeLeader(_ user: User){
+        self.global.isLeader = false
+        currentRoomRef?.child("leader").setValue(user.uid)
     }
     
 
@@ -117,15 +131,14 @@ class RoomController: UITableViewController  {
     
     //MARK: Firebase Functions
     private func observeRooms() {
-        print("wes_ in oserveroom")
         // Listening for changes to y room for sonf
         currentRoomRefHandle = currentRoomRef?.observe(.value, with: { (snapshot) -> Void in
             
             let roomData = snapshot.value as! Dictionary<String, AnyObject>
             let rid = snapshot.key
             if rid == self.global.room?.rid {
-                print("wes_ found room")
                 self.global.room?.leader =  roomData["leader"] as! String
+                self.global.isLeader = (self.global.room?.leader == self.global.user?.uid)
                 //might need to do something if leader changed
                 if let _ = roomData["songID"] {
                     if (roomData["songID"] as! String) != self.global.room?.songID {

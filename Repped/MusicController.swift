@@ -29,6 +29,8 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.navigationBar.topItem?.title = "Title 3"
+        
         searchBarLabel.delegate = self
         musicTable.delegate = self
         musicTable.dataSource = self

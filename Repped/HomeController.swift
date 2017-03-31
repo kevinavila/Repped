@@ -23,7 +23,7 @@ class HomeController: UITableViewController {
     //MARK: Properties
     private var rooms:[Room] = []
     private var onlinefriends:[User] = []
-    private var friendList:[String:String] = [:]
+    private var offlineFriendList:[String:String] = [:]
     private var friendRequests:[String:String] = [:]
     private lazy var roomRef:FIRDatabaseReference = FIRDatabase.database().reference().child("rooms")
     private lazy var userRef:FIRDatabaseReference = FIRDatabase.database().reference().child("users")
@@ -44,7 +44,8 @@ class HomeController: UITableViewController {
         //Use for testing
         //sampleData.makeSampleUsers()
         //breaking because I dont have the friend list first
-        self.friendList = self.sampleData.testFriendList
+        print("init friendList")
+        self.offlineFriendList = self.sampleData.testFriendList
         
         //TODO we need to figure out have to save the user info instead of pulling all this info
         //takes to long each time
@@ -110,7 +111,8 @@ class HomeController: UITableViewController {
             //for (key,value) in self.sampleData.testFriendList {
             //  self.global.user?.friendsList.updateValue(value, forKey:key)
             //}
-            self.friendList = (self.global.user?.friendsList)!
+            //must not override the removed friends
+            //self.offlineFriendList = (self.global.user?.friendsList)!
         }
         if (userData["requests"] != nil) {
             self.global.user?.friendRequests = userData["requests"] as! [String : String]
@@ -185,7 +187,7 @@ class HomeController: UITableViewController {
         if section == 0 {
             return onlinefriends.count
         } else if section == 1 {
-            return friendList.count
+            return offlineFriendList.count
         } else {
             return self.friendRequests.count
         }
@@ -205,8 +207,9 @@ class HomeController: UITableViewController {
             }
         } else if indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "homeViewCell", for: indexPath) as! HomeViewCell
-            if (indexPath.row < friendList.count) {
-                cell.friendName.text = Array(friendList.values)[indexPath.row]
+            if (indexPath.row < self.offlineFriendList.count) {
+                print("building table", self.offlineFriendList.count)
+                cell.friendName.text = Array(self.offlineFriendList.values)[indexPath.row]
                 cell.roomName.text = ""
             }
             return cell
@@ -410,24 +413,18 @@ class HomeController: UITableViewController {
             let uid = snapshot.key as! String
 
             
-            if let name = self.friendList[uid] {
+            if let name = self.offlineFriendList[uid] {
                 let friend = User(uid: uid, name: name)
                 friend.rid = rid
                 self.onlinefriends.append(friend)
                 print("added ", friend.name)
-                print(self.friendList.count)
-                self.friendList.removeValue(forKey: uid)
-                print(self.friendList.count)
+                print(self.offlineFriendList.count)
+                self.offlineFriendList.removeValue(forKey: uid)
+                print(self.offlineFriendList.count)
             }
             
             self.tableView.reloadData()
         })
-        for friend in friendList{
-            print(friend)
-        }
-        for friend in onlinefriends{
-            print(friend.name)
-        }
     }
 
     

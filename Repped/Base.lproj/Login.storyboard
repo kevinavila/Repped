@@ -30,23 +30,53 @@
                                     <constraint firstAttribute="height" constant="44" id="CVy-1H-duC"/>
                                 </constraints>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ReppedLaunchscreenLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="2Li-qi-ZLZ">
+                                <rect key="frame" x="47" y="287" width="280" height="280"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="280" id="z8r-zD-dOP"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="R E P P E D" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vxa-Gf-dkj">
+                                <rect key="frame" x="78" y="165" width="218" height="46"/>
+                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="32"/>
+                                <color key="textColor" red="0.29554146528244019" green="0.66677868366241455" blue="0.74451214075088501" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="LR2-qf-Tqu">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                                <color key="color" red="0.29554146529999997" green="0.66677868370000004" blue="0.74451214080000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.10980392156862745" green="0.10980392156862745" blue="0.10980392156862745" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="gQH-i0-17Z" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="51" id="17Y-33-KXf"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="gQH-i0-17Z" secondAttribute="bottom" constant="48" id="95U-YD-bV5"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="vxa-Gf-dkj" secondAttribute="trailing" constant="63" id="AeQ-1h-fno"/>
+                            <constraint firstItem="2Li-qi-ZLZ" firstAttribute="top" secondItem="vxa-Gf-dkj" secondAttribute="bottom" constant="76" id="Cse-D8-vV4"/>
+                            <constraint firstItem="2Li-qi-ZLZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="31" id="ImV-3v-yYh"/>
+                            <constraint firstItem="LR2-qf-Tqu" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="295" id="R2O-b0-MXQ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="gQH-i0-17Z" secondAttribute="trailing" constant="52" id="bQP-3W-nV3"/>
+                            <constraint firstItem="LR2-qf-Tqu" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="153" id="cqz-0d-eqq"/>
                             <constraint firstItem="gQH-i0-17Z" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="555" id="n8T-AU-wEz"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="LR2-qf-Tqu" secondAttribute="bottom" constant="315" id="nhd-4Z-1sw"/>
+                            <constraint firstItem="gQH-i0-17Z" firstAttribute="top" secondItem="2Li-qi-ZLZ" secondAttribute="bottom" constant="8" symbolic="YES" id="qL8-uK-QhG"/>
+                            <constraint firstItem="2Li-qi-ZLZ" firstAttribute="centerX" secondItem="gQH-i0-17Z" secondAttribute="centerX" id="quB-KE-yKM"/>
+                            <constraint firstItem="vxa-Gf-dkj" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="62" id="s9L-xx-qtJ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="LR2-qf-Tqu" secondAttribute="trailing" constant="153" id="xtB-hg-AjX"/>
+                            <constraint firstItem="vxa-Gf-dkj" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="145" id="yX9-Of-HhG"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="facebookLoginButton" destination="gQH-i0-17Z" id="iL9-1d-Pwm"/>
+                        <outlet property="reppedLabel" destination="vxa-Gf-dkj" id="Tzl-HC-T8o"/>
+                        <outlet property="reppedLogo" destination="2Li-qi-ZLZ" id="3cq-SW-qLL"/>
+                        <outlet property="spinner" destination="LR2-qf-Tqu" id="Jab-ZW-S5k"/>
                         <segue destination="B4r-8S-f64" kind="show" identifier="homeSegue" id="6nP-v1-S3O"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="122" y="125"/>
+            <point key="canvasLocation" x="120.8" y="124.58770614692655"/>
         </scene>
         <!--Home-->
         <scene sceneID="ieX-NJ-FNO">
@@ -57,4 +87,7 @@
             <point key="canvasLocation" x="737" y="-22"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ReppedLaunchscreenLogo.png" width="1536" height="1536"/>
+    </resources>
 </document>

@@ -14,6 +14,10 @@ import FBSDKLoginKit
 class LoginController: UIViewController, FBSDKLoginButtonDelegate {
 
     @IBOutlet weak var facebookLoginButton: FBSDKLoginButton!
+    @IBOutlet weak var reppedLogo: UIImageView!
+    @IBOutlet weak var reppedLabel: UILabel!
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
+    
     var global:Global = Global.sharedGlobal
     private lazy var userRef:FIRDatabaseReference = FIRDatabase.database().reference().child("users")
     
@@ -30,12 +34,18 @@ class LoginController: UIViewController, FBSDKLoginButtonDelegate {
     }
 
     func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
+        spinner.startAnimating()
+        
         if (error != nil) {
             print(error!.localizedDescription)
             return
         } else if (result.isCancelled) {
             // User canceled login: do something
         } else {
+            facebookLoginButton.isHidden = true
+            reppedLogo.isHidden = true
+            reppedLabel.isHidden = true
+            
             print("User logged into Facebook.")
             let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
             FIRAuth.auth()?.signIn(with: credential) { (user, error) in
@@ -45,6 +55,7 @@ class LoginController: UIViewController, FBSDKLoginButtonDelegate {
                 }
                 print("User authenticated with Firebase.")
                 
+                self.spinner.stopAnimating()
                 // Go to home screen
                 self.performSegue(withIdentifier: "homeSegue", sender: self)
             }

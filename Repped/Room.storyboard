@@ -118,19 +118,30 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recently Played" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vBo-ZF-pb6">
+                                <rect key="frame" x="0.0" y="63" width="375" height="44"/>
+                                <color key="backgroundColor" red="0.54503626660000004" green="0.63131090970000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="vBo-ZF-pb6" firstAttribute="top" secondItem="hMh-bV-IMR" secondAttribute="bottom" constant="14" id="7zB-i1-PlC"/>
                             <constraint firstItem="z3n-1f-Nai" firstAttribute="top" secondItem="hMh-bV-IMR" secondAttribute="bottom" constant="14" id="9uZ-UF-j2N"/>
                             <constraint firstItem="lTj-fb-BS9" firstAttribute="top" secondItem="Rke-SZ-obk" secondAttribute="bottom" constant="8" symbolic="YES" id="ALY-s0-Znb"/>
+                            <constraint firstAttribute="trailing" secondItem="vBo-ZF-pb6" secondAttribute="trailing" id="Cr5-tH-5ZD"/>
                             <constraint firstAttribute="trailing" secondItem="z3n-1f-Nai" secondAttribute="trailing" id="Oyo-oW-kUF"/>
                             <constraint firstItem="l3B-ua-JKE" firstAttribute="leading" secondItem="Svu-8s-A13" secondAttribute="leading" id="VeD-YK-Ufv"/>
                             <constraint firstAttribute="trailing" secondItem="l3B-ua-JKE" secondAttribute="trailing" id="Zsu-Nz-H5Q"/>
+                            <constraint firstItem="vBo-ZF-pb6" firstAttribute="leading" secondItem="Svu-8s-A13" secondAttribute="leading" id="afV-5k-ghA"/>
                             <constraint firstItem="hMh-bV-IMR" firstAttribute="top" secondItem="jCW-jk-qpP" secondAttribute="bottom" constant="8" symbolic="YES" id="azP-eE-wpC"/>
                             <constraint firstItem="l3B-ua-JKE" firstAttribute="top" secondItem="z3n-1f-Nai" secondAttribute="bottom" id="dcE-Wy-KXa"/>
                             <constraint firstItem="hMh-bV-IMR" firstAttribute="trailing" secondItem="Rke-SZ-obk" secondAttribute="trailing" id="eJ8-SS-sIk"/>
                             <constraint firstItem="hMh-bV-IMR" firstAttribute="leading" secondItem="Rke-SZ-obk" secondAttribute="leading" id="fuY-wW-LD6"/>
                             <constraint firstItem="z3n-1f-Nai" firstAttribute="leading" secondItem="Svu-8s-A13" secondAttribute="leading" id="iAh-9a-d3F"/>
+                            <constraint firstItem="l3B-ua-JKE" firstAttribute="top" secondItem="vBo-ZF-pb6" secondAttribute="bottom" id="k8Z-Gd-mh7"/>
                             <constraint firstItem="Rke-SZ-obk" firstAttribute="top" secondItem="l3B-ua-JKE" secondAttribute="bottom" id="xRH-uD-N75"/>
                             <constraint firstItem="hMh-bV-IMR" firstAttribute="centerX" secondItem="z3n-1f-Nai" secondAttribute="centerX" id="xnr-G1-Nuo"/>
                         </constraints>
@@ -138,6 +149,7 @@
                     <tabBarItem key="tabBarItem" title="Music" image="musicIcon" id="6EZ-sK-vsW"/>
                     <connections>
                         <outlet property="musicTable" destination="l3B-ua-JKE" id="mrY-oD-Ffh"/>
+                        <outlet property="recentlyPlayedLabel" destination="vBo-ZF-pb6" id="Z7W-Fl-T96"/>
                         <outlet property="searchBarLabel" destination="z3n-1f-Nai" id="20W-6L-HEB"/>
                     </connections>
                 </viewController>

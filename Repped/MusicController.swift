@@ -24,12 +24,15 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     private lazy var roomRef:FIRDatabaseReference = FIRDatabase.database().reference().child("rooms")
 
+    @IBOutlet weak var recentlyPlayedLabel: UILabel!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationController?.navigationBar.topItem?.title = "Title 3"
+        
+        self.global.isLeader ? setLeader() : setListener()
         
         searchBarLabel.delegate = self
         musicTable.delegate = self
@@ -38,6 +41,15 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
         searchBarLabel.placeholder = "Start typing to add tracks to playlist"
     }
     
+    private func setLeader(){
+        self.searchBarLabel.isHidden = false
+        self.recentlyPlayedLabel.isHidden = true
+    }
+    
+    private func setListener(){
+        self.searchBarLabel.isHidden = true
+        self.recentlyPlayedLabel.isHidden = false
+    }
     
     
 

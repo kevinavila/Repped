@@ -59,6 +59,8 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
             //    print("skipping to next song")
             //     self.global.systemMusicPlayer.skipToNextItem()
             //}
+            self.global.idQueue.remove(at: 0)
+            self.global.room?.previousPlayed.append(song.trackId!)
             songChange()
             showPop()
         }
@@ -84,8 +86,10 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
         let roomItem = [
             "name": (self.global.room?.name)!,
             "leader": (self.global.room?.leader)!,
-            "songID": (self.global.room?.songID)!
-            ] as [String:String]
+            "songID": (self.global.room?.songID)!,
+            "songQueue": (self.global.idQueue),
+            "previouslyPlayed": (self.global.room?.previousPlayed)!,
+            ] as [String:Any]
         self.roomRef.child((self.global.room?.rid)!).setValue(roomItem)
     }
     
@@ -161,7 +165,7 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
         if let rowData: NSDictionary = self.tableData?[indexPath!.row], let urlString = rowData["artworkUrl60"] as? String,
             let imgURL = URL(string: urlString),
             let imgData = try? Data(contentsOf: imgURL)  {
-            //self.global.idQueue.append(String (describing: rowData["trackId"]!))
+            self.global.idQueue.append(String (describing: rowData["trackId"]!))
             //print("id Queue ",self.global.idQueue)
             //self.global.systemMusicPlayer.setQueueWithStoreIDs(self.global.idQueue)
             self.global.queue.append(Song(artWork: UIImage(data: imgData), trackName: rowData["trackName"] as? String, artistName: rowData["artistName"] as? String, trackId: String (describing: rowData["trackId"]!)))

@@ -13,6 +13,7 @@ internal class Room {
     internal var leader:String
     internal var songID:String
     internal var isEmpty:Bool = true
+    internal var previousPlayed:[String] = []
     
     init(rid:String, name:String, leader:String) {
         self.rid = rid

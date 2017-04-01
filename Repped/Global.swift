@@ -16,6 +16,7 @@ class Global {
     static let sharedGlobal = Global()
     
     var queue: [Song] = []
+    var idQueue: [String] = []
     let systemMusicPlayer = MPMusicPlayerController.systemMusicPlayer()
     
     private init() {

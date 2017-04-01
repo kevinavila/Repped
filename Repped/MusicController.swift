@@ -51,6 +51,14 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
             self.global.room?.songID = song.trackId!
             self.global.systemMusicPlayer.setQueueWithStoreIDs([song.trackId!])
             self.global.systemMusicPlayer.play()
+            //Need to get it to workl to use the musicplayer controller queue so songs will play in the backgroung
+            //if self.global.systemMusicPlayer.nowPlayingItem == nil {
+            //    print("trying to play for tyhe first time")
+            //    self.global.systemMusicPlayer.play()
+            //} else {
+            //    print("skipping to next song")
+            //     self.global.systemMusicPlayer.skipToNextItem()
+            //}
             songChange()
             showPop()
         }
@@ -153,6 +161,9 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
         if let rowData: NSDictionary = self.tableData?[indexPath!.row], let urlString = rowData["artworkUrl60"] as? String,
             let imgURL = URL(string: urlString),
             let imgData = try? Data(contentsOf: imgURL)  {
+            //self.global.idQueue.append(String (describing: rowData["trackId"]!))
+            //print("id Queue ",self.global.idQueue)
+            //self.global.systemMusicPlayer.setQueueWithStoreIDs(self.global.idQueue)
             self.global.queue.append(Song(artWork: UIImage(data: imgData), trackName: rowData["trackName"] as? String, artistName: rowData["artistName"] as? String, trackId: String (describing: rowData["trackId"]!)))
             toast("Added track!")
             

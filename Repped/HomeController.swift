@@ -120,6 +120,7 @@ class HomeController: UITableViewController {
         self.global.user?.rep = userData["rep"] as! Int
         if (userData["friends"] != nil) {
             self.global.user?.friendsList = userData["friends"] as! [String : String]
+            self.offlineFriendList = (self.global.user?.friendsList)!
             
             //TODO REMOVE ADDINGMORE FRIENDS
             //for (key,value) in self.sampleData.testFriendList {

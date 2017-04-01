@@ -20,6 +20,11 @@ class MusicPlayerController: UIViewController {
     @IBOutlet weak var songProgress: UIProgressView!
     @IBOutlet weak var progressView: UISlider!
     
+    @IBOutlet weak var playPauseOutlet: UIButton!
+    
+    @IBOutlet weak var skipRepOutlet: UIButton!
+    
+
     let global:Global = Global.sharedGlobal
     
     let accessibilityDateComponentsFormatter = DateComponentsFormatter()
@@ -71,24 +76,34 @@ class MusicPlayerController: UIViewController {
         
     }
     
+    @IBAction func playPauseButton(_ sender: Any) {
+         print("mute")
+        print("play")
+    }
+    
+    @IBAction func skipRepButton(_ sender: Any) {
+         print("add rep")
+        print("go next")
+    }
+    
     func next(sender: UIBarButtonItem)
     {
-        print("go next")
+        skipRepButton(sender)
     }
     
     func pause(sender: UIBarButtonItem)
     {
-        print("add rep")
+       playPauseButton(sender)
     }
     
     func rep(sender: UIBarButtonItem)
     {
-        print("add rep")
+        skipRepButton(sender)
     }
     
     func mute(sender: UIBarButtonItem)
     {
-        print("mute")
+        playPauseButton(sender)
     }
     
     

@@ -213,19 +213,12 @@
                                         <rect key="frame" x="0.0" y="400" width="375" height="267"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HNp-CW-eRO" userLabel="Play">
-                                                <rect key="frame" x="180" y="125" width="16" height="18"/>
+                                                <rect key="frame" x="97" y="125" width="16" height="18"/>
                                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal" image="nowPlaying_pause"/>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vPJ-bH-i8d" userLabel="Next">
-                                                <rect key="frame" x="273" y="125" width="16" height="18"/>
-                                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <state key="normal" image="nowPlaying_next"/>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cfm-T5-K28" userLabel="Prev">
-                                                <rect key="frame" x="86" y="125" width="16" height="18"/>
-                                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <state key="normal" image="nowPlaying_prev"/>
+                                                <connections>
+                                                    <action selector="playPauseButton:" destination="zz5-W1-pft" eventType="touchUpInside" id="TMo-eL-ehY"/>
+                                                </connections>
                                             </button>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" minimumValueImage="volDown" maximumValueImage="volUp" translatesAutoresizingMaskIntoConstraints="NO" id="pnJ-2j-GaY">
                                                 <rect key="frame" x="30" y="185" width="315" height="31"/>
@@ -241,6 +234,14 @@
                                                 <color key="textColor" red="0.91372549020000005" green="0.27058823529999998" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vPJ-bH-i8d" userLabel="Next">
+                                                <rect key="frame" x="254" y="125" width="16" height="18"/>
+                                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" image="nowPlaying_next"/>
+                                                <connections>
+                                                    <action selector="skipRepButton:" destination="zz5-W1-pft" eventType="touchUpInside" id="xVU-Sm-FOg"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -252,15 +253,13 @@
                                             <constraint firstAttribute="trailing" secondItem="soX-Rt-rE7" secondAttribute="trailing" constant="32" id="ToQ-9F-2f9"/>
                                             <constraint firstItem="HNp-CW-eRO" firstAttribute="centerY" secondItem="Nft-T7-oQC" secondAttribute="centerY" id="YYc-H0-TSp"/>
                                             <constraint firstItem="vPJ-bH-i8d" firstAttribute="centerY" secondItem="Nft-T7-oQC" secondAttribute="centerY" id="Z1R-WF-GZl"/>
-                                            <constraint firstItem="HNp-CW-eRO" firstAttribute="centerX" secondItem="Nft-T7-oQC" secondAttribute="centerX" id="ac1-Dx-Vum"/>
+                                            <constraint firstItem="HNp-CW-eRO" firstAttribute="centerX" secondItem="Nft-T7-oQC" secondAttribute="centerX" constant="-82.5" id="ac1-Dx-Vum"/>
                                             <constraint firstItem="isL-4C-aTr" firstAttribute="centerX" secondItem="Nft-T7-oQC" secondAttribute="centerX" id="dNn-Wg-JBv"/>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="elq-IQ-qmH"/>
                                             <constraint firstAttribute="trailing" secondItem="pnJ-2j-GaY" secondAttribute="trailing" constant="32" id="i0L-Dv-pWY"/>
-                                            <constraint firstItem="vPJ-bH-i8d" firstAttribute="centerX" secondItem="Nft-T7-oQC" secondAttribute="centerX" multiplier="1.5:1" id="j6E-3g-Ocb"/>
+                                            <constraint firstItem="vPJ-bH-i8d" firstAttribute="centerX" secondItem="Nft-T7-oQC" secondAttribute="centerX" multiplier="1.5:1" constant="-19.25" id="j6E-3g-Ocb"/>
                                             <constraint firstItem="pnJ-2j-GaY" firstAttribute="leading" secondItem="Nft-T7-oQC" secondAttribute="leading" constant="32" id="qv3-7c-sWK"/>
                                             <constraint firstAttribute="trailing" secondItem="isL-4C-aTr" secondAttribute="trailing" constant="32" id="ru7-6D-oie"/>
-                                            <constraint firstItem="cfm-T5-K28" firstAttribute="centerX" secondItem="Nft-T7-oQC" secondAttribute="centerX" multiplier="3:6" id="sJU-GK-nve"/>
-                                            <constraint firstItem="cfm-T5-K28" firstAttribute="centerY" secondItem="Nft-T7-oQC" secondAttribute="centerY" id="zkN-G2-kIJ"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -291,14 +290,16 @@
                     <connections>
                         <outlet property="albumArtImageView" destination="VrC-Xn-U5D" id="ftp-l4-ImT"/>
                         <outlet property="albumNameLabel" destination="soX-Rt-rE7" id="RNG-9h-uCJ"/>
+                        <outlet property="playPauseOutlet" destination="HNp-CW-eRO" id="EKc-C0-BXL"/>
                         <outlet property="progressView" destination="pnJ-2j-GaY" id="pNm-5s-4Hm"/>
+                        <outlet property="skipRepOutlet" destination="vPJ-bH-i8d" id="hhe-dw-AmQ"/>
                         <outlet property="songNameLabel" destination="isL-4C-aTr" id="xVI-ql-EFQ"/>
                         <outlet property="songProgress" destination="r7H-FJ-JYi" id="eH1-PX-rt4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pMo-LC-LaS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1425" y="332"/>
+            <point key="canvasLocation" x="1424.8" y="331.48425787106447"/>
         </scene>
     </scenes>
     <resources>
@@ -306,7 +307,6 @@
         <image name="no_music" width="88" height="88"/>
         <image name="nowPlaying_next" width="16" height="16"/>
         <image name="nowPlaying_pause" width="16" height="16"/>
-        <image name="nowPlaying_prev" width="16" height="16"/>
         <image name="roomIcon" width="30" height="30"/>
         <image name="volDown" width="16" height="16"/>
         <image name="volUp" width="16" height="16"/>

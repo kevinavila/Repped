@@ -117,6 +117,9 @@ class HomeController: UITableViewController {
             self.global.user?.friendRequests = userData["requests"] as! [String : String]
             self.friendRequests = (self.global.user?.friendRequests)!
         }
+        if (userData["sentRequests"] != nil) {
+            self.global.user?.sentRequests = userData["sentRequests"] as! [String : String]
+        }
         self.global.user?.profilePicture = self.returnProfilePic(userData["id"] as! String)
     }
     
@@ -160,6 +163,7 @@ class HomeController: UITableViewController {
                         "id": fBData["id"]!,
                         "friends": [:],
                         "requests": [:],
+                        "sentRequest": [:],
                         ] as [String:Any]
                     self.userRef.child(fBData["id"] as! String).setValue(user)
                     
@@ -229,7 +233,7 @@ class HomeController: UITableViewController {
         } else if section == 1 {
             return "Offline"
         } else {
-            return "Pending Requests"
+            return "Friend Requests"
         }
     }
     
@@ -346,6 +350,8 @@ class HomeController: UITableViewController {
         self.userRef.child("\((self.global.user?.uid)!)/friends/\(friendID)").setValue(self.friendRequests[friendID])
         self.userRef.child("\(friendID)/friends/\((self.global.user?.uid)!)").setValue(self.global.user?.name)
         self.userRef.child("\((self.global.user?.uid)!)/requests/\(friendID)").removeValue()
+        self.userRef.child("\(friendID)/sentRequests/\((self.global.user?.uid)!)").removeValue()
+        
         
         toast("You are now friends with \(self.friendRequests[friendID]!)!")
         self.friendRequests.removeValue(forKey: friendID)
@@ -360,6 +366,7 @@ class HomeController: UITableViewController {
         
         // Firebase updates
         self.userRef.child("\((self.global.user?.uid)!)/requests/\(friendID)").removeValue()
+        self.userRef.child("\(friendID)/sentRequests/\((self.global.user?.uid)!)").removeValue()
         
         toast("Declined \(self.friendRequests[friendID]!).")
         self.friendRequests.removeValue(forKey: friendID)

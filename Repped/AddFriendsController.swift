@@ -17,6 +17,7 @@ class AddFriendsController: UITableViewController {
     var user:User? = nil
     var facebookFriends:[String] = []
     var facebookFriendNames:[String:String] = [:]
+    var pendingRequests:[Bool] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,20 +29,35 @@ class AddFriendsController: UITableViewController {
                 //grab facebook friends
                 if let resultdict = fBData["friends"] {
                     let data : NSArray = (resultdict as AnyObject).object(forKey: "data") as! NSArray
-                
+                    
                     for entry in data {
+                        print("in for loop")
                         let valueDict : NSDictionary = entry as! NSDictionary
                         let id = valueDict.object(forKey: "id") as! String
                         let name = valueDict.object(forKey: "name") as! String
                         
-                        self.facebookFriends.append(id)
-                        self.facebookFriendNames[id] = name
+                        if (self.user?.friendsList[id] == nil) {
+                            print("friend added to array")
+                            self.facebookFriends.append(id)
+                            self.facebookFriendNames[id] = name
+                            
+                            if (self.user?.sentRequests[id] != nil) {
+                                // We already sent this user a friend request
+                                self.pendingRequests.append(true)
+                                print("already sent this person a request")
+                            } else {
+                                self.pendingRequests.append(false)
+                                print("havent sent this person a request")
+                            }
+                        }
+                        
                         
                         //TODO: We need to make sure the friend is not already on our friendslist and that we havent
                         //already sent them a friend request. But when grabbing from firebase we get a race condition.
                     }
                 }
                 
+                print("reload data called")
                 self.tableView.reloadData()
             }
         })
@@ -61,6 +77,12 @@ class AddFriendsController: UITableViewController {
             cell.friendNameLabel.text = facebookFriendNames[id]
             cell.friendProfilePicture.image = returnProfilePic(id)
             cell.friendID = id
+            
+            if (pendingRequests[(indexPath as IndexPath).row]) {
+                cell.addFriendButton.isHidden = true
+                cell.friendNameLabel.textColor = UIColor.lightGray
+                cell.requestSentLabel.isHidden = false
+            }
         }
         return cell
     }
@@ -90,10 +112,23 @@ class AddFriendsController: UITableViewController {
         let friendID = cell.friendID!
         self.userRef.child("\(friendID)/requests/\((self.user?.uid)!)").setValue(self.user?.name)
         print("SENT REQUEST TO: \(cell.friendNameLabel.text!) with id \(friendID)")
+        self.userRef.child("\((self.user?.uid)!)/sentRequests/\(friendID)").setValue(facebookFriendNames[friendID])
         
-        //TODO: Display alert confirming request was sent
+        toast("sent \(facebookFriendNames[friendID]) a friend request!")
         
         //FUTURE: Have section for sent requests, and send push notification to user to notify them of the new request
+    }
+    
+    func toast(_ toast: String){
+        //Show alert telling the user the song was added to the playback queue
+        let requestDecisionAlert = UIAlertController(title: nil, message: toast, preferredStyle: .alert)
+        self.present(requestDecisionAlert, animated: true, completion: nil)
+        let delay = 0.5 * Double(NSEC_PER_SEC)
+        let time = DispatchTime.now() + Double(Int64(delay)) / Double(NSEC_PER_SEC)
+        DispatchQueue.main.asyncAfter(deadline: time, execute: {
+            requestDecisionAlert.dismiss(animated: true, completion: nil)
+        })
+        
     }
     
 }

@@ -55,18 +55,10 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nYW-Md-FOW">
-                                <rect key="frame" x="150" y="449" width="75" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Add Friend">
-                                    <color key="titleColor" red="0.072702249219411125" green="0.49584760065357703" blue="0.65742187500000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="addFriendButton" destination="nYW-Md-FOW" id="eS5-GX-Okm"/>
                         <outlet property="liveLabel" destination="leu-sr-ed9" id="tps-4h-oKO"/>
                         <outlet property="liveSymbol" destination="T1O-bQ-jWS" id="5Q6-BZ-jT2"/>
                         <outlet property="nameLabel" destination="te8-tl-Dzz" id="iKa-0i-rNu"/>

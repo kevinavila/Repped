@@ -83,7 +83,7 @@ class AddFriendsController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Route to user's profile
+        // Routes to user's profile
     }
     
     //MARK: Facebook Functions
@@ -109,7 +109,7 @@ class AddFriendsController: UITableViewController {
         print("SENT REQUEST TO: \(cell.friendNameLabel.text!) with id \(friendID)")
         self.userRef.child("\((self.user?.uid)!)/sentRequests/\(friendID)").setValue(facebookFriendNames[friendID])
         
-        toast("Sent \(facebookFriendNames[friendID]) a friend request!")
+        toast("Sent \(facebookFriendNames[friendID]!) a friend request!")
         
         //FUTURE: Have section for sent requests, and send push notification to user to notify them of the new request
     }
@@ -124,6 +124,18 @@ class AddFriendsController: UITableViewController {
             requestDecisionAlert.dismiss(animated: true, completion: nil)
         })
         
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "addFriendToProfile" {
+            if let nextScene = segue.destination as? ProfileController {
+                let cell = sender as! AddFriendsCell
+                nextScene.otherProfileImage = cell.friendProfilePicture
+                nextScene.otherUserID = cell.friendID!
+                nextScene.otherName = cell.friendNameLabel.text!
+                // Rep set in ProfileController
+            }
+        }
     }
     
 }

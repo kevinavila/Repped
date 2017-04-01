@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4dg-wt-Tls" id="HDd-ev-5Hl">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gfb-z5-bsj">
@@ -57,6 +57,7 @@
                                     <outlet property="friendNameLabel" destination="a2Q-jr-Ltd" id="ueJ-Xr-dy1"/>
                                     <outlet property="friendProfilePicture" destination="gfb-z5-bsj" id="U5F-oL-K42"/>
                                     <outlet property="requestSentLabel" destination="igE-Aa-jMO" id="iGM-8q-P5f"/>
+                                    <segue destination="NJ4-BB-QKa" kind="show" identifier="addFriendToProfile" id="aHN-fh-tzp"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -69,6 +70,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qnQ-Zy-UYa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="941.60000000000002" y="135.38230884557723"/>
+        </scene>
+        <!--Profile-->
+        <scene sceneID="4KK-qn-6Af">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Profile" id="NJ4-BB-QKa" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qzd-jj-SmJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1643" y="135"/>
         </scene>
     </scenes>
 </document>

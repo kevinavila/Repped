@@ -31,23 +31,19 @@ class AddFriendsController: UITableViewController {
                     let data : NSArray = (resultdict as AnyObject).object(forKey: "data") as! NSArray
                     
                     for entry in data {
-                        print("in for loop")
                         let valueDict : NSDictionary = entry as! NSDictionary
                         let id = valueDict.object(forKey: "id") as! String
                         let name = valueDict.object(forKey: "name") as! String
                         
                         if (self.user?.friendsList[id] == nil) {
-                            print("friend added to array")
                             self.facebookFriends.append(id)
                             self.facebookFriendNames[id] = name
                             
                             if (self.user?.sentRequests[id] != nil) {
                                 // We already sent this user a friend request
                                 self.pendingRequests.append(true)
-                                print("already sent this person a request")
                             } else {
                                 self.pendingRequests.append(false)
-                                print("havent sent this person a request")
                             }
                         }
                         
@@ -56,8 +52,7 @@ class AddFriendsController: UITableViewController {
                         //already sent them a friend request. But when grabbing from firebase we get a race condition.
                     }
                 }
-                
-                print("reload data called")
+
                 self.tableView.reloadData()
             }
         })
@@ -114,7 +109,7 @@ class AddFriendsController: UITableViewController {
         print("SENT REQUEST TO: \(cell.friendNameLabel.text!) with id \(friendID)")
         self.userRef.child("\((self.user?.uid)!)/sentRequests/\(friendID)").setValue(facebookFriendNames[friendID])
         
-        toast("sent \(facebookFriendNames[friendID]) a friend request!")
+        toast("Sent \(facebookFriendNames[friendID]) a friend request!")
         
         //FUTURE: Have section for sent requests, and send push notification to user to notify them of the new request
     }

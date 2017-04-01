@@ -46,15 +46,16 @@ class MusicPlayerController: UIViewController {
         super.init(coder: aDecoder)
         
         //Need to check for if user is the leader -> show different Controls TODO
-        let pause = UIBarButtonItem(image: UIImage(named: "pause"), style: .plain, target: nil, action: nil)
+        let pause = UIBarButtonItem(image: UIImage(named: "pause"), style: .plain, target: self, action: #selector(pause(sender:)))
         pause.accessibilityLabel = NSLocalizedString("Pause", comment: "")
-        let next = UIBarButtonItem(image: UIImage(named: "nextFwd"), style: .plain, target: nil, action: nil)
+        
+        let next = UIBarButtonItem(image: UIImage(named: "nextFwd"), style: .plain, target: self, action: #selector(next(sender:)))
         next.accessibilityLabel = NSLocalizedString("Next Track", comment: "")
         
-        let rep = UIBarButtonItem(image: UIImage(named: "lovec"), style: .plain, target: nil, action: nil)
+        let rep = UIBarButtonItem(image: UIImage(named: "lovec"), style: .plain, target: self, action: #selector(rep(sender:)))
         rep.accessibilityLabel = NSLocalizedString("Give Rep", comment: "")
         
-        let mute = UIBarButtonItem(image: UIImage(named: "volDown"), style: .plain, target: nil, action: nil)
+        let mute = UIBarButtonItem(image: UIImage(named: "volDown"), style: .plain, target: self, action: #selector(mute(sender:)))
         mute.accessibilityLabel = NSLocalizedString("Give Rep", comment: "")
         
         
@@ -70,9 +71,24 @@ class MusicPlayerController: UIViewController {
         
     }
     
-    private func clickNext()
+    func next(sender: UIBarButtonItem)
     {
-        
+        print("go next")
+    }
+    
+    func pause(sender: UIBarButtonItem)
+    {
+        print("add rep")
+    }
+    
+    func rep(sender: UIBarButtonItem)
+    {
+        print("add rep")
+    }
+    
+    func mute(sender: UIBarButtonItem)
+    {
+        print("mute")
     }
     
     

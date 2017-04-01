@@ -7,7 +7,7 @@
 //
 import UIKit
 
-internal class User {
+internal class User : NSObject {
     
     internal let uid:String
     internal var name:String
@@ -23,5 +23,27 @@ internal class User {
     init(uid:String, name:String) {
         self.uid = uid
         self.name = name
+    }
+    
+    init(userDict:[String:Any]){
+        self.uid = userDict["uid"] as! String
+        self.name = userDict["name"] as! String
+        self.rep = userDict["rep"] as! Int
+        self.friendsList = userDict["friendList"] as! [String : String]
+        self.friendRequests = userDict["friendRequests"] as! [String : String]
+        self.sentRequests = userDict["sentRequests"] as! [String : String]
+    }
+    
+    public func deconstructUser() -> [String:Any]{
+        var result = [String:Any]()
+        result["uid"] = self.uid
+        result["name"] = self.name
+        result["rep"] = self.rep
+        result["email"] = self.email
+        result["friendList"] = self.friendsList
+        result["friendRequests"] = self.friendRequests
+        result["sentRequests"] = self.sentRequests
+        
+        return result
     }
 }

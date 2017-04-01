@@ -34,6 +34,7 @@ class HomeController: UITableViewController {
     var global:Global = Global.sharedGlobal
     //Use for Testing only
     let sampleData:SampleData = SampleData.sharedSample
+    let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,22 +45,35 @@ class HomeController: UITableViewController {
         //Use for testing
         //sampleData.makeSampleUsers()
         //breaking because I dont have the friend list first
-        self.offlineFriendList = self.sampleData.testFriendList
+        //self.offlineFriendList = self.sampleData.testFriendList
         
         //TODO we need to figure out have to save the user info instead of pulling all this info
         //takes to long each time
         //AND/OR move this to appdelagete
-        self.userRef.observeSingleEvent(of: .value, with: { (snapshot) -> Void in
-            
-            if (snapshot.hasChild(FBSDKAccessToken.current().userID)) {
-                let results = snapshot.value as! Dictionary<String, AnyObject>
-                let userData = results[FBSDKAccessToken.current().userID] as! Dictionary<String, AnyObject>
-                self.setUser(userData: userData)
-            } else {
-                // initialize new user
-                self.newUser()
-            }
-        })
+        
+        if let savedUser = defaults.object(forKey: "User"){
+            print("user was loaded from User Defaults")
+            print(savedUser)
+            self.global.user = User(userDict: savedUser as! [String:Any])
+            self.offlineFriendList = (self.global.user?.friendsList)!
+        } else {
+            self.userRef.observeSingleEvent(of: .value, with: { (snapshot) -> Void in
+                
+                if (snapshot.hasChild(FBSDKAccessToken.current().userID)) {
+                    print("user was loaded from firbase")
+                    let results = snapshot.value as! Dictionary<String, AnyObject>
+                    let userData = results[FBSDKAccessToken.current().userID] as! Dictionary<String, AnyObject>
+                    self.setUser(userData: userData)
+                } else {
+                    print("makin new user")
+                    // initialize new user
+                    self.newUser()
+                }
+            })
+        }
+        
+        
+        
         
         //only run if user already exists in Firebase, checking for new friends
         //self.getFriends()
@@ -90,6 +104,7 @@ class HomeController: UITableViewController {
                 }
             }
             self.global.user?.friendsList.update(other: friendList)
+            self.offlineFriendList = (self.global.user?.friendsList)!
             
             //update firebase
             self.userRef.child("\((self.global.user?.uid)!)/friends").setValue(friendList)
@@ -121,6 +136,9 @@ class HomeController: UITableViewController {
             self.global.user?.sentRequests = userData["sentRequests"] as! [String : String]
         }
         self.global.user?.profilePicture = self.returnProfilePic(userData["id"] as! String)
+       
+        self.defaults.set(self.global.user?.deconstructUser(), forKey: "User")
+        print("saving user to defaults 1")
     }
     
     private func newUser(){
@@ -167,6 +185,9 @@ class HomeController: UITableViewController {
                         ] as [String:Any]
                     self.userRef.child(fBData["id"] as! String).setValue(user)
                     
+                    
+                    self.defaults.set(self.global.user?.deconstructUser(), forKey: "User")
+                    print("saving user to defaults 2")
                 }
             })
         }

@@ -178,17 +178,18 @@ class RoomController: UITableViewController  {
             
             //need to hanbdle errors for optionals -> if let ...
             let userData = value as! [String:Any]
-            let user = [
-                "name": userData["name"] as! String,
-                "email": userData["email"] as! String,
-                "rep":  userData["rep"] as! Int,
-                "id": userData["id"] as! String
-            ] as [String:Any]
+            
+       //     let user = [
+       //         "name": userData["name"] as! String,
+       //         "email": userData["email"] as! String,
+       //         "rep":  userData["rep"] as! Int,
+       //        "id": userData["id"] as! String
+       //     ] as [String:Any]
             
             //TODO figure out why this doesnt work on the first time
             for curUser in self.listeners {
                 if curUser.uid == uid {
-                    curUser.name = (user["name"] as? String)!
+                    curUser.name = (userData["name"] as? String)!
                     print("listner name_ ", curUser.name)
                     curUser.profilePicture = self.returnProfilePic(uid)
                 }

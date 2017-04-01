@@ -161,7 +161,7 @@ class RoomController: UITableViewController  {
                     }
                 }
                 if self.global.isLeader != (self.global.room?.leader == self.global.user?.uid){
-                    self.global.isLeader = true
+                    self.global.isLeader = (self.global.room?.leader == self.global.user?.uid)
                     self.tableView.reloadData()
                 }
             }

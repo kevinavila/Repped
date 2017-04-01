@@ -15,12 +15,15 @@ import LNPopupController
 
 class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate{
     
+    private var currentRoomRefHandle:FIRDatabaseHandle?
+    private var currentRoomRef:FIRDatabaseReference?
     @IBOutlet weak var searchBarLabel: UISearchBar!
     @IBOutlet weak var musicTable: UITableView!
     var global:Global = Global.sharedGlobal
     
     var currentRoom: Room? = nil
     var tableData = [] as? [NSDictionary]
+    var previousSongs = [] as [Song]
     
     private lazy var roomRef:FIRDatabaseReference = FIRDatabase.database().reference().child("rooms")
 
@@ -37,6 +40,9 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
         searchBarLabel.delegate = self
         musicTable.delegate = self
         musicTable.dataSource = self
+        
+         self.currentRoomRef = FIRDatabase.database().reference().child("rooms/"+(self.global.room?.rid)!)
+        observeRooms()
         
         searchBarLabel.placeholder = "Start typing to add tracks to playlist"
     }
@@ -151,29 +157,41 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     //Only displaying 10 of the search items
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (tableData?.count)! < 10 {
-            return tableData!.count
+        if self.global.isLeader {
+            if (tableData?.count)! < 10 {
+                return tableData!.count
+            }
+            return 10
+        } else {
+            return  self.previousSongs.count
         }
-        return 10
+
     }
     
     //Display iTunes search results
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: nil)
-        if let rowData: NSDictionary = self.tableData?[indexPath.row],
-            let urlString = rowData["artworkUrl60"] as? String,
-            let imgURL = URL(string: urlString),
-            let imgData = try? Data(contentsOf: imgURL) {
-            cell.imageView?.image = UIImage(data: imgData)
-            cell.textLabel?.text = rowData["trackName"] as? String
-            cell.detailTextLabel?.text = rowData["artistName"] as? String
+        if self.global.isLeader {
+            if let rowData: NSDictionary = self.tableData?[indexPath.row],
+                let urlString = rowData["artworkUrl60"] as? String,
+                let imgURL = URL(string: urlString),
+                let imgData = try? Data(contentsOf: imgURL) {
+                cell.imageView?.image = UIImage(data: imgData)
+                cell.textLabel?.text = rowData["trackName"] as? String
+                cell.detailTextLabel?.text = rowData["artistName"] as? String
+            }
+        } else {
+            cell.textLabel?.text = self.previousSongs[indexPath.row].trackName
+            cell.detailTextLabel?.text = self.previousSongs[indexPath.row].artistName
         }
+       
         return cell
     }
     
     //Add song to playback queue if user selects a cell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let indexPath = tableView.indexPathForSelectedRow
+         if self.global.isLeader {
         if let rowData: NSDictionary = self.tableData?[indexPath!.row], let urlString = rowData["artworkUrl60"] as? String,
             let imgURL = URL(string: urlString),
             let imgData = try? Data(contentsOf: imgURL)  {
@@ -184,6 +202,7 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
             toast("Added track!")
             
                        tableView.deselectRow(at: indexPath!, animated: true)
+        }
         }
     }
         
@@ -217,6 +236,47 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
             searchBar.resignFirstResponder()
         }
     }
+    
+    
+    //MARK: Firebase Functions
+    private func observeRooms() {
+        // Listening for changes to y room for sonf
+        currentRoomRefHandle = currentRoomRef?.observe(.value, with: { (snapshot) -> Void in
+            
+            let roomData = snapshot.value as! Dictionary<String, AnyObject>
+            let rid = snapshot.key
+            if rid == self.global.room?.rid {
+                self.global.room?.leader =  roomData["leader"] as! String
+                if let _ = roomData["songID"] {
+                    if (roomData["songID"] as! String) != self.global.room?.songID {
+                        print("wes_ seting new song0")
+                        self.global.room?.songID = roomData["songID"] as! String
+                        self.global.systemMusicPlayer.setQueueWithStoreIDs([(self.global.room?.songID)!])
+                        self.global.systemMusicPlayer.play()
+                        self.global.song = Song(trackId: (self.global.room?.songID)!){
+                            print("completion handler?")
+                            self.showPop()
+                        }
+                    }
+                }
+                if let _ = roomData["previouslyPlayed"] {
+                    let songIDs = roomData["previouslyPlayed"] as! [String]
+                    for id in songIDs{
+                        self.previousSongs.append(Song(trackId: id){
+                            self.musicTable.reloadData()
+                        })
+                    }
+                }
+                if self.global.isLeader != (self.global.room?.leader == self.global.user?.uid){
+                    self.global.isLeader = (self.global.room?.leader == self.global.user?.uid)
+                    self.musicTable.reloadData()
+                    self.global.isLeader ? self.setLeader() : self.setListener()
+                }
+            }
+        })
+    }
+
+    
     
     func dismissSearchKeyboard() {
         self.view.endEditing(true)

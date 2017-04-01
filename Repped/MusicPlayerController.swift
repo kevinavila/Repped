@@ -9,9 +9,12 @@
 import UIKit
 import LNPopupController
 import MediaPlayer
+import Firebase
 
 class MusicPlayerController: UIViewController {
     
+    
+    private lazy var userRef:FIRDatabaseReference = FIRDatabase.database().reference().child("users")
     
     @IBOutlet weak var songNameLabel: UILabel!
     @IBOutlet weak var albumNameLabel: UILabel!
@@ -21,7 +24,6 @@ class MusicPlayerController: UIViewController {
     @IBOutlet weak var progressView: UISlider!
     
     @IBOutlet weak var playPauseOutlet: UIButton!
-    
     @IBOutlet weak var skipRepOutlet: UIButton!
     
 
@@ -82,6 +84,25 @@ class MusicPlayerController: UIViewController {
     }
     
     @IBAction func skipRepButton(_ sender: Any) {
+        if self.global.isLeader {
+            //button hould show skipped and function as skip
+        } else {
+            //add rep
+            let leaderRepRef = userRef.child((self.global.room?.leader)!).child("rep")
+
+            leaderRepRef.runTransactionBlock({ (currentData: FIRMutableData) -> FIRTransactionResult in
+                if let curRep = currentData.value as? Int{
+                    currentData.value = curRep + 1
+                    print("increased rep")
+                }
+                return FIRTransactionResult.success(withValue: currentData)
+            }) { (error, committed, snapshot) in
+                if let error = error {
+                    print("there was an error adding rep")
+                    print(error.localizedDescription)
+                }
+            }
+        }
          print("add rep")
         print("go next")
     }

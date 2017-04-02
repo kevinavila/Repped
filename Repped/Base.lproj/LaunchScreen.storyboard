@@ -22,21 +22,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ReppedLaunchscreenLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="04y-fZ-5HY">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ReppedLaunchscreenLogo" translatesAutoresizingMaskIntoConstraints="NO" id="04y-fZ-5HY">
                                 <rect key="frame" x="47" y="178" width="280" height="280"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="280" id="0IB-UW-xhW"/>
-                                    <constraint firstAttribute="height" constant="280" id="9PG-Zh-zXT"/>
+                                    <constraint firstAttribute="width" constant="280" id="4l0-I6-CvW"/>
+                                    <constraint firstAttribute="height" constant="280" id="ubJ-bz-wEh"/>
                                 </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.10980392156862745" green="0.10980392156862745" blue="0.10980392156862745" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="04y-fZ-5HY" secondAttribute="bottom" constant="209" id="2y0-F1-qn7"/>
-                            <constraint firstItem="04y-fZ-5HY" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="158" id="Znc-Ie-Zfs"/>
-                            <constraint firstItem="04y-fZ-5HY" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="31" id="gCI-sk-3PM"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="04y-fZ-5HY" secondAttribute="trailing" constant="32" id="vMa-gt-3Y4"/>
+                            <constraint firstItem="04y-fZ-5HY" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="158" id="EMe-pd-ywL"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="04y-fZ-5HY" secondAttribute="trailing" constant="32" id="IEp-Wl-Jcf"/>
+                            <constraint firstItem="04y-fZ-5HY" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="31" id="TRl-H5-UHd"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="04y-fZ-5HY" secondAttribute="bottom" constant="209" id="dqH-62-pO1"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -46,6 +46,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ReppedLaunchscreenLogo.png" width="1536" height="1536"/>
+        <image name="ReppedLaunchscreenLogo" width="16" height="16"/>
     </resources>
 </document>

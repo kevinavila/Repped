@@ -18,6 +18,9 @@ PODS:
   - Firebase/Core (3.7.1):
     - FirebaseAnalytics (= 3.4.4)
     - FirebaseCore (= 3.4.3)
+  - Firebase/Crash (3.7.1):
+    - Firebase/Core
+    - FirebaseCrash (= 1.0.7)
   - Firebase/Database (3.7.1):
     - Firebase/Core
     - FirebaseDatabase (= 3.0.3)
@@ -32,6 +35,12 @@ PODS:
     - GoogleUtilities (~> 1.2)
   - FirebaseCore (3.4.3):
     - GoogleInterchangeUtilities (~> 1.2)
+    - GoogleUtilities (~> 1.2)
+  - FirebaseCrash (1.0.7):
+    - FirebaseAnalytics (~> 3.2)
+    - FirebaseInstanceID (~> 1.0)
+    - GoogleInterchangeUtilities (~> 1.2)
+    - GoogleSymbolUtilities (~> 1.1)
     - GoogleUtilities (~> 1.2)
   - FirebaseDatabase (3.0.3):
     - FirebaseAnalytics (~> 3.3)
@@ -51,6 +60,7 @@ DEPENDENCIES:
   - FBSDKLoginKit
   - Firebase
   - Firebase/Auth
+  - Firebase/Crash
   - Firebase/Database
   - LNPopupController (from `https://github.com/WDraper/LNPopupController.git`)
 
@@ -72,6 +82,7 @@ SPEC CHECKSUMS:
   FirebaseAnalytics: 0533a00b681e08fd0b2cd0444b7ddf0ef9fd7a1a
   FirebaseAuth: 75a062bbf2d3c97d1e6e55bbc110e13a6853e25d
   FirebaseCore: 5a885548bbc5f0c410b04f8e9ac9d73ff1221907
+  FirebaseCrash: 2efeb3715b76ac843b841529ce413efb67e5fd4d
   FirebaseDatabase: 750a4a0fe18ef114318876fd654b2d9c671e0992
   FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
   GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
@@ -80,6 +91,6 @@ SPEC CHECKSUMS:
   GoogleUtilities: 8bbc733218aad26306f9d4a253823986110e3358
   LNPopupController: be91d0839b2aa611a32542a59b196ca7032ef530
 
-PODFILE CHECKSUM: 2b52939f80f009f61fcae28082082b1f545a8431
+PODFILE CHECKSUM: 9551523443a88047822bcfe2ec5c96b13bd6f0ff
 
 COCOAPODS: 1.2.0

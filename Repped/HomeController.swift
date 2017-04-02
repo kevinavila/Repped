@@ -152,29 +152,7 @@ class HomeController: UITableViewController {
                     self.global.user?.email =  fBData["email"] as! String
                     self.global.user?.profilePicture = self.returnProfilePic(fBData["id"] as! String)
                     
-                    //build friendlist
-//                    var friendList: [String:String] = [:]
-//                    
-//                    if let resultdict = fBData["friends"]{
-//                        let data : NSArray = (resultdict as AnyObject).object(forKey: "data") as! NSArray
-//                        
-//                        for entry in data {
-//                            let valueDict : NSDictionary = entry as! NSDictionary
-//                            let id = valueDict.object(forKey: "id") as! String
-//                            let name = valueDict.object(forKey: "name") as! String
-//                            friendList[id] = name
-//                        }
-//                    }
-                    
-                    //TODO REMOVE ADDINGMORE FRIENDS 
-                    //for (key,value) in self.sampleData.testFriendList {
-                    //  friendList.updateValue(value, forKey:key)
-                    //}
-                
-                    //self.global.user?.facebookFriendsList.update(other: friendList)
-                    
-                    
-                    //set user info in firebase
+                    // Set user info in firebase
                     let user = [
                         "name": fBData["name"]!,
                         "email": fBData["email"]!,

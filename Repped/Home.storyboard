@@ -51,7 +51,7 @@
                                 <rect key="frame" x="0.0" y="72" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DMx-eD-Edo" id="Lvm-rF-SSi">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Pending Friend" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KxK-EV-ANP">
@@ -93,18 +93,21 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="HI7-S8-Rbr">
                         <leftBarButtonItems>
-                            <barButtonItem title="Profile" id="G0n-43-ZLg">
+                            <barButtonItem image="profile" id="G0n-43-ZLg">
+                                <color key="tintColor" red="0.29554146529999997" green="0.66677868370000004" blue="0.74451214080000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="profileClicked:" destination="ek9-al-Yi4" id="Zi8-TI-VeS"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Add Friends" id="srL-Fa-dtW">
+                            <barButtonItem image="addFriend" id="srL-Fa-dtW">
+                                <color key="tintColor" red="0.29554146529999997" green="0.66677868370000004" blue="0.74451214080000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <segue destination="ojj-HA-gR3" kind="show" identifier="showAddFriends" id="fVp-5M-hPV"/>
                                 </connections>
                             </barButtonItem>
                         </leftBarButtonItems>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="wQB-dZ-VLK">
+                            <color key="tintColor" red="0.29554146529999997" green="0.66677868370000004" blue="0.74451214080000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="createNewRoom:" destination="ek9-al-Yi4" id="bFi-DJ-Z7Y"/>
                             </connections>
@@ -170,6 +173,8 @@
         <image name="Accept" width="50" height="50"/>
         <image name="Reject" width="50" height="50"/>
         <image name="acceptHighlighted" width="50" height="50"/>
+        <image name="addFriend" width="30" height="30"/>
+        <image name="profile" width="30" height="30"/>
         <image name="rejectHighlighted" width="50" height="50"/>
     </resources>
 </document>

@@ -17,6 +17,7 @@ class Global {
     
     var queue: [Song] = []
     var idQueue: [String] = []
+    var repHistory: [String:String] = [:]  //trackId leaderUID
     let systemMusicPlayer = MPMusicPlayerController.systemMusicPlayer()
     
     private init() {

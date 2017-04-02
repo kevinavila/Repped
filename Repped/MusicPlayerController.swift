@@ -59,7 +59,7 @@ class MusicPlayerController: UIViewController {
         let next = UIBarButtonItem(image: UIImage(named: "nextFwd"), style: .plain, target: self, action: #selector(next(sender:)))
         next.accessibilityLabel = NSLocalizedString("Next Track", comment: "")
         
-        let rep = UIBarButtonItem(image: UIImage(named: "lovec"), style: .plain, target: self, action: #selector(rep(sender:)))
+        let rep = UIBarButtonItem(image: (reppedSong() ? UIImage(named: "loved") : UIImage(named: "lovec")), style: .plain, target: self, action: #selector(rep(sender:)))
         rep.accessibilityLabel = NSLocalizedString("Give Rep", comment: "")
         
         let mute = UIBarButtonItem(image: UIImage(named: "volDown"), style: .plain, target: self, action: #selector(mute(sender:)))
@@ -87,13 +87,22 @@ class MusicPlayerController: UIViewController {
         if self.global.isLeader {
             //button hould show skipped and function as skip
         } else {
-            //add rep
+            var increased = false
+            if self.reppedSong() {
+                print("Already Repped Song")
+            } else {
             let leaderRepRef = userRef.child((self.global.room?.leader)!).child("rep")
 
             leaderRepRef.runTransactionBlock({ (currentData: FIRMutableData) -> FIRTransactionResult in
                 if let curRep = currentData.value as? Int{
+                    increased = true
                     currentData.value = curRep + 1
                     print("increased rep")
+                    self.global.repHistory[(self.global.song?.trackId)!] = self.global.room?.leader
+                    //change button icon
+                    DispatchQueue.main.async(){
+                        self.popupItem.leftBarButtonItems = [UIBarButtonItem(image:UIImage(named: "loved"), style: .plain, target: nil, action: nil)]
+                    }
                 }
                 return FIRTransactionResult.success(withValue: currentData)
             }) { (error, committed, snapshot) in
@@ -102,6 +111,7 @@ class MusicPlayerController: UIViewController {
                     print(error.localizedDescription)
                 }
             }
+        }
         }
          print("add rep")
         print("go next")
@@ -125,6 +135,10 @@ class MusicPlayerController: UIViewController {
     func mute(sender: UIBarButtonItem)
     {
         playPauseButton(sender)
+    }
+    
+    private func reppedSong() -> Bool {
+        return self.global.repHistory[(self.global.song?.trackId)!] == self.global.room?.leader
     }
     
     

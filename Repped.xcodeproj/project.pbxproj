@@ -36,6 +36,7 @@
 		DBC80E991E4B840E00A3CCBC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBC80E971E4B840E00A3CCBC /* LaunchScreen.storyboard */; };
 		DBC80EA41E4B840F00A3CCBC /* ReppedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC80EA31E4B840F00A3CCBC /* ReppedTests.swift */; };
 		DBC80EAF1E4B840F00A3CCBC /* ReppedUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC80EAE1E4B840F00A3CCBC /* ReppedUITests.swift */; };
+		DBD26D4C1E90C0B9004F5597 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBD26D4B1E90C0B9004F5597 /* Main.storyboard */; };
 		DBFA247B1E57F25300224898 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBFA247A1E57F25300224898 /* Home.storyboard */; };
 		DBFA247D1E57F29B00224898 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFA247C1E57F29B00224898 /* HomeController.swift */; };
 		DBFBB8BA1E66749500C85C1C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFBB8B91E66749500C85C1C /* User.swift */; };
@@ -99,6 +100,7 @@
 		DBC80EAA1E4B840F00A3CCBC /* ReppedUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReppedUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBC80EAE1E4B840F00A3CCBC /* ReppedUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReppedUITests.swift; sourceTree = "<group>"; };
 		DBC80EB01E4B840F00A3CCBC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DBD26D4B1E90C0B9004F5597 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		DBFA247A1E57F25300224898 /* Home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		DBFA247C1E57F29B00224898 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		DBFBB8B91E66749500C85C1C /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 				BC89AB5B1E71E2FD003244FA /* Global.swift */,
 				BC810C7B1E85A7F100DC8493 /* SampleData.swift */,
 				DB686E371E873A6C0068A11F /* AddFriendsCell.swift */,
+				DBD26D4B1E90C0B9004F5597 /* Main.storyboard */,
 				DBFA247A1E57F25300224898 /* Home.storyboard */,
 				DB8B7E0E1E6A5E1200FFAC57 /* AddFriends.storyboard */,
 				DB1F47011E62607400F0FFEC /* Room.storyboard */,
@@ -357,6 +360,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBC80E991E4B840E00A3CCBC /* LaunchScreen.storyboard in Resources */,
+				DBD26D4C1E90C0B9004F5597 /* Main.storyboard in Resources */,
 				DBFA247B1E57F25300224898 /* Home.storyboard in Resources */,
 				DB3A775E1E52AE9A001D3B15 /* GoogleService-Info.plist in Resources */,
 				DB1F47021E62607400F0FFEC /* Room.storyboard in Resources */,

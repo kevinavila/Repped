@@ -34,7 +34,6 @@ class LoginController: UIViewController, FBSDKLoginButtonDelegate {
     }
 
     func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
-        spinner.startAnimating()
         
         if (error != nil) {
             print(error!.localizedDescription)
@@ -42,6 +41,7 @@ class LoginController: UIViewController, FBSDKLoginButtonDelegate {
         } else if (result.isCancelled) {
             // User canceled login: do something
         } else {
+            spinner.startAnimating()
             facebookLoginButton.isHidden = true
             reppedLogo.isHidden = true
             reppedLabel.isHidden = true

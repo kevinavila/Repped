@@ -55,6 +55,7 @@ class HomeController: UITableViewController {
             print("user was loaded from User Defaults")
             print(savedUser)
             self.global.user = User(userDict: savedUser as! [String:Any])
+            self.global.user?.profilePicture = self.returnProfilePic((self.global.user?.uid)!)
             self.offlineFriendList = (self.global.user?.friendsList)!
         } else {
             self.userRef.observeSingleEvent(of: .value, with: { (snapshot) -> Void in

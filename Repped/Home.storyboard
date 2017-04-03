@@ -14,12 +14,12 @@
         <scene sceneID="eEm-jR-Bor">
             <objects>
                 <tableViewController storyboardIdentifier="homeController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ek9-al-Yi4" customClass="HomeController" customModule="Repped" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Dco-3W-TPS">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="55" sectionHeaderHeight="28" sectionFooterHeight="28" id="Dco-3W-TPS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="homeViewCell" rowHeight="55" id="uLC-im-s7F" customClass="HomeViewCell" customModule="Repped" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="homeViewCell" id="uLC-im-s7F" customClass="HomeViewCell" customModule="Repped" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="55"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uLC-im-s7F" id="uL7-oD-Sqe">
@@ -27,7 +27,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Room Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e7P-dK-XNz">
-                                            <rect key="frame" x="8" y="32" width="359" height="14"/>
+                                            <rect key="frame" x="8" y="32" width="359" height="19"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <nil key="textColor"/>
@@ -42,47 +42,70 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
                                     <outlet property="friendName" destination="Br8-Cp-ZWf" id="HYD-Qe-8Y8"/>
                                     <outlet property="roomName" destination="e7P-dK-XNz" id="Fbq-zV-bgj"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="homeViewRequestCell" id="DMx-eD-Edo" customClass="HomeViewRequestCell" customModule="Repped" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="83" width="375" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="homeViewOfflineCell" id="DMx-eD-Edo" customClass="HomeViewOfflineCell" customModule="Repped" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="83" width="375" height="55"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DMx-eD-Edo" id="Lvm-rF-SSi">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="54"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Pending Friend" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KxK-EV-ANP">
-                                            <rect key="frame" x="16" y="11" width="268" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Offline Friend Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gn4-u3-bIX">
+                                            <rect key="frame" x="8" y="17" width="359" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J3v-0C-qh7">
-                                            <rect key="frame" x="292" y="6" width="30" height="30"/>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <connections>
+                                    <outlet property="offlineFriendNameLabel" destination="Gn4-u3-bIX" id="hYw-Zg-54x"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="homeViewRequestCell" id="e5j-E6-C3F" customClass="HomeViewRequestCell" customModule="Repped" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="138" width="375" height="55"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="e5j-E6-C3F" id="8kp-ID-cO7">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="54"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Pending Friend" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C32-KA-T9h">
+                                            <rect key="frame" x="8" y="17" width="276" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Di8-SE-ia1">
+                                            <rect key="frame" x="292" y="12" width="30" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" title="Button" image="Accept"/>
                                             <state key="highlighted" image="acceptHighlighted"/>
                                             <connections>
-                                                <action selector="acceptingFriend:" destination="ek9-al-Yi4" eventType="touchUpInside" id="WGL-xt-n2U"/>
+                                                <action selector="acceptingFriend:" destination="ek9-al-Yi4" eventType="touchUpInside" id="hRh-Ue-AuK"/>
                                             </connections>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L6f-3H-fkc">
-                                            <rect key="frame" x="330" y="6" width="30" height="30"/>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="43T-pa-7V3">
+                                            <rect key="frame" x="330" y="12" width="30" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" title="Button" image="Reject"/>
                                             <state key="highlighted" image="rejectHighlighted"/>
                                             <connections>
-                                                <action selector="rejectingFriend:" destination="ek9-al-Yi4" eventType="touchUpInside" id="iT4-GL-2xe"/>
+                                                <action selector="rejectingFriend:" destination="ek9-al-Yi4" eventType="touchUpInside" id="JLU-Kc-t2y"/>
                                             </connections>
                                         </button>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
-                                    <outlet property="pendingFriendLabel" destination="KxK-EV-ANP" id="gEM-Bi-QEh"/>
+                                    <outlet property="pendingFriendLabel" destination="C32-KA-T9h" id="epq-LN-9Ox"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

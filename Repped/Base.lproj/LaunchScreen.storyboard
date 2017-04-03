@@ -22,7 +22,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ReppedLaunchscreenLogo" translatesAutoresizingMaskIntoConstraints="NO" id="04y-fZ-5HY">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ReppedLaunchscreenLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="04y-fZ-5HY">
                                 <rect key="frame" x="47" y="178" width="280" height="280"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="280" id="4l0-I6-CvW"/>
@@ -46,6 +46,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ReppedLaunchscreenLogo" width="16" height="16"/>
+        <image name="ReppedLaunchscreenLogo.png" width="1536" height="1536"/>
     </resources>
 </document>

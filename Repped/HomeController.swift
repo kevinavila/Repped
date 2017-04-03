@@ -212,11 +212,10 @@ class HomeController: UITableViewController {
                 return cell
             }
         } else if indexPath.section == 1 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "homeViewCell", for: indexPath) as! HomeViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "homeViewOfflineCell", for: indexPath) as! HomeViewOfflineCell
             if (indexPath.row < self.offlineFriendList.count) {
                 print("building table", self.offlineFriendList.count)
-                cell.friendName.text = Array(self.offlineFriendList.values)[indexPath.row]
-                cell.roomName.text = ""
+                cell.offlineFriendNameLabel.text = Array(self.offlineFriendList.values)[indexPath.row]
             }
             return cell
         } else {

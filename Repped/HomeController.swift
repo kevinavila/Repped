@@ -41,6 +41,10 @@ class HomeController: UITableViewController {
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor(red:0.11, green:0.11, blue:0.11, alpha:1.0)
+        self.navigationController?.navigationBar.isTranslucent = false
+        
        
         //Use for testing
         //sampleData.makeSampleUsers()
@@ -231,7 +235,7 @@ class HomeController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
-            return "Live"
+            return "LIVE"
         } else if section == 1 {
             return "Offline"
         } else {
@@ -239,6 +243,15 @@ class HomeController: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let header = view as! UITableViewHeaderFooterView
+        if (section == 0) {
+            header.textLabel?.textColor = UIColor(red:0.18, green:0.80, blue:0.44, alpha:1.0)
+        } else {
+            header.textLabel?.textColor = UIColor.lightGray
+        }
+
+    }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {

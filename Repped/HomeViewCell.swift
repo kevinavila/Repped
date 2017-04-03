@@ -10,8 +10,8 @@ import UIKit
 
 class HomeViewCell: UITableViewCell {
     
-    @IBOutlet weak var friendName: UILabel!
     @IBOutlet weak var roomName: UILabel!
+    @IBOutlet weak var friendName: UILabel!
 
     
 }

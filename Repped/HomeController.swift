@@ -208,7 +208,7 @@ class HomeController: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "homeViewCell", for: indexPath) as! HomeViewCell
             if (indexPath.row < onlinefriends.count) {
                 cell.friendName.text = onlinefriends[(indexPath as IndexPath).row].name
-                cell.roomName.text = onlinefriends[(indexPath as IndexPath).row].rid
+                cell.roomName.text = onlinefriends[(indexPath as IndexPath).row].currentRoom?.name
                 return cell
             }
         } else if indexPath.section == 1 {
@@ -297,7 +297,6 @@ class HomeController: UITableViewController {
         } else {
              print("option 3")
             if (self.global.room?.isEmpty)! {
-                print("heloo dsfsdf here")
                 let oldRid = self.global.room?.rid
                 createRoomHelper()
                 roomRef.child(oldRid!).removeValue()
@@ -403,6 +402,7 @@ class HomeController: UITableViewController {
             
             let roomData = snapshot.value as! Dictionary<String, AnyObject>
             let rid = snapshot.key
+
             let name = roomData["name"] as! String
             let leader = roomData["leader"] as! String
             let room = Room(rid: rid, name: name, leader: leader)
@@ -411,6 +411,12 @@ class HomeController: UITableViewController {
                 self.global.isLeader = true
                 // Segue to room
                 self.performSegue(withIdentifier: "showRoom", sender: self.global.room)
+            }
+            
+            for friend in self.onlinefriends {
+                if (rid == friend.rid!) {
+                    friend.currentRoom = room
+                }
             }
             
             self.rooms.append(room)

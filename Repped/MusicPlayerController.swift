@@ -87,7 +87,6 @@ class MusicPlayerController: UIViewController {
         if self.global.isLeader {
             //button hould show skipped and function as skip
         } else {
-            var increased = false
             if self.reppedSong() {
                 print("Already Repped Song")
             } else {
@@ -95,7 +94,6 @@ class MusicPlayerController: UIViewController {
 
             leaderRepRef.runTransactionBlock({ (currentData: FIRMutableData) -> FIRTransactionResult in
                 if let curRep = currentData.value as? Int{
-                    increased = true
                     currentData.value = curRep + 1
                     print("increased rep")
                     self.global.repHistory[(self.global.song?.trackId)!] = self.global.room?.leader

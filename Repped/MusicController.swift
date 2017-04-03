@@ -26,6 +26,7 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
     var previousSongs = [] as [Song]
     
     private lazy var roomRef:FIRDatabaseReference = FIRDatabase.database().reference().child("rooms")
+    private lazy var userRef:FIRDatabaseReference = FIRDatabase.database().reference().child("users")
 
     @IBOutlet weak var recentlyPlayedLabel: UILabel!
     
@@ -170,8 +171,8 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     //Display iTunes search results
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: nil)
         if self.global.isLeader {
+            let cell  = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: nil)
             if let rowData: NSDictionary = self.tableData?[indexPath.row],
                 let urlString = rowData["artworkUrl60"] as? String,
                 let imgURL = URL(string: urlString),
@@ -180,14 +181,61 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
                 cell.textLabel?.text = rowData["trackName"] as? String
                 cell.detailTextLabel?.text = rowData["artistName"] as? String
             }
+            return cell
         } else {
-            cell.textLabel?.text = self.previousSongs[indexPath.row].trackName
-            cell.detailTextLabel?.text = self.previousSongs[indexPath.row].artistName
+             let cell = tableView.dequeueReusableCell(withIdentifier: "musicViewCell", for: indexPath) as! MusicViewCell
+            cell.mainText.text = self.previousSongs[indexPath.row].trackName
+            cell.subTitle.text = self.previousSongs[indexPath.row].artistName
+            
+            if self.reppedSong(trackID: self.previousSongs[indexPath.row].trackId!){
+                print("seting img loved")
+                cell.repButtonOutlet.imageView?.image = #imageLiteral(resourceName: "loved")
+            } else {
+                print("seting img lovec")
+                cell.repButtonOutlet.imageView?.image = #imageLiteral(resourceName: "lovec")
+            }
+            
+            cell.tapAction = { (cell) in
+                print("just tapped the button for ", (indexPath as IndexPath).row)
+                if self.reppedSong(trackID: self.previousSongs[indexPath.row].trackId!){
+                    print("repped already boy")
+                }else {
+                    self.clickedRep(cell: (cell as! MusicViewCell))
+                    (cell as! MusicViewCell).repButtonOutlet.imageView?.image = #imageLiteral(resourceName: "loved")
+                }
+               
+            }
+            return cell
         }
-       
-        return cell
     }
     
+    private func clickedRep(cell: MusicViewCell){
+            let leaderRepRef = userRef.child((self.global.room?.leader)!).child("rep")
+            
+            leaderRepRef.runTransactionBlock({ (currentData: FIRMutableData) -> FIRTransactionResult in
+                if let curRep = currentData.value as? Int{
+                    currentData.value = curRep + 1
+                    print("increased rep")
+                    self.global.repHistory[(self.global.song?.trackId)!] = self.global.room?.leader
+                    //change button icon
+                    DispatchQueue.main.async(){
+                        print("reload tbale")
+                        self.musicTable.reloadData()
+                    }
+                }
+                return FIRTransactionResult.success(withValue: currentData)
+            }) { (error, committed, snapshot) in
+                if let error = error {
+                    print("there was an error adding rep")
+                    print(error.localizedDescription)
+                }
+            }
+    }
+    
+    private func reppedSong(trackID: String) -> Bool {
+        return self.global.repHistory[trackID] == self.global.room?.leader
+    }
+
     //Add song to playback queue if user selects a cell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let indexPath = tableView.indexPathForSelectedRow
@@ -202,10 +250,12 @@ class MusicController: UIViewController, UITableViewDelegate, UITableViewDataSou
             toast("Added track!")
             
                        tableView.deselectRow(at: indexPath!, animated: true)
-        }
+            }
         }
     }
-        
+
+
+
     func toast(_ toast: String){
         //Show alert telling the user the song was added to the playback queue
         let addedTrackAlert = UIAlertController(title: nil, message: toast, preferredStyle: .alert)

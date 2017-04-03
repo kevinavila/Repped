@@ -25,7 +25,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2Er-ci-haa" id="pSR-7J-vyr">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Wes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M6m-OX-X7E">
@@ -100,6 +100,69 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="l3B-ua-JKE">
                                 <rect key="frame" x="0.0" y="107" width="375" height="473"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="musicViewCell" id="veV-yO-O32" customClass="MusicViewCell" customModule="Repped" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="veV-yO-O32" id="khk-Gw-XWo">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Main" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mO9-uY-g1j">
+                                                    <rect key="frame" x="61" y="0.0" width="207" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Sub Text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xmF-Fk-9wb">
+                                                    <rect key="frame" x="61" y="22" width="207" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="207" id="C9W-zD-5lr"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gxj-eq-GGC">
+                                                    <rect key="frame" x="8" y="-2" width="45" height="45"/>
+                                                </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HCR-xj-7fW">
+                                                    <rect key="frame" x="330" y="2" width="37" height="37"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="37" id="NID-mN-Cqp"/>
+                                                    </constraints>
+                                                    <state key="normal" backgroundImage="lovec"/>
+                                                    <connections>
+                                                        <action selector="repButton:" destination="veV-yO-O32" eventType="touchUpInside" id="ktp-vV-hp6"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="HCR-xj-7fW" firstAttribute="top" secondItem="khk-Gw-XWo" secondAttribute="topMargin" constant="-6" id="0wD-3c-X8o"/>
+                                                <constraint firstItem="HCR-xj-7fW" firstAttribute="trailing" secondItem="khk-Gw-XWo" secondAttribute="trailingMargin" id="1T8-aw-T6P"/>
+                                                <constraint firstItem="mO9-uY-g1j" firstAttribute="leading" secondItem="Gxj-eq-GGC" secondAttribute="trailing" constant="8" id="8I4-uB-ynN"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="HCR-xj-7fW" secondAttribute="bottom" constant="-4" id="BtH-ka-B28"/>
+                                                <constraint firstItem="Gxj-eq-GGC" firstAttribute="bottom" secondItem="xmF-Fk-9wb" secondAttribute="bottom" id="Sxp-Js-YIJ"/>
+                                                <constraint firstItem="xmF-Fk-9wb" firstAttribute="leading" secondItem="Gxj-eq-GGC" secondAttribute="trailing" constant="8" id="Tam-Cr-TcR"/>
+                                                <constraint firstItem="mO9-uY-g1j" firstAttribute="top" secondItem="khk-Gw-XWo" secondAttribute="top" id="U6s-S4-udp"/>
+                                                <constraint firstItem="xmF-Fk-9wb" firstAttribute="trailing" secondItem="mO9-uY-g1j" secondAttribute="trailing" id="adX-r5-s1v"/>
+                                                <constraint firstItem="xmF-Fk-9wb" firstAttribute="bottom" secondItem="khk-Gw-XWo" secondAttribute="bottomMargin" id="de1-WS-axF"/>
+                                                <constraint firstItem="HCR-xj-7fW" firstAttribute="leading" secondItem="xmF-Fk-9wb" secondAttribute="trailing" constant="62" id="mLO-4l-Xjd"/>
+                                                <constraint firstItem="Gxj-eq-GGC" firstAttribute="leading" secondItem="khk-Gw-XWo" secondAttribute="leadingMargin" id="n3g-rm-u4E"/>
+                                                <constraint firstItem="xmF-Fk-9wb" firstAttribute="top" secondItem="khk-Gw-XWo" secondAttribute="topMargin" constant="6" id="sRu-QD-DP0"/>
+                                                <constraint firstItem="xmF-Fk-9wb" firstAttribute="leading" secondItem="mO9-uY-g1j" secondAttribute="leading" id="vf1-83-hsF"/>
+                                                <constraint firstItem="Gxj-eq-GGC" firstAttribute="top" secondItem="khk-Gw-XWo" secondAttribute="topMargin" constant="-10" id="zLj-EE-gHv"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="RepButtonOutlet" destination="HCR-xj-7fW" id="LC1-Mv-j5O"/>
+                                            <outlet property="img" destination="Gxj-eq-GGC" id="7u1-CF-r4w"/>
+                                            <outlet property="mainText" destination="mO9-uY-g1j" id="TTU-eU-9eX"/>
+                                            <outlet property="repButtonOutlet" destination="HCR-xj-7fW" id="3W3-M9-loH"/>
+                                            <outlet property="subTitle" destination="xmF-Fk-9wb" id="CeF-YY-zYb"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rke-SZ-obk">
                                 <rect key="frame" x="118" y="580" width="139" height="30"/>
@@ -303,6 +366,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="lovec" width="16" height="16"/>
         <image name="musicIcon" width="30" height="30"/>
         <image name="no_music" width="88" height="88"/>
         <image name="nowPlaying_next" width="16" height="16"/>

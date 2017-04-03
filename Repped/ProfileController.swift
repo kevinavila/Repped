@@ -55,6 +55,7 @@ class ProfileController: UIViewController {
         self.profileImage.layer.cornerRadius = self.profileImage.frame.size.width / 2
         self.profileImage.clipsToBounds = true
         self.profileImage.layer.borderWidth = 3.0
+        self.profileImage.layer.borderColor = UIColor(red:0.29, green:0.67, blue:0.75, alpha:1.0).cgColor
         
         isUserLive()
     }
@@ -63,7 +64,8 @@ class ProfileController: UIViewController {
         self.liveSymbol.layer.cornerRadius = self.liveSymbol.frame.size.width / 2
         self.liveSymbol.clipsToBounds = true
         self.liveSymbol.layer.borderWidth = 2.0
-        self.liveSymbol.backgroundColor = UIColor.white
+        self.liveSymbol.layer.borderColor = UIColor(red:0.29, green:0.67, blue:0.75, alpha:1.0).cgColor
+        self.liveSymbol.backgroundColor = UIColor(red:0.11, green:0.11, blue:0.11, alpha:1.0)
         
         self.joinRef.observeSingleEvent(of: .value, with: { (snapshot) -> Void in
             var lookupID = ""
@@ -75,7 +77,7 @@ class ProfileController: UIViewController {
 
             if (snapshot.hasChild(lookupID)) {
                 // User is online
-                self.liveSymbol.backgroundColor = UIColor.green
+                self.liveSymbol.backgroundColor = UIColor(red:0.18, green:0.80, blue:0.44, alpha:1.0)
             }
         })
     }

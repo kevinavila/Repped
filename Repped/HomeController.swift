@@ -57,6 +57,7 @@ class HomeController: UITableViewController {
             self.global.user = User(userDict: savedUser as! [String:Any])
             self.global.user?.profilePicture = self.returnProfilePic((self.global.user?.uid)!)
             self.offlineFriendList = (self.global.user?.friendsList)!
+            self.getFriends()
         } else {
             self.userRef.observeSingleEvent(of: .value, with: { (snapshot) -> Void in
                 
@@ -65,6 +66,7 @@ class HomeController: UITableViewController {
                     let results = snapshot.value as! Dictionary<String, AnyObject>
                     let userData = results[FBSDKAccessToken.current().userID] as! Dictionary<String, AnyObject>
                     self.setUser(userData: userData)
+                    self.getFriends()
                 } else {
                     print("makin new user")
                     // initialize new user
@@ -107,7 +109,7 @@ class HomeController: UITableViewController {
             self.global.user?.friendsList.update(other: friendList)
             self.offlineFriendList = (self.global.user?.friendsList)!
             
-            //update firebase
+            // Update firebase
             self.userRef.child("\((self.global.user?.uid)!)/friends").setValue(friendList)
         }
         
@@ -355,7 +357,11 @@ class HomeController: UITableViewController {
         
         
         toast("You are now friends with \(self.friendRequests[friendID]!)!")
+        
+        // Local updates
+        self.global.user?.friendsList.updateValue(self.friendRequests[friendID]!, forKey: friendID)
         self.friendRequests.removeValue(forKey: friendID)
+        self.global.user?.friendRequests.removeValue(forKey: friendID)
         self.tableView.reloadData()
     }
     
@@ -371,6 +377,7 @@ class HomeController: UITableViewController {
         
         toast("Declined \(self.friendRequests[friendID]!).")
         self.friendRequests.removeValue(forKey: friendID)
+        self.global.user?.friendRequests.removeValue(forKey: friendID)
         self.tableView.reloadData()
 
     }

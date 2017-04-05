@@ -51,11 +51,8 @@ class HomeController: UITableViewController {
         //breaking because I dont have the friend list first
         //self.offlineFriendList = self.sampleData.testFriendList
         
-        //TODO we need to figure out have to save the user info instead of pulling all this info
-        //takes to long each time
-        //AND/OR move this to appdelagete
-        
         if let savedUser = defaults.object(forKey: "User"){
+            // When do we update the user saved in defaults? (e.g. if user changes their FB pic)
             print("user was loaded from User Defaults")
             print(savedUser)
             self.global.user = User(userDict: savedUser as! [String:Any])
@@ -70,21 +67,13 @@ class HomeController: UITableViewController {
                     let results = snapshot.value as! Dictionary<String, AnyObject>
                     let userData = results[FBSDKAccessToken.current().userID] as! Dictionary<String, AnyObject>
                     self.setUser(userData: userData)
-                    self.getFriends()
                 } else {
-                    print("makin new user")
-                    // initialize new user
+                    print("making new user")
+                    // Initialize new user
                     self.newUser()
                 }
             })
         }
-        
-        
-        
-        
-        //only run if user already exists in Firebase, checking for new friends
-        //self.getFriends()
-        
         
         self.observeRooms()
         
@@ -92,30 +81,26 @@ class HomeController: UITableViewController {
     }
  
     private func getFriends(){
-        let params = ["fields": "id, name"]
-        FBSDKGraphRequest(graphPath: "me/friends", parameters: params).start { (connection, result , error) -> Void in
-            
-            var friendList: [String:String] = [:]
-            
-            if error != nil {
-                print("wes_ error: ", error!)
-            } else {
-                let resultdict = result as! NSDictionary
-                let data : NSArray = resultdict.object(forKey: "data") as! NSArray
-  
-                for entry in data {
-                    let valueDict : NSDictionary = entry as! NSDictionary
-                    let id = valueDict.object(forKey: "id") as! String
-                    let name = valueDict.object(forKey: "name") as! String
-                    friendList[id] = name
-                }
+        // Update user friends and requests
+        let specficUserRef = userRef.child((self.global.user?.uid)!)
+        specficUserRef.observeSingleEvent(of: .value, with: { (snapshot) -> Void in
+            let userData = snapshot.value as! Dictionary<String, AnyObject>
+            if (userData["friends"] != nil) {
+                self.global.user?.friendsList = userData["friends"] as! [String : String]
+                self.offlineFriendList = (self.global.user?.friendsList)!
             }
-            self.global.user?.friendsList.update(other: friendList)
-            self.offlineFriendList = (self.global.user?.friendsList)!
+            if (userData["requests"] != nil) {
+                self.global.user?.friendRequests = userData["requests"] as! [String : String]
+                self.friendRequests = (self.global.user?.friendRequests)!
+            }
+            if (userData["sentRequests"] != nil) {
+                self.global.user?.sentRequests = userData["sentRequests"] as! [String : String]
+            }
+            //self.global.user?.profilePicture = self.returnProfilePic(userData["id"] as! String)
             
-            // Update firebase
-            self.userRef.child("\((self.global.user?.uid)!)/friends").setValue(friendList)
-        }
+            self.defaults.set(self.global.user?.deconstructUser(), forKey: "User")
+            
+        })
         
         
     }
@@ -128,13 +113,6 @@ class HomeController: UITableViewController {
         if (userData["friends"] != nil) {
             self.global.user?.friendsList = userData["friends"] as! [String : String]
             self.offlineFriendList = (self.global.user?.friendsList)!
-            
-            //TODO REMOVE ADDINGMORE FRIENDS
-            //for (key,value) in self.sampleData.testFriendList {
-            //  self.global.user?.friendsList.updateValue(value, forKey:key)
-            //}
-            //must not override the removed friends
-            //self.offlineFriendList = (self.global.user?.friendsList)!
         }
         if (userData["requests"] != nil) {
             self.global.user?.friendRequests = userData["requests"] as! [String : String]

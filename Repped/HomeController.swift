@@ -52,13 +52,13 @@ class HomeController: UITableViewController {
         //self.offlineFriendList = self.sampleData.testFriendList
         
         if let savedUser = defaults.object(forKey: "User"){
-            // When do we update the user saved in defaults? (e.g. if user changes their FB pic)
+            // When do we update the user saved in defaults? (e.g. if their friends list updates?)
             print("user was loaded from User Defaults")
             print(savedUser)
             self.global.user = User(userDict: savedUser as! [String:Any])
             self.global.user?.profilePicture = self.returnProfilePic((self.global.user?.uid)!)
             self.offlineFriendList = (self.global.user?.friendsList)!
-            self.getFriends()
+            //self.getFriends()
         } else {
             self.userRef.observeSingleEvent(of: .value, with: { (snapshot) -> Void in
                 

@@ -21,7 +21,7 @@ extension Dictionary {
 class HomeController: UITableViewController {
     
     //MARK: Properties
-    private var rooms:[Room] = []
+    private var rooms:[String:Room] = [:]
     private var onlinefriends:[User] = []
     private var offlineFriendList:[String:String] = [:]
     private var friendRequests:[String:String] = [:]
@@ -32,7 +32,7 @@ class HomeController: UITableViewController {
     private var joinRefHandle:FIRDatabaseHandle?
     
     var global:Global = Global.sharedGlobal
-    //Use for Testing only
+    // Use for Testing only
     let sampleData:SampleData = SampleData.sharedSample
     let defaults = UserDefaults.standard
     
@@ -46,29 +46,29 @@ class HomeController: UITableViewController {
         self.navigationController?.navigationBar.isTranslucent = false
         
        
-        //Use for testing
-        //sampleData.makeSampleUsers()
-        //breaking because I dont have the friend list first
-        //self.offlineFriendList = self.sampleData.testFriendList
+        // Use for testing
+//        sampleData.makeSampleUsers()
+//        self.offlineFriendList = self.sampleData.testFriendList
         
-        if let savedUser = defaults.object(forKey: "User"){
+        if let savedUser = defaults.object(forKey: "User") {
             // When do we update the user saved in defaults? (e.g. if their friends list updates?)
-            print("user was loaded from User Defaults")
+            print("User was loaded from User Defaults")
             print(savedUser)
             self.global.user = User(userDict: savedUser as! [String:Any])
             self.global.user?.profilePicture = self.returnProfilePic((self.global.user?.uid)!)
             self.offlineFriendList = (self.global.user?.friendsList)!
-            //self.getFriends()
+            self.getFriends()
         } else {
             self.userRef.observeSingleEvent(of: .value, with: { (snapshot) -> Void in
                 
                 if (snapshot.hasChild(FBSDKAccessToken.current().userID)) {
-                    print("user was loaded from firbase")
+                    print("User was loaded from Firbase")
                     let results = snapshot.value as! Dictionary<String, AnyObject>
                     let userData = results[FBSDKAccessToken.current().userID] as! Dictionary<String, AnyObject>
                     self.setUser(userData: userData)
+                    self.observeJoinTable()
                 } else {
-                    print("making new user")
+                    print("Making new user")
                     // Initialize new user
                     self.newUser()
                 }
@@ -76,8 +76,6 @@ class HomeController: UITableViewController {
         }
         
         self.observeRooms()
-        
-        self.observeJoinTable()
     }
  
     private func getFriends(){
@@ -96,10 +94,9 @@ class HomeController: UITableViewController {
             if (userData["sentRequests"] != nil) {
                 self.global.user?.sentRequests = userData["sentRequests"] as! [String : String]
             }
-            //self.global.user?.profilePicture = self.returnProfilePic(userData["id"] as! String)
             
             self.defaults.set(self.global.user?.deconstructUser(), forKey: "User")
-            
+            self.observeJoinTable()
         })
         
         
@@ -124,7 +121,7 @@ class HomeController: UITableViewController {
         self.global.user?.profilePicture = self.returnProfilePic(userData["id"] as! String)
        
         self.defaults.set(self.global.user?.deconstructUser(), forKey: "User")
-        print("saving user to defaults 1")
+        print("Saving user to defaults 1")
     }
     
     private func newUser(){
@@ -151,7 +148,7 @@ class HomeController: UITableViewController {
                     
                     
                     self.defaults.set(self.global.user?.deconstructUser(), forKey: "User")
-                    print("saving user to defaults 2")
+                    print("Saving user to defaults 2")
                 }
             })
         }
@@ -189,8 +186,9 @@ class HomeController: UITableViewController {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "homeViewCell", for: indexPath) as! HomeViewCell
             if (indexPath.row < onlinefriends.count) {
-                cell.friendName.text = onlinefriends[(indexPath as IndexPath).row].name
-                cell.roomName.text = onlinefriends[(indexPath as IndexPath).row].currentRoom?.name
+                let friend = onlinefriends[(indexPath as IndexPath).row]
+                cell.friendName.text = friend.name
+                cell.roomName.text = rooms[friend.rid!]?.name
                 return cell
             }
         } else if indexPath.section == 1 {
@@ -235,31 +233,26 @@ class HomeController: UITableViewController {
         if indexPath.section == 0 {
             let friend = onlinefriends[(indexPath as IndexPath).row]
         
-            var room:Room?
-            for indexedRoom in rooms {
-                if friend.rid == indexedRoom.rid {
-                    room = indexedRoom
-                }
-            }
-        
-            print("self.global.room", self.global.room?.rid)
+            let room = rooms[friend.rid!]
+
+            print("self.global.room", (self.global.room?.rid)!)
             if (self.global.room != nil) {
                 if (self.global.room?.rid != room?.rid) {
-                    print("joing room not already in")
+                    print("Joing a new room")
                     // User is attempting to joining a new room
                     if (self.global.room?.leader != self.global.user?.uid) {
-                    
                         userLeavingRoom()
                         userJoiningRoom(room: room!)
                         self.performSegue(withIdentifier: "showRoom", sender: room)
                     } else {
                         if (self.global.room?.isEmpty)! {
+                            // User is leader of their room but it's empty. Let them join the other room and destroy their current one
                             let oldRid = self.global.room?.rid
                             userLeavingRoom()
                             userJoiningRoom(room: room!)
                             roomRef.child(oldRid!).removeValue()
-                            self.performSegue(withIdentifier: "showRoom", sender: room)                    }
-                        // User is leader of their current room. Do something.
+                            self.performSegue(withIdentifier: "showRoom", sender: room)
+                        }
                     
                     }
                 } else {
@@ -365,6 +358,8 @@ class HomeController: UITableViewController {
         self.userRef.child("\(friendID)/sentRequests/\((self.global.user?.uid)!)").removeValue()
         
         toast("Declined \(self.friendRequests[friendID]!).")
+        
+        // Local updates
         self.friendRequests.removeValue(forKey: friendID)
         self.global.user?.friendRequests.removeValue(forKey: friendID)
         self.tableView.reloadData()
@@ -403,14 +398,7 @@ class HomeController: UITableViewController {
                 self.performSegue(withIdentifier: "showRoom", sender: self.global.room)
             }
             
-            for friend in self.onlinefriends {
-                if (rid == friend.rid!) {
-                    friend.currentRoom = room
-                }
-            }
-            
-            self.rooms.append(room)
-            self.tableView.reloadData()
+            self.rooms.updateValue(room, forKey: rid)
         })
     }
     
@@ -418,9 +406,8 @@ class HomeController: UITableViewController {
         // Observe for any changes made to the rooms in the Firebase DB
         // What about when a room is destroyed?
         joinRefHandle = joinRef.observe(.childAdded, with: { (snapshot) -> Void in
-            
             let rid = snapshot.value as! String
-            let uid = snapshot.key as! String
+            let uid = snapshot.key 
 
             
             if let name = self.offlineFriendList[uid] {

@@ -67,6 +67,7 @@ class HomeController: UITableViewController {
                     let userData = results[FBSDKAccessToken.current().userID] as! Dictionary<String, AnyObject>
                     self.setUser(userData: userData)
                     self.observeJoinTable()
+                    self.observeRep()
                 } else {
                     print("Making new user")
                     // Initialize new user
@@ -97,6 +98,7 @@ class HomeController: UITableViewController {
             
             self.defaults.set(self.global.user?.deconstructUser(), forKey: "User")
             self.observeJoinTable()
+            self.observeRep()
         })
         
         
@@ -421,6 +423,18 @@ class HomeController: UITableViewController {
             }
             
             self.tableView.reloadData()
+        })
+    }
+    
+    // Listen for changes in user's rep
+    private func observeRep() {
+        var userRepHandle:FIRDatabaseHandle?
+        let repUserRef = userRef.child("\((self.global.user?.uid)!)/rep")
+        userRepHandle = repUserRef.observe(.value, with: { (snapshot) -> Void in
+            let rep = snapshot.value as! Int
+            print("Did my rep change? \(String(rep))")
+            self.global.user?.rep = rep
+            self.defaults.set(self.global.user?.deconstructUser(), forKey: "User")
         })
     }
 

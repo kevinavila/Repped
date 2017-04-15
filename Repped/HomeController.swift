@@ -237,7 +237,7 @@ class HomeController: UITableViewController {
         
             let room = rooms[friend.rid!]
 
-            print("self.global.room", (self.global.room?.rid)!)
+            print("Current global room: \(self.global.room?.rid)")
             if (self.global.room != nil) {
                 if (self.global.room?.rid != room?.rid) {
                     print("Joing a new room")
@@ -254,8 +254,9 @@ class HomeController: UITableViewController {
                             userJoiningRoom(room: room!)
                             roomRef.child(oldRid!).removeValue()
                             self.performSegue(withIdentifier: "showRoom", sender: room)
+                        } else {
+                            // User is leader of their room and there are listneners. Show message saying they must end room to leave
                         }
-                    
                     }
                 } else {
                     self.performSegue(withIdentifier: "showRoom", sender: room)

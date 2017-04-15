@@ -51,7 +51,6 @@ class RoomController: UITableViewController  {
         
         observeListeners()
         observeRooms()
-        fillOutListeners()
     }
     
     private func showPop(){
@@ -116,31 +115,29 @@ class RoomController: UITableViewController  {
     
 
 
-//        MARK: Firebase Functions
+    //MARK: Firebase Functions
     private func observeListeners() {
-        print("wes_   in RoomController observeListeners")
-        // Observe for any changes made to the rooms in the Firebase DB
+        // Observer to update listeners for this room
         joinRefHandle = joinRef.observe(.value, with: { (snapshot) -> Void in
-            var updateListener:[User] = []
-            print ("wes_  observing")
+            var updateListeners:[User] = []
             
             for item in snapshot.children {
                 let snapshot = item as! FIRDataSnapshot
                 let uid = snapshot.key
                 let rid = snapshot.value as! String
                 if rid == self.global.room?.rid {
-                    print("wes_ appending to listeners")
-                    print ("wes_  uid: " + uid + " rid: " + rid)
-                    updateListener.append(User(uid: uid, name: ""))
+                    print("Appending to listeners")
+                    print ("uid: " + uid + " rid: " + rid)
+                    updateListeners.append(User(uid: uid, name: ""))
                 }
             }
-            self.listeners = updateListener
+            self.listeners = updateListeners
+            self.fillOutListeners()
         })
     }
     
-    //MARK: Firebase Functions
     private func observeRooms() {
-        // Listening for changes to y room for sonf
+        // Listening for changes to my room
         currentRoomRefHandle = currentRoomRef?.observe(.value, with: { (snapshot) -> Void in
             
             let roomData = snapshot.value as! Dictionary<String, AnyObject>
@@ -160,7 +157,7 @@ class RoomController: UITableViewController  {
                         }
                     }
                 }
-                if self.global.isLeader != (self.global.room?.leader == self.global.user?.uid){
+                if self.global.isLeader != (self.global.room?.leader == self.global.user?.uid) {
                     self.global.isLeader = (self.global.room?.leader == self.global.user?.uid)
                     self.tableView.reloadData()
                 }
@@ -168,34 +165,25 @@ class RoomController: UITableViewController  {
         })
     }
     
-    //MARK: Firebase Functions
     private func fillOutListeners() {
-        // Listening for changes to y room for sonf
         userRefHandle = userRef.observe(.childAdded, with: { (snapshot) -> Void in
             
             let uid = snapshot.key
             let value = snapshot.value
             
-            //need to hanbdle errors for optionals -> if let ...
+            // Need to hanbdle errors for optionals -> if let ...
             let userData = value as! [String:Any]
-            
-       //     let user = [
-       //         "name": userData["name"] as! String,
-       //         "email": userData["email"] as! String,
-       //         "rep":  userData["rep"] as! Int,
-       //        "id": userData["id"] as! String
-       //     ] as [String:Any]
             
             //TODO figure out why this doesnt work on the first time
             for curUser in self.listeners {
                 if curUser.uid == uid {
                     curUser.name = (userData["name"] as? String)!
-                    print("listner name_ ", curUser.name)
+                    print("Listner name: \(curUser.name)")
                     curUser.profilePicture = self.returnProfilePic(uid)
                 }
             }
             
-            self.global.room?.isEmpty = (self.listeners.count > 1)
+            self.global.room?.isEmpty = !(self.listeners.count > 1)
             self.tableView.reloadData()
         })
     }

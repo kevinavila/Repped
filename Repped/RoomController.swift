@@ -73,19 +73,20 @@ class RoomController: UITableViewController  {
         return listeners.count
     }
     
-    //when I try to implement the custom cell it brakes. cant figure out why
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("here")
         let cell = tableView.dequeueReusableCell(withIdentifier: "roomViewCell", for: indexPath) as! RoomViewCell
-        if let rowData: User = self.listeners[(indexPath as IndexPath).row]{
+        if let rowData:User = self.listeners[(indexPath as IndexPath).row] {
             cell.listenerLabel.text = rowData.name
+            cell.listenerPic.layer.cornerRadius = cell.listenerPic.frame.size.width / 2
+            cell.listenerPic.clipsToBounds = true
+            cell.listenerPic.image = rowData.profilePicture
             
             if (rowData.uid == self.global.user?.uid) {
                 cell.makeLeaderLabel.isHidden = true
                 
-            } else if(self.global.isLeader){
+            } else if (self.global.isLeader) {
                 cell.makeLeaderLabel.isHidden = false
-                //Make Leader Button
+                // Make Leader Button
                 cell.tapAction = { (cell) in
                     print("just tapped the button for ", (indexPath as IndexPath).row)
                     self.makeLeader(rowData)
@@ -174,7 +175,6 @@ class RoomController: UITableViewController  {
             // Need to hanbdle errors for optionals -> if let ...
             let userData = value as! [String:Any]
             
-            //TODO figure out why this doesnt work on the first time
             for curUser in self.listeners {
                 if curUser.uid == uid {
                     curUser.name = (userData["name"] as? String)!

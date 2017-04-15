@@ -10,6 +10,7 @@ import UIKit
 
 class RoomViewCell: UITableViewCell {
     @IBOutlet weak var listenerLabel: UILabel!
+    @IBOutlet weak var listenerPic: UIImageView!
     @IBOutlet weak var makeLeaderLabel: UIButton!
     
     var tapAction: ((UITableViewCell) -> Void)?

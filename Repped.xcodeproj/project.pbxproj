@@ -18,7 +18,7 @@
 		BC95F5831E7219FC003011B3 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC95F5821E7219FC003011B3 /* Profile.storyboard */; };
 		BC95F5851E721CF0003011B3 /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC95F5841E721CF0003011B3 /* ProfileController.swift */; };
 		BC9ED4281E6B5731002A8FBE /* MusicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9ED4271E6B5731002A8FBE /* MusicController.swift */; };
-		BCF20C7C1E91A6C700BBC135 /* MusicViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF20C7B1E91A6C700BBC135 /* MusicViewCell.swift */; };
+		BCF20C7C1E91A6C700BBC135 /* RecentlyPlayedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF20C7B1E91A6C700BBC135 /* RecentlyPlayedCell.swift */; };
 		C89F9DEB8D56D48322769E84 /* Pods_ReppedUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BEE666B8E8AC1F90BDD6477 /* Pods_ReppedUITests.framework */; };
 		DB1A2ECF1E8CEB0E006DB539 /* HomeViewRequestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1A2ECE1E8CEB0C006DB539 /* HomeViewRequestCell.swift */; };
 		DB1F47021E62607400F0FFEC /* Room.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB1F47011E62607400F0FFEC /* Room.storyboard */; };
@@ -76,7 +76,7 @@
 		BC95F5821E7219FC003011B3 /* Profile.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		BC95F5841E721CF0003011B3 /* ProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
 		BC9ED4271E6B5731002A8FBE /* MusicController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicController.swift; sourceTree = "<group>"; };
-		BCF20C7B1E91A6C700BBC135 /* MusicViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicViewCell.swift; sourceTree = "<group>"; };
+		BCF20C7B1E91A6C700BBC135 /* RecentlyPlayedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentlyPlayedCell.swift; sourceTree = "<group>"; };
 		BDBCB15701519444437FA42C /* Pods-ReppedTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReppedTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReppedTests/Pods-ReppedTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D9F0FE0FA5ADD3716E537AAE /* Pods_ReppedTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReppedTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB1A2ECE1E8CEB0C006DB539 /* HomeViewRequestCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewRequestCell.swift; sourceTree = "<group>"; };
@@ -203,7 +203,7 @@
 				DB3B28DC1E63E55000AB6C18 /* HomeViewCell.swift */,
 				DB54CD9D1E922BF2000A3B6E /* HomeViewOfflineCell.swift */,
 				DB1A2ECE1E8CEB0C006DB539 /* HomeViewRequestCell.swift */,
-				BCF20C7B1E91A6C700BBC135 /* MusicViewCell.swift */,
+				BCF20C7B1E91A6C700BBC135 /* RecentlyPlayedCell.swift */,
 				BC749A051E6B6D22001E21D9 /* RoomViewCell.swift */,
 				BC89AB5B1E71E2FD003244FA /* Global.swift */,
 				BC810C7B1E85A7F100DC8493 /* SampleData.swift */,
@@ -538,7 +538,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB1F47041E6261FA00F0FFEC /* RoomController.swift in Sources */,
-				BCF20C7C1E91A6C700BBC135 /* MusicViewCell.swift in Sources */,
+				BCF20C7C1E91A6C700BBC135 /* RecentlyPlayedCell.swift in Sources */,
 				DBC80E911E4B840E00A3CCBC /* LoginController.swift in Sources */,
 				BC9ED4281E6B5731002A8FBE /* MusicController.swift in Sources */,
 				DB1A2ECF1E8CEB0E006DB539 /* HomeViewRequestCell.swift in Sources */,
@@ -723,6 +723,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.audiophiles.Repped;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -743,6 +744,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.audiophiles.Repped;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

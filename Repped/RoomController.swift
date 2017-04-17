@@ -148,11 +148,11 @@ class RoomController: UITableViewController  {
                 //might need to do something if leader changed
                 if let _ = roomData["songID"] {
                     if (roomData["songID"] as! String) != self.global.room?.songID {
-                        print("wes_ seting new song0")
+                        print("Setting song")
                         self.global.room?.songID = roomData["songID"] as! String
-                       self.global.systemMusicPlayer.setQueueWithStoreIDs([(self.global.room?.songID)!])
+                        self.global.systemMusicPlayer.setQueueWithStoreIDs([(self.global.room?.songID)!])
                         self.global.systemMusicPlayer.play()
-                        self.global.song = Song(trackId: (self.global.room?.songID)!){
+                        self.global.song = Song(trackId: (self.global.room?.songID)!) {
                             print("completion handler?")
                             self.showPop()
                         }

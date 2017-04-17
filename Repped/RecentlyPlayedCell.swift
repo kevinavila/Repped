@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MusicViewCell: UITableViewCell {
+class RecentlyPlayedCell: UITableViewCell {
     
     @IBOutlet weak var img: UIImageView!
     @IBOutlet weak var mainText: UILabel!
@@ -17,7 +17,7 @@ class MusicViewCell: UITableViewCell {
     
     var tapAction: ((UITableViewCell) -> Void)?
     
-    @IBAction func repButton(_ sender: Any) {
+    @IBAction func clickedRep(_ sender: Any) {
         print("clicked Rep")
         tapAction?(self)
     }

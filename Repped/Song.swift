@@ -10,14 +10,16 @@ import Alamofire
 
 
 internal class Song {
-    internal var artWork: UIImage?
+    internal var artWorkLarge: UIImage?
+    internal var artWorkSmall: UIImage?
     internal var trackName: String?
     internal var artistName: String?
     internal let trackId: String?
     
     
-    init(artWork: UIImage?, trackName: String?, artistName: String?,trackId: String?) {
-        self.artWork = artWork
+    init(artWorkSmall: UIImage?, artWorkLarge: UIImage?, trackName: String?, artistName: String?,trackId: String?) {
+        self.artWorkSmall = artWorkSmall
+        self.artWorkLarge = artWorkLarge
         self.trackName = trackName
         self.artistName = artistName
         self.trackId = trackId
@@ -36,7 +38,12 @@ internal class Song {
                             let info =  songResults[0]
                             let urlString = info["artworkUrl60"] as? String
                             let imgURL = URL(string: urlString!)
-                            self.artWork = UIImage(data: try! Data(contentsOf: imgURL!))
+                            self.artWorkSmall = UIImage(data: try! Data(contentsOf: imgURL!))
+                            
+                            let urlStringLarge = info["artworkUrl100"] as? String
+                            let imgURLLarge = URL(string: urlStringLarge!)
+                            self.artWorkLarge = UIImage(data: try! Data(contentsOf: imgURLLarge!))
+                            
                             self.trackName = info["trackName"] as! String
                             self.artistName = info["artistName"] as! String
                             
@@ -45,7 +52,7 @@ internal class Song {
                     }
                 case .failure(_):
                     print("Error in finding song info")
-                    self.artWork = #imageLiteral(resourceName: "noprofile")
+                    self.artWorkSmall = #imageLiteral(resourceName: "noprofile")
                     self.trackName = "That song"
                     self.artistName = "Rick Astley"
                 }
@@ -64,7 +71,12 @@ internal class Song {
                             let info =  songResults[0]
                             let urlString = info["artworkUrl60"] as? String
                             let imgURL = URL(string: urlString!)
-                            self.artWork = UIImage(data: try! Data(contentsOf: imgURL!))
+                            self.artWorkSmall = UIImage(data: try! Data(contentsOf: imgURL!))
+                            
+                            let urlStringLarge = info["artworkUrl100"] as? String
+                            let imgURLLarge = URL(string: urlStringLarge!)
+                            self.artWorkLarge = UIImage(data: try! Data(contentsOf: imgURLLarge!))
+                            
                             self.trackName = info["trackName"] as! String
                             self.artistName = info["artistName"] as! String
                             

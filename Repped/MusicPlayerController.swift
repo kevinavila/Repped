@@ -39,8 +39,8 @@ class MusicPlayerController: UIViewController {
         songNameLabel.text = (self.global.song?.trackName)!
         popupItem.title = (self.global.song?.trackName)!
         
-        albumArtImageView.image = (self.global.song?.artWork)!
-        popupItem.image = (self.global.song?.artWork)!
+        albumArtImageView.image = (self.global.song?.artWorkLarge)!
+        popupItem.image = (self.global.song?.artWorkSmall)!
         
         albumNameLabel.text = (self.global.song?.artistName)!
         popupItem.subtitle = (self.global.song?.artistName)!

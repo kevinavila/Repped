@@ -106,6 +106,7 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
         return nil
     }
     
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if ((searchController?.isActive)! && searchController?.searchBar.text != "") {
@@ -125,7 +126,7 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
             let cell = tableView.dequeueReusableCell(withIdentifier: "recentlyPlayedCell", for: indexPath) as! RecentlyPlayedCell
             cell.mainText.text = self.global.previousSongs[indexPath.row].trackName
             cell.subTitle.text = self.global.previousSongs[indexPath.row].artistName
-            cell.img.image = self.global.previousSongs[indexPath.row].artWork
+            cell.img.image = self.global.previousSongs[indexPath.row].artWorkSmall
             
             if self.reppedSong(trackID: self.global.previousSongs[indexPath.row].trackId!) {
                 print("seting img loved")
@@ -153,7 +154,7 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
                 print ("DISPLAYING USER's QUEUE")
                 let cell  = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: nil)
                 let song = self.global.queue[indexPath.row]
-                cell.imageView?.image = song.artWork
+                cell.imageView?.image = song.artWorkSmall
                 cell.textLabel?.text = song.trackName
                 cell.detailTextLabel?.text = song.artistName
                 return cell
@@ -170,13 +171,16 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
             let rowData = self.songResults[indexPath.row] as NSDictionary
             let urlString = rowData["artworkUrl60"] as? String
             let imgURL = URL(string: urlString!)
+            let urlStringLarge = rowData["artworkUrl100"] as? String
+            let imgURLLarge = URL(string: urlStringLarge!)
             
             do {
-                let imgData = try Data(contentsOf: imgURL!)
+                let imgDataSmall = try Data(contentsOf: imgURL!)
+                let imgDataLarge = try Data(contentsOf: imgURLLarge!)
                 self.global.idQueue.append(String (describing: rowData["trackId"]!))
                 //print("id Queue ",self.global.idQueue)
                 //self.global.systemMusicPlayer.setQueueWithStoreIDs(self.global.idQueue)
-                self.global.queue.append(Song(artWork: UIImage(data: imgData), trackName: rowData["trackName"] as? String, artistName: rowData["artistName"] as? String, trackId: String (describing: rowData["trackId"]!)))
+                self.global.queue.append(Song(artWorkSmall: UIImage(data: imgDataSmall),artWorkLarge:  UIImage(data: imgDataLarge), trackName: rowData["trackName"] as? String, artistName: rowData["artistName"] as? String, trackId: String (describing: rowData["trackId"]!)))
                 toast("Added track!")
                 tableView.deselectRow(at: indexPath, animated: true)
                 

@@ -156,6 +156,8 @@ class RoomController: UITableViewController  {
                             print("completion handler?")
                             self.showPop()
                         }
+                    }else{
+                        self.showPop()
                     }
                 }
                 if self.global.isLeader != (self.global.room?.leader == self.global.user?.uid) {

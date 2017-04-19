@@ -130,10 +130,10 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
             
             if self.reppedSong(trackID: self.global.previousSongs[indexPath.row].trackId!) {
                 print("seting img loved")
-                cell.repButtonOutlet.imageView?.image = #imageLiteral(resourceName: "loved")
+                cell.repButtonOutlet.setImage(#imageLiteral(resourceName: "loved"), for: .normal)
             } else {
                 print("seting img lovec")
-                cell.repButtonOutlet.imageView?.image = #imageLiteral(resourceName: "lovec")
+                cell.repButtonOutlet.setImage(#imageLiteral(resourceName: "lovec"), for: .normal)
             }
             
             cell.tapAction = { (cell) in
@@ -142,7 +142,7 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
                     print("Repped already boy.")
                 } else {
                     self.clickedRep(cell: (cell as! RecentlyPlayedCell))
-                    (cell as! RecentlyPlayedCell).repButtonOutlet.imageView?.image = #imageLiteral(resourceName: "loved")
+                    (cell as! RecentlyPlayedCell).repButtonOutlet.setImage(#imageLiteral(resourceName: "loved"), for: .normal) 
                 }
                 
             }

@@ -16,17 +16,11 @@ class Global {
     static let sharedGlobal = Global()
     
     var queue: [Song] = []
+    var previousSongs = [] as [Song]
     var idQueue: [String] = []
     var repHistory: [String:String] = [:]  //trackId leaderUID
     let systemMusicPlayer = MPMusicPlayerController.systemMusicPlayer()
     
-    private init() {
-        print("MyClass Initialized")
-    }
-    
-    var thing:Int = 7
-    
-    var testString: String="Test" //for debugging
     
     var user:User? = nil
     
@@ -35,6 +29,10 @@ class Global {
     var song:Song? = nil
     
     var isLeader:Bool = false
+    
+    public func isSongPlaying() -> Bool{
+        return self.systemMusicPlayer.playbackState == MPMusicPlaybackState.playing
+    }
     
 }
 

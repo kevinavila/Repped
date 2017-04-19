@@ -22,7 +22,7 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
     
     var currentRoom: Room? = nil
     var songResults = [] as [NSDictionary]
-    var previousSongs = [] as [Song]
+    
     
     private lazy var roomRef:FIRDatabaseReference = FIRDatabase.database().reference().child("rooms")
     private lazy var userRef:FIRDatabaseReference = FIRDatabase.database().reference().child("users")
@@ -80,8 +80,8 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
             return 10
         } else if (section == 0) {
             // Recently played: limit this to 5
-            if (self.previousSongs.count < 5) {
-                return self.previousSongs.count
+            if (self.global.previousSongs.count < 5) {
+                return self.global.previousSongs.count
             }
             return 5
         } else {
@@ -123,11 +123,11 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
         } else if (indexPath.section == 0) {
             // Recently played
             let cell = tableView.dequeueReusableCell(withIdentifier: "recentlyPlayedCell", for: indexPath) as! RecentlyPlayedCell
-            cell.mainText.text = self.previousSongs[indexPath.row].trackName
-            cell.subTitle.text = self.previousSongs[indexPath.row].artistName
-            cell.img.image = self.previousSongs[indexPath.row].artWork
+            cell.mainText.text = self.global.previousSongs[indexPath.row].trackName
+            cell.subTitle.text = self.global.previousSongs[indexPath.row].artistName
+            cell.img.image = self.global.previousSongs[indexPath.row].artWork
             
-            if self.reppedSong(trackID: self.previousSongs[indexPath.row].trackId!) {
+            if self.reppedSong(trackID: self.global.previousSongs[indexPath.row].trackId!) {
                 print("seting img loved")
                 cell.repButtonOutlet.imageView?.image = #imageLiteral(resourceName: "loved")
             } else {
@@ -137,7 +137,7 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
             
             cell.tapAction = { (cell) in
                 print("Just tapped the button for ", (indexPath as IndexPath).row)
-                if self.reppedSong(trackID: self.previousSongs[indexPath.row].trackId!) {
+                if self.reppedSong(trackID: self.global.previousSongs[indexPath.row].trackId!) {
                     print("Repped already boy.")
                 } else {
                     self.clickedRep(cell: (cell as! RecentlyPlayedCell))
@@ -399,7 +399,7 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
                 if let _ = roomData["previouslyPlayed"] {
                     let songIDs = roomData["previouslyPlayed"] as! [String]
                     for id in songIDs {
-                        self.previousSongs.append(Song(trackId: id){
+                        self.global.previousSongs.append(Song(trackId: id){
                             self.tableView.reloadData()
                         })
                     }

@@ -241,6 +241,8 @@ class HomeController: UITableViewController {
             if (self.global.room != nil) {
                 if (self.global.room?.rid != room?.rid) {
                     print("Joing a new room")
+                    //New previous Song List 
+                    self.global.previousSongs = [Song]()
                     // User is attempting to joining a new room
                     if (self.global.room?.leader != self.global.user?.uid) {
                         userLeavingRoom()

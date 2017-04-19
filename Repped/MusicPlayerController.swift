@@ -49,6 +49,19 @@ class MusicPlayerController: UIViewController {
         self.timer?.tolerance = 0.1
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        if self.global.isLeader {
+            self.skipRepOutlet.setImage(#imageLiteral(resourceName: "nextFwd"), for: .normal)
+        } else {
+            if self.reppedSong() {
+                skipRepOutlet.setImage(#imageLiteral(resourceName: "loved"), for: .normal)
+            } else {
+                skipRepOutlet.setImage(#imageLiteral(resourceName: "lovec"), for: .normal)
+            }
+            
+        }
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
@@ -79,13 +92,32 @@ class MusicPlayerController: UIViewController {
     }
     
     @IBAction func playPauseButton(_ sender: Any) {
-         print("mute")
-        print("play")
+        if self.global.isSongPlaying() {
+            self.global.systemMusicPlayer.pause()
+            //switch image
+            self.playPauseOutlet.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+        }else{
+            self.global.systemMusicPlayer.play()
+            //switch image
+            self.playPauseOutlet.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+        }
     }
+
     
     @IBAction func skipRepButton(_ sender: Any) {
         if self.global.isLeader {
-            //button hould show skipped and function as skip
+            if self.global.queue.isEmpty {
+                print("First add a song to the queue")
+                
+            } else {
+                let song = self.global.queue.remove(at: 0)
+                self.global.song = song
+                self.global.room?.songID = song.trackId!
+                self.global.systemMusicPlayer.setQueueWithStoreIDs([song.trackId!])
+                self.global.systemMusicPlayer.play()
+                self.global.idQueue.remove(at: 0)
+                self.global.room?.previousPlayed.append(song.trackId!)
+            }
         } else {
             if self.reppedSong() {
                 print("Already Repped Song")
@@ -100,6 +132,7 @@ class MusicPlayerController: UIViewController {
                     //change button icon
                     DispatchQueue.main.async(){
                         self.popupItem.leftBarButtonItems = [UIBarButtonItem(image:UIImage(named: "loved"), style: .plain, target: nil, action: nil)]
+                        self.skipRepOutlet.setImage(#imageLiteral(resourceName: "loved"), for: .normal)
                     }
                 }
                 return FIRTransactionResult.success(withValue: currentData)
@@ -111,8 +144,6 @@ class MusicPlayerController: UIViewController {
             }
         }
         }
-         print("add rep")
-        print("go next")
     }
     
     func next(sender: UIBarButtonItem)

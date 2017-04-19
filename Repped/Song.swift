@@ -40,9 +40,7 @@ internal class Song {
                             self.trackName = info["trackName"] as! String
                             self.artistName = info["artistName"] as! String
                             
-                            print("Song Results", songResults[0])
-                            print("song info in here", self.trackId!, self.artistName!, self.trackName!)
-                        }
+                }
                         completionHandler()
                     }
                 case .failure(_):
@@ -52,7 +50,6 @@ internal class Song {
                     self.artistName = "Rick Astley"
                 }
         }
-        print("song info", self.trackId, self.artistName, self.trackName)
     }
     
     func searchItunes(_ trackID: String){
@@ -70,8 +67,7 @@ internal class Song {
                             self.artWork = UIImage(data: try! Data(contentsOf: imgURL!))
                             self.trackName = info["trackName"] as! String
                             self.artistName = info["artistName"] as! String
-
-                            print("Song Results", songResults[0])
+                            
                             print("song info in here", self.trackId!, self.artistName!, self.trackName!)
                         }
                     }

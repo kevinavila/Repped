@@ -125,6 +125,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 DispatchQueue.main.async(){
                     self.userDoesNotHaveAppleMusic()
                     //TODO: UI update if user selects 'No Thanks'
+                    self.loginOrHome() //Need to use the simulator
                 }
             }
             

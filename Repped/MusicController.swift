@@ -37,38 +37,14 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
         //searchController?.searchBar.delegate = self
         searchController?.dimsBackgroundDuringPresentation = false
         searchController?.searchResultsUpdater = self
-        //definesPresentationContext = true
         tableView.tableHeaderView = searchController?.searchBar
         searchController?.delegate = self
+        
+        self.tableView.backgroundView = UIView()
         
         self.currentRoomRef = FIRDatabase.database().reference().child("rooms/"+(self.global.room?.rid)!)
         observeRooms()
     }
-
-//    @IBAction func playButtonClicked(_ sender: Any) {
-//        if self.global.queue.isEmpty {
-//            toast("First add a song to the queue")
-//            
-//        } else {
-//            let song = self.global.queue.remove(at: 0)
-//            self.global.song = song
-//            self.global.room?.songID = song.trackId!
-//            self.global.systemMusicPlayer.setQueueWithStoreIDs([song.trackId!])
-//            self.global.systemMusicPlayer.play()
-//            //Need to get it to workl to use the musicplayer controller queue so songs will play in the backgroung
-//            //if self.global.systemMusicPlayer.nowPlayingItem == nil {
-//            //    print("trying to play for tyhe first time")
-//            //    self.global.systemMusicPlayer.play()
-//            //} else {
-//            //    print("skipping to next song")
-//            //     self.global.systemMusicPlayer.skipToNextItem()
-//            //}
-//            self.global.idQueue.remove(at: 0)
-//            self.global.room?.previousPlayed.append(song.trackId!)
-//            songChange()
-//            showPop()
-//        }
-//    }
     
     //MARK: Tableview functions
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -112,6 +88,12 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
         if ((searchController?.isActive)! && searchController?.searchBar.text != "") {
             // Currently searching
             let cell  = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: nil)
+            
+            // UI styling for cell
+            cell.backgroundColor = UIColor(red:0.11, green:0.11, blue:0.11, alpha:1.0)
+            cell.textLabel?.textColor = UIColor(red:0.29, green:0.67, blue:0.75, alpha:1.0)
+            cell.detailTextLabel?.textColor = UIColor(red:0.29, green:0.67, blue:0.75, alpha:1.0)
+            
             if let rowData: NSDictionary = self.songResults[indexPath.row],
                 let urlString = rowData["artworkUrl60"] as? String,
                 let imgURL = URL(string: urlString),
@@ -139,6 +121,7 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
             cell.tapAction = { (cell) in
                 print("Just tapped the button for ", (indexPath as IndexPath).row)
                 if self.reppedSong(trackID: self.global.previousSongs[indexPath.row].trackId!) {
+                    self.toast("Already repped the leader for this song.")
                     print("Repped already boy.")
                 } else {
                     self.clickedRep(cell: (cell as! RecentlyPlayedCell))
@@ -151,8 +134,13 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
         } else {
             // User's song queue
             if (self.global.queue.count > 0) {
-                print ("DISPLAYING USER's QUEUE")
                 let cell  = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: nil)
+                
+                // UI styling for cell
+                cell.backgroundColor = UIColor(red:0.11, green:0.11, blue:0.11, alpha:1.0)
+                cell.textLabel?.textColor = UIColor(red:0.29, green:0.67, blue:0.75, alpha:1.0)
+                cell.detailTextLabel?.textColor = UIColor(red:0.29, green:0.67, blue:0.75, alpha:1.0)
+                
                 let song = self.global.queue[indexPath.row]
                 cell.imageView?.image = song.artWorkSmall
                 cell.textLabel?.text = song.trackName
@@ -185,21 +173,13 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
                 tableView.deselectRow(at: indexPath, animated: true)
                 
                 if (self.global.isLeader) {
-                    if (self.global.queue.count < 2) {
+                    if (!self.global.isSongPlaying()) {
                         // Adding first song. Start playing.
                         let song = self.global.queue.remove(at: 0)
                         self.global.song = song
                         self.global.room?.songID = song.trackId!
                         self.global.systemMusicPlayer.setQueueWithStoreIDs([song.trackId!])
                         self.global.systemMusicPlayer.play()
-                        //Need to get it to workl to use the musicplayer controller queue so songs will play in the backgroung
-                        //if self.global.systemMusicPlayer.nowPlayingItem == nil {
-                        //    print("trying to play for tyhe first time")
-                        //    self.global.systemMusicPlayer.play()
-                        //} else {
-                        //    print("skipping to next song")
-                        //     self.global.systemMusicPlayer.skipToNextItem()
-                        //}
                         self.global.idQueue.remove(at: 0)
                         self.global.room?.previousPlayed.append(song.trackId!)
                         updateRoom()
@@ -218,20 +198,12 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
             // User's song queue
         }
         
-        //        let indexPath = tableView.indexPathForSelectedRow
-        //         if self.global.isLeader {
-        //        if let rowData: NSDictionary = self.tableData?[indexPath!.row], let urlString = rowData["artworkUrl60"] as? String,
-        //            let imgURL = URL(string: urlString),
-        //            let imgData = try? Data(contentsOf: imgURL)  {
-        //            self.global.idQueue.append(String (describing: rowData["trackId"]!))
-        //            //print("id Queue ",self.global.idQueue)
-        //            //self.global.systemMusicPlayer.setQueueWithStoreIDs(self.global.idQueue)
-        //            self.global.queue.append(Song(artWork: UIImage(data: imgData), trackName: rowData["trackName"] as? String, artistName: rowData["artistName"] as? String, trackId: String (describing: rowData["trackId"]!)))
-        //            toast("Added track!")
-        //
-        //                       tableView.deselectRow(at: indexPath!, animated: true)
-        //            }
-        //        }
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let header = view as! UITableViewHeaderFooterView
+        header.textLabel?.textColor = UIColor.lightGray
+        
     }
     
     private func updateRoom() {
@@ -267,18 +239,19 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
             leaderRepRef.runTransactionBlock({ (currentData: FIRMutableData) -> FIRTransactionResult in
                 if let curRep = currentData.value as? Int{
                     currentData.value = curRep + 1
-                    print("increased rep")
+                    print("Increased rep")
                     self.global.repHistory[(self.global.song?.trackId)!] = self.global.room?.leader
-                    //change button icon
+                    // Change button icon
                     DispatchQueue.main.async(){
-                        print("reload table")
+                        self.toast("Repped!")
+                        print("Reload table")
                         self.tableView.reloadData()
                     }
                 }
                 return FIRTransactionResult.success(withValue: currentData)
             }) { (error, committed, snapshot) in
                 if let error = error {
-                    print("there was an error adding rep")
+                    print("There was an error increasing the rep.")
                     print(error.localizedDescription)
                 }
             }
@@ -383,6 +356,8 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
     private func observeRooms() {
         // Listening for changes in current room
         currentRoomRefHandle = currentRoomRef?.observe(.value, with: { (snapshot) -> Void in
+            
+            print("IN OBSERVE ROOMS: MusicControler")
             
             let roomData = snapshot.value as! Dictionary<String, AnyObject>
             let rid = snapshot.key

@@ -141,6 +141,8 @@ class RoomController: UITableViewController  {
         // Listening for changes to my room
         currentRoomRefHandle = currentRoomRef?.observe(.value, with: { (snapshot) -> Void in
             
+            print("IN OBSERVE ROOMS: RoomController")
+            
             let roomData = snapshot.value as! Dictionary<String, AnyObject>
             let rid = snapshot.key
             if rid == self.global.room?.rid {

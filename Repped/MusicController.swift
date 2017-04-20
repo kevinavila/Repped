@@ -174,16 +174,17 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
                 if (self.global.isLeader) {
                     if (!self.global.isSongPlaying()) {
                         // Adding first song. Start playing.
-                        let song = self.global.queue.remove(at: 0)
+                        let song = self.global.queue[0]
                         self.global.song = song
                         self.global.room?.songID = song.trackId!
-                        self.global.systemMusicPlayer.setQueueWithStoreIDs([song.trackId!])
+                        self.global.systemMusicPlayer.setQueueWithStoreIDs(self.global.idQueue)
                         self.global.systemMusicPlayer.play()
-                        self.global.idQueue.remove(at: 0)
-                        self.global.room?.previousPlayed.append(song.trackId!)
+                        //self.global.idQueue.remove(at: 0)
+                        //self.global.room?.previousPlayed.append(song.trackId!)
                         updateRoom()
                         showPop()
                     } else {
+                        self.global.systemMusicPlayer.setQueueWithStoreIDs(self.global.idQueue)
                         updateRoom()
                     }
                 }

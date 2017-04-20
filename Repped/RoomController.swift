@@ -46,6 +46,13 @@ class RoomController: UITableViewController  {
         //    self.sampleData.addUserToMyRoom((self.global.room?.rid)!)
         //}
         
+        self.global.systemMusicPlayer.beginGeneratingPlaybackNotifications()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(songInMusicPlayerChanged),
+            name: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange,
+            object: nil)
+        
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
@@ -114,6 +121,10 @@ class RoomController: UITableViewController  {
         currentRoomRef?.child("leader").setValue(user.uid)
     }
     
+    func songInMusicPlayerChanged() {
+        print("SONG CHANGED")
+    }
+    
 
 
     //MARK: Firebase Functions
@@ -149,7 +160,8 @@ class RoomController: UITableViewController  {
                     if (roomData["songID"] as! String) != self.global.room?.songID {
                         print("Setting new song")
                         self.global.room?.songID = roomData["songID"] as! String
-                        self.global.systemMusicPlayer.setQueueWithStoreIDs([(self.global.room?.songID)!])
+                        let roomQueue = roomData["songQueue"] as! [String]
+                        self.global.systemMusicPlayer.setQueueWithStoreIDs(roomQueue)
                         self.global.systemMusicPlayer.play()
                         self.global.song = Song(trackId: (self.global.room?.songID)!){
                             print("completion handler?")

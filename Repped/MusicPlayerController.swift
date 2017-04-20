@@ -15,6 +15,7 @@ class MusicPlayerController: UIViewController {
     
     
     private lazy var userRef:FIRDatabaseReference = FIRDatabase.database().reference().child("users")
+    private lazy var roomRef:FIRDatabaseReference = FIRDatabase.database().reference().child("rooms")
     
     @IBOutlet weak var songNameLabel: UILabel!
     @IBOutlet weak var albumNameLabel: UILabel!
@@ -110,13 +111,16 @@ class MusicPlayerController: UIViewController {
                 print("First add a song to the queue")
                 
             } else {
-                let song = self.global.queue.remove(at: 0)
-                self.global.song = song
-                self.global.room?.songID = song.trackId!
-                self.global.systemMusicPlayer.setQueueWithStoreIDs([song.trackId!])
-                self.global.systemMusicPlayer.play()
+                let prevSong = self.global.queue.remove(at: 0)
                 self.global.idQueue.remove(at: 0)
-                self.global.room?.previousPlayed.append(song.trackId!)
+                self.global.room?.previousPlayed.append(prevSong.trackId!)
+                
+                let newSong = self.global.queue[0]
+                self.global.song = newSong
+                self.global.room?.songID = newSong.trackId!
+                self.global.systemMusicPlayer.setQueueWithStoreIDs(self.global.idQueue)
+                self.global.systemMusicPlayer.play()
+                updateRoom()
             }
         } else {
             if self.reppedSong() {
@@ -193,6 +197,17 @@ class MusicPlayerController: UIViewController {
             songProgress.setProgress(Float(trackElapsed/trackDuration), animated: true)
         }
         
+    }
+    
+    private func updateRoom() {
+        let roomItem = [
+            "name": (self.global.room?.name)!,
+            "leader": (self.global.room?.leader)!,
+            "songID": (self.global.room?.songID)!,
+            "songQueue": (self.global.idQueue),
+            "previouslyPlayed": (self.global.room?.previousPlayed)!,
+            ] as [String:Any]
+        self.roomRef.child((self.global.room?.rid)!).setValue(roomItem)
     }
         
    }

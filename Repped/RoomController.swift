@@ -141,25 +141,28 @@ class RoomController: UITableViewController  {
         // Listening for changes to my room
         currentRoomRefHandle = currentRoomRef?.observe(.value, with: { (snapshot) -> Void in
             
-            print("IN OBSERVE ROOMS: RoomController")
-            
             let roomData = snapshot.value as! Dictionary<String, AnyObject>
             let rid = snapshot.key
             if rid == self.global.room?.rid {
-                self.global.room?.leader =  roomData["leader"] as! String
-                //might need to do something if leader changed
+                self.global.room?.leader = roomData["leader"] as! String
                 if let _ = roomData["songID"] {
                     if (roomData["songID"] as! String) != self.global.room?.songID {
-                        print("Setting song")
+                        print("Setting new song")
                         self.global.room?.songID = roomData["songID"] as! String
                         self.global.systemMusicPlayer.setQueueWithStoreIDs([(self.global.room?.songID)!])
                         self.global.systemMusicPlayer.play()
-                        self.global.song = Song(trackId: (self.global.room?.songID)!) {
+                        self.global.song = Song(trackId: (self.global.room?.songID)!){
                             print("completion handler?")
                             self.showPop()
                         }
-                    }else{
-                        self.showPop()
+                    }
+                }
+                if let _ = roomData["previouslyPlayed"] {
+                    let songIDs = roomData["previouslyPlayed"] as! [String]
+                    for id in songIDs {
+                        self.global.previousSongs.append(Song(trackId: id){
+                            self.tableView.reloadData()
+                        })
                     }
                 }
                 if self.global.isLeader != (self.global.room?.leader == self.global.user?.uid) {

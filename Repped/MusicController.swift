@@ -43,7 +43,6 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
         self.tableView.backgroundView = UIView()
         
         self.currentRoomRef = FIRDatabase.database().reference().child("rooms/"+(self.global.room?.rid)!)
-        observeRooms()
     }
     
     //MARK: Tableview functions
@@ -193,9 +192,11 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
             }
         } else if (indexPath.section == 0) {
             // Recently played
+            tableView.deselectRow(at: indexPath, animated: true)
             
         } else {
             // User's song queue
+            tableView.deselectRow(at: indexPath, animated: true)
         }
         
     }
@@ -348,46 +349,6 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
             let trimmedId = storefrontId[indexRange]
             
             print("Success! The user's storefront ID is: \(trimmedId)")
-        })
-    }
-    
-    
-    //MARK: Firebase Functions
-    private func observeRooms() {
-        // Listening for changes in current room
-        currentRoomRefHandle = currentRoomRef?.observe(.value, with: { (snapshot) -> Void in
-            
-            print("IN OBSERVE ROOMS: MusicControler")
-            
-            let roomData = snapshot.value as! Dictionary<String, AnyObject>
-            let rid = snapshot.key
-            if rid == self.global.room?.rid {
-                self.global.room?.leader = roomData["leader"] as! String
-                if let _ = roomData["songID"] {
-                    if (roomData["songID"] as! String) != self.global.room?.songID {
-                        print("Setting new song")
-                        self.global.room?.songID = roomData["songID"] as! String
-                        self.global.systemMusicPlayer.setQueueWithStoreIDs([(self.global.room?.songID)!])
-                        self.global.systemMusicPlayer.play()
-                        self.global.song = Song(trackId: (self.global.room?.songID)!){
-                            print("completion handler?")
-                            self.showPop()
-                        }
-                    }
-                }
-                if let _ = roomData["previouslyPlayed"] {
-                    let songIDs = roomData["previouslyPlayed"] as! [String]
-                    for id in songIDs {
-                        self.global.previousSongs.append(Song(trackId: id){
-                            self.tableView.reloadData()
-                        })
-                    }
-                }
-                if self.global.isLeader != (self.global.room?.leader == self.global.user?.uid) {
-                    self.global.isLeader = (self.global.room?.leader == self.global.user?.uid)
-                    self.tableView.reloadData()
-                }
-            }
         })
     }
 

@@ -30,6 +30,8 @@ class Global {
     
     var isLeader:Bool = false
     
+    var didSkip:Bool = false
+    
     public func isSongPlaying() -> Bool{
         return self.systemMusicPlayer.playbackState == MPMusicPlaybackState.playing
     }

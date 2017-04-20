@@ -43,6 +43,8 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
         self.tableView.backgroundView = UIView()
         
         self.currentRoomRef = FIRDatabase.database().reference().child("rooms/"+(self.global.room?.rid)!)
+        
+        // self.observePrevioslyPlayedSongs()
     }
     
     //MARK: Tableview functions
@@ -104,6 +106,7 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
             return cell
         } else if (indexPath.section == 0) {
             // Recently played
+            // TODO: Read from previousSongs array backwards to make sure the top 5 are the most recent.
             let cell = tableView.dequeueReusableCell(withIdentifier: "recentlyPlayedCell", for: indexPath) as! RecentlyPlayedCell
             cell.mainText.text = self.global.previousSongs[indexPath.row].trackName
             cell.subTitle.text = self.global.previousSongs[indexPath.row].artistName
@@ -179,9 +182,6 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
                         self.global.room?.songID = song.trackId!
                         self.global.systemMusicPlayer.setQueueWithStoreIDs(self.global.idQueue)
                         self.global.systemMusicPlayer.play()
-                        //self.global.idQueue.remove(at: 0)
-                        //self.global.room?.previousPlayed.append(song.trackId!)
-                        updateRoom()
                         showPop()
                     } else {
                         self.global.systemMusicPlayer.setQueueWithStoreIDs(self.global.idQueue)
@@ -262,6 +262,26 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
     private func reppedSong(trackID: String) -> Bool {
         return self.global.repHistory[trackID] == self.global.room?.leader
     }
+    
+    //MARK: Firebase functions
+    private func observePrevioslyPlayedSongs() {
+        // Updates previously played songs
+        currentRoomRefHandle = currentRoomRef?.observe(.value, with: { (snapshot) -> Void in
+            let roomData = snapshot.value as! Dictionary<String, AnyObject>
+            let rid = snapshot.key
+            if rid == self.global.room?.rid {
+                if let _ = roomData["previouslyPlayed"] {
+                    let songIDs = roomData["previouslyPlayed"] as! [String]
+                    for id in songIDs {
+                        self.global.previousSongs.append(Song(trackId: id){
+                            self.tableView.reloadData()
+                        })
+                    }
+                }
+            }
+        })
+    }
+
 
 
     func toast(_ toast: String){

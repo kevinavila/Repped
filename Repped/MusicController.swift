@@ -142,7 +142,7 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
                     print("Repped already boy.")
                 } else {
                     self.clickedRep(cell: (cell as! RecentlyPlayedCell))
-                    (cell as! RecentlyPlayedCell).repButtonOutlet.setImage(#imageLiteral(resourceName: "loved"), for: .normal) 
+                    (cell as! RecentlyPlayedCell).repButtonOutlet.setImage(#imageLiteral(resourceName: "loved"), for: .normal)
                 }
                 
             }
@@ -185,7 +185,7 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
                 tableView.deselectRow(at: indexPath, animated: true)
                 
                 if (self.global.isLeader) {
-                    if (self.global.queue.count < 2) {
+                    if (self.global.isSongPlaying()) {
                         // Adding first song. Start playing.
                         let song = self.global.queue.remove(at: 0)
                         self.global.song = song

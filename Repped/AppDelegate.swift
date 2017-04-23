@@ -135,6 +135,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Login and Home screen initialization
     func loginOrHome() {
+        print("_ login or home")
         // Uncomment to allow app to remember login info
         let loginStoryboard = UIStoryboard(name: "Login", bundle: nil)
         let homeStoryboard = UIStoryboard(name: "Home", bundle: nil)

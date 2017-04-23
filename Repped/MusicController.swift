@@ -135,7 +135,7 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
             
         } else {
             // User's song queue
-            if (self.global.queue.count > 0) {
+            if (indexPath.row < self.global.queue.count) {
                 let cell  = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: nil)
                 
                 // UI styling for cell
@@ -177,12 +177,12 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
                 if (self.global.isLeader) {
                     if (!self.global.isSongPlaying()) {
                         // Adding first song. Start playing.
+                        print("Adding first song!")
                         let song = self.global.queue[0]
                         self.global.song = song
                         self.global.room?.songID = song.trackId!
                         self.global.systemMusicPlayer.setQueueWithStoreIDs(self.global.idQueue)
                         self.global.systemMusicPlayer.play()
-                        showPop()
                     } else {
                         self.global.systemMusicPlayer.setQueueWithStoreIDs(self.global.idQueue)
                         updateRoom()

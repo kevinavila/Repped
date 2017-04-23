@@ -29,7 +29,7 @@ class RoomController: UITableViewController  {
     let sampleData:SampleData = SampleData.sharedSample
     
     var currentRoom:Room!
-    
+    var firstCall:Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +46,7 @@ class RoomController: UITableViewController  {
         //}
         
         self.global.systemMusicPlayer.beginGeneratingPlaybackNotifications()
+        NotificationCenter.default.removeObserver(self) // Remove from all notifications being observed
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(songInMusicPlayerChanged),
@@ -72,17 +73,6 @@ class RoomController: UITableViewController  {
         self.navigationController!.view.bringSubview(toFront: self.navigationController!.popupContentView)
         
         tabBarController?.popupBar.tintColor = UIColor(white: 38.0 / 255.0, alpha: 1.0)
-    }
-    
-    private func updatePopup(){
-        popupContentController?.songNameLabel.text = (self.global.song?.trackName)!
-        popupContentController?.popupItem.title = (self.global.song?.trackName)!
-        
-        popupContentController?.albumArtImageView.image = (self.global.song?.artWorkLarge)!
-        popupContentController?.popupItem.image = (self.global.song?.artWorkSmall)!
-        
-        popupContentController?.albumNameLabel.text = (self.global.song?.artistName)!
-        popupContentController?.popupItem.subtitle = (self.global.song?.artistName)!
     }
     
     //MARK: Table View Functions
@@ -132,26 +122,31 @@ class RoomController: UITableViewController  {
     }
     
     func songInMusicPlayerChanged() {
-        print("SONG CHANGED")
-        
-        if (self.global.queue.count > 1 ) {
-            if (self.global.didSkip) {
-                // User skipped to next song
-                self.global.didSkip = false
-            } else {
-                // Song ended, next one is starting.
-                let prevSong = self.global.queue.remove(at: 0)
-                self.global.idQueue.remove(at: 0)
-                self.global.room?.previousPlayed.append(prevSong.trackId!)
-                
-                let newSong = self.global.queue[0]
-                self.global.song = newSong
-                self.global.room?.songID = newSong.trackId!
+        if (firstCall) {
+            if (self.global.queue.count > 1 ) {
+                if (self.global.didSkip) {
+                    print ("User skipped song")
+                    // User skipped to next song
+                    self.global.didSkip = false
+                } else {
+                    print("Song ended, next one is starting")
+                    // Song ended, next one is starting.
+                    let prevSong = self.global.queue.remove(at: 0)
+                    self.global.idQueue.remove(at: 0)
+                    self.global.room?.previousPlayed.append(prevSong.trackId!)
+                    
+                    let newSong = self.global.queue[0]
+                    self.global.song = newSong
+                    self.global.room?.songID = newSong.trackId!
+                }
             }
+            updateRoom()
+            showPop()
+            // FUTURE: if no more songs in queue, destroy the room.
+            firstCall = false
+        } else {
+            firstCall = true
         }
-        updateRoom()
-        updatePopup()
-        // FUTURE: if no more songs in queue, destroy the room.
     }
     
     private func updateRoom() {
@@ -191,21 +186,22 @@ class RoomController: UITableViewController  {
     private func observeRooms() {
         // Listening for changes to my room
         currentRoomRefHandle = currentRoomRef?.observe(.value, with: { (snapshot) -> Void in
-            
             let roomData = snapshot.value as! Dictionary<String, AnyObject>
             let rid = snapshot.key
             if rid == self.global.room?.rid {
                 self.global.room?.leader = roomData["leader"] as! String
-                if let _ = roomData["songID"] {
-                    if (roomData["songID"] as! String) != self.global.room?.songID {
-                        print("Setting new song")
-                        self.global.room?.songID = roomData["songID"] as! String
-                        let roomQueue = roomData["songQueue"] as! [String]
-                        self.global.systemMusicPlayer.setQueueWithStoreIDs(roomQueue)
-                        self.global.systemMusicPlayer.play()
-                        self.global.song = Song(trackId: (self.global.room?.songID)!){
-                            print("completion handler?")
-                            self.showPop()
+                if (!(self.global.room?.leader == self.global.user?.uid)) {
+                    if let _ = roomData["songID"] {
+                        if (roomData["songID"] as! String) != self.global.room?.songID {
+                            print("Setting new song")
+                            self.global.room?.songID = roomData["songID"] as! String
+                            let roomQueue = roomData["songQueue"] as! [String]
+                            self.global.systemMusicPlayer.setQueueWithStoreIDs(roomQueue)
+                            self.global.systemMusicPlayer.play()
+                            self.global.song = Song(trackId: (self.global.room?.songID)!){
+                                print("completion handler?")
+                                self.showPop()
+                            }
                         }
                     }
                 }
@@ -223,7 +219,7 @@ class RoomController: UITableViewController  {
             let uid = snapshot.key
             let value = snapshot.value
             
-            // Need to hanbdle errors for optionals -> if let ...
+            // Need to handle errors for optionals -> if let ...
             let userData = value as! [String:Any]
             
             for curUser in self.listeners {

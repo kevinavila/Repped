@@ -106,11 +106,13 @@ class MusicPlayerController: UIViewController {
 
     
     @IBAction func skipRepButton(_ sender: Any) {
+        print("Skip song button pressed.")
         if self.global.isLeader {
             if (self.global.queue.count < 2) {
                 print("First add a song to the queue")
                 
             } else {
+                print("Skipping song...")
                 self.global.didSkip = true
                 let prevSong = self.global.queue.remove(at: 0)
                 self.global.idQueue.remove(at: 0)

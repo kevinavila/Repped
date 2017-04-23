@@ -44,7 +44,7 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
         
         self.currentRoomRef = FIRDatabase.database().reference().child("rooms/"+(self.global.room?.rid)!)
         
-        // self.observePrevioslyPlayedSongs()
+        self.observePreviouslyPlayedSongs()
     }
     
     //MARK: Tableview functions
@@ -264,7 +264,7 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
     }
     
     //MARK: Firebase functions
-    private func observePrevioslyPlayedSongs() {
+    private func observePreviouslyPlayedSongs() {
         // Updates previously played songs
         currentRoomRefHandle = currentRoomRef?.observe(.value, with: { (snapshot) -> Void in
             let roomData = snapshot.value as! Dictionary<String, AnyObject>
@@ -272,7 +272,9 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
             if rid == self.global.room?.rid {
                 if let _ = roomData["previouslyPlayed"] {
                     let songIDs = roomData["previouslyPlayed"] as! [String]
-                    for id in songIDs {
+                    print("Updating previousSongs...")
+                    self.global.previousSongs = []
+                    for id in songIDs.reversed() {
                         self.global.previousSongs.append(Song(trackId: id){
                             self.tableView.reloadData()
                         })

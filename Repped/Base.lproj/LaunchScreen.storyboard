@@ -30,8 +30,8 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.10980392156862745" green="0.10980392156862745" blue="0.10980392156862745" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.10980392156862745" green="0.10980392156862745" blue="0.10980392156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="04y-fZ-5HY" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="158" id="EMe-pd-ywL"/>
                             <constraint firstAttribute="trailingMargin" secondItem="04y-fZ-5HY" secondAttribute="trailing" constant="32" id="IEp-Wl-Jcf"/>

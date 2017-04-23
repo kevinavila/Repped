@@ -22,21 +22,20 @@ class RoomController: UITableViewController  {
     private lazy var joinRef:FIRDatabaseReference = FIRDatabase.database().reference().child("joinTable")
     private var joinRefHandle:FIRDatabaseHandle?
      
-    
+    var popupContentController:MusicPlayerController?
     let systemMusicPlayer = MPMusicPlayerController.systemMusicPlayer()
     
     var global:Global = Global.sharedGlobal
     let sampleData:SampleData = SampleData.sharedSample
     
     var currentRoom:Room!
-    
+    var firstCall:Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //cant figure out how to set a title TODO
         //navigationController?.navigationBar.topItem?.title = "Listeners"
-
         
         
         self.currentRoomRef = FIRDatabase.database().reference().child("rooms/"+(self.global.room?.rid)!)
@@ -45,6 +44,14 @@ class RoomController: UITableViewController  {
         //if self.global.isLeader{
         //    self.sampleData.addUserToMyRoom((self.global.room?.rid)!)
         //}
+        
+        self.global.systemMusicPlayer.beginGeneratingPlaybackNotifications()
+        NotificationCenter.default.removeObserver(self) // Remove from all notifications being observed
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(songInMusicPlayerChanged),
+            name: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange,
+            object: nil)
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -55,20 +62,20 @@ class RoomController: UITableViewController  {
     
     private func showPop(){
         print("Show Popup Controller")
-        let popupContentController = storyboard?.instantiateViewController(withIdentifier: "MusicPlayerController") as! MusicPlayerController
+        popupContentController = storyboard?.instantiateViewController(withIdentifier: "MusicPlayerController") as? MusicPlayerController
         
-        popupContentController.popupItem.accessibilityHint = NSLocalizedString("Double Tap to Expand the Mini Player", comment: "")
+        popupContentController?.popupItem.accessibilityHint = NSLocalizedString("Double Tap to Expand the Mini Player", comment: "")
         
         tabBarController?.popupContentView.popupCloseButton.accessibilityLabel = NSLocalizedString("Dismiss Now Playing Screen", comment: "")
         
-        tabBarController?.presentPopupBar(withContentViewController: popupContentController, animated: true, completion: nil)
+        tabBarController?.presentPopupBar(withContentViewController: popupContentController!, animated: true, completion: nil)
         
         self.navigationController!.view.bringSubview(toFront: self.navigationController!.popupContentView)
         
         tabBarController?.popupBar.tintColor = UIColor(white: 38.0 / 255.0, alpha: 1.0)
     }
     
-//    MARK: Table View Functions
+    //MARK: Table View Functions
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return listeners.count
     }
@@ -114,6 +121,45 @@ class RoomController: UITableViewController  {
         currentRoomRef?.child("leader").setValue(user.uid)
     }
     
+    func songInMusicPlayerChanged() {
+        if (firstCall) {
+            if (self.global.queue.count > 1 ) {
+                if (self.global.didSkip) {
+                    print ("User skipped song")
+                    // User skipped to next song
+                    self.global.didSkip = false
+                } else {
+                    print("Song ended, next one is starting")
+                    // Song ended, next one is starting.
+                    let prevSong = self.global.queue.remove(at: 0)
+                    self.global.idQueue.remove(at: 0)
+                    self.global.room?.previousPlayed.append(prevSong.trackId!)
+                    
+                    let newSong = self.global.queue[0]
+                    self.global.song = newSong
+                    self.global.room?.songID = newSong.trackId!
+                }
+            }
+            updateRoom()
+            showPop()
+            // FUTURE: if no more songs in queue, destroy the room.
+            firstCall = false
+        } else {
+            firstCall = true
+        }
+    }
+    
+    private func updateRoom() {
+        let roomItem = [
+            "name": (self.global.room?.name)!,
+            "leader": (self.global.room?.leader)!,
+            "songID": (self.global.room?.songID)!,
+            "songQueue": (self.global.idQueue),
+            "previouslyPlayed": (self.global.room?.previousPlayed)!,
+            ] as [String:Any]
+        self.currentRoomRef?.setValue(roomItem)
+    }
+    
 
 
     //MARK: Firebase Functions
@@ -140,24 +186,23 @@ class RoomController: UITableViewController  {
     private func observeRooms() {
         // Listening for changes to my room
         currentRoomRefHandle = currentRoomRef?.observe(.value, with: { (snapshot) -> Void in
-            
             let roomData = snapshot.value as! Dictionary<String, AnyObject>
             let rid = snapshot.key
             if rid == self.global.room?.rid {
-                self.global.room?.leader =  roomData["leader"] as! String
-                //might need to do something if leader changed
-                if let _ = roomData["songID"] {
-                    if (roomData["songID"] as! String) != self.global.room?.songID {
-                        print("Setting song")
-                        self.global.room?.songID = roomData["songID"] as! String
-                        self.global.systemMusicPlayer.setQueueWithStoreIDs([(self.global.room?.songID)!])
-                        self.global.systemMusicPlayer.play()
-                        self.global.song = Song(trackId: (self.global.room?.songID)!) {
-                            print("completion handler?")
-                            self.showPop()
+                self.global.room?.leader = roomData["leader"] as! String
+                if (!(self.global.room?.leader == self.global.user?.uid)) {
+                    if let _ = roomData["songID"] {
+                        if (roomData["songID"] as! String) != self.global.room?.songID {
+                            print("Setting new song")
+                            self.global.room?.songID = roomData["songID"] as! String
+                            let roomQueue = roomData["songQueue"] as! [String]
+                            self.global.systemMusicPlayer.setQueueWithStoreIDs(roomQueue)
+                            self.global.systemMusicPlayer.play()
+                            self.global.song = Song(trackId: (self.global.room?.songID)!){
+                                print("completion handler?")
+                                self.showPop()
+                            }
                         }
-                    }else{
-                        self.showPop()
                     }
                 }
                 if self.global.isLeader != (self.global.room?.leader == self.global.user?.uid) {
@@ -174,7 +219,7 @@ class RoomController: UITableViewController  {
             let uid = snapshot.key
             let value = snapshot.value
             
-            // Need to hanbdle errors for optionals -> if let ...
+            // Need to handle errors for optionals -> if let ...
             let userData = value as! [String:Any]
             
             for curUser in self.listeners {

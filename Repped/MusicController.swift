@@ -31,8 +31,6 @@ class MusicController: UITableViewController, UISearchControllerDelegate, UISear
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //navigationController?.navigationBar.topItem?.title = "Title 3"
-        
         searchController = UISearchController(searchResultsController: nil)
         //searchController?.searchBar.delegate = self
         searchController?.dimsBackgroundDuringPresentation = false

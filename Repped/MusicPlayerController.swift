@@ -37,21 +37,17 @@ class MusicPlayerController: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        setPopupWithSongInfo()
+        songNameLabel.text = (self.global.song?.trackName)!
+        popupItem.title = (self.global.song?.trackName)!
+        
+        albumArtImageView.image = (self.global.song?.artWorkLarge)!
+        popupItem.image = (self.global.song?.artWorkSmall)!
+        
+        albumNameLabel.text = (self.global.song?.artistName)!
+        popupItem.subtitle = (self.global.song?.artistName)!
         
         self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.timerFired(_:)), userInfo: nil, repeats: true)
         self.timer?.tolerance = 0.1
-    }
-    
-    private func setPopupWithSongInfo(){
-        songNameLabel.text = (self.global.song?.trackName)!
-        popupItem.title = (self.global.song?.trackName)!
-    
-        albumArtImageView.image = (self.global.song?.artWorkLarge)!
-        popupItem.image = (self.global.song?.artWorkSmall)!
-    
-        albumNameLabel.text = (self.global.song?.artistName)!
-        popupItem.subtitle = (self.global.song?.artistName)!
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -127,8 +123,6 @@ class MusicPlayerController: UIViewController {
                 self.global.room?.songID = newSong.trackId!
                 self.global.systemMusicPlayer.setQueueWithStoreIDs(self.global.idQueue)
                 self.global.systemMusicPlayer.play()
-                
-                setPopupWithSongInfo()
             }
         } else {
             if self.reppedSong() {

@@ -44,6 +44,7 @@ class HomeController: UITableViewController {
         
         self.navigationController?.navigationBar.barTintColor = UIColor(red:0.11, green:0.11, blue:0.11, alpha:1.0)
         self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
         
        
         // Use for testing

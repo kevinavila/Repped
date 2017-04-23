@@ -22,6 +22,8 @@ class AddFriendsController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Add Friends"
+        
         FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "friends"]).start(completionHandler: { (connection, result, error) -> Void in
             let fBData = result as! [String:Any]
             if (error == nil) {

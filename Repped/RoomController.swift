@@ -28,15 +28,12 @@ class RoomController: UITableViewController  {
     var global:Global = Global.sharedGlobal
     let sampleData:SampleData = SampleData.sharedSample
     
-    var currentRoom:Room!
     var firstCall:Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //cant figure out how to set a title TODO
-        //navigationController?.navigationBar.topItem?.title = "Listeners"
-        
+        self.tabBarController?.navigationItem.title = self.global.room?.name
         
         self.currentRoomRef = FIRDatabase.database().reference().child("rooms/"+(self.global.room?.rid)!)
         

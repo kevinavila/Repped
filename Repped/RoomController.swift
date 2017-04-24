@@ -137,7 +137,9 @@ class RoomController: UITableViewController  {
                     self.global.room?.songID = newSong.trackId!
                 }
             }
-            updateRoom()
+            if (self.global.room?.leader == self.global.user?.uid) {
+                updateRoom()
+            }
             showPop()
             // FUTURE: if no more songs in queue, destroy the room.
             firstCall = false
@@ -192,12 +194,15 @@ class RoomController: UITableViewController  {
                         if (roomData["songID"] as! String) != self.global.room?.songID {
                             print("Setting new song")
                             self.global.room?.songID = roomData["songID"] as! String
-                            let roomQueue = roomData["songQueue"] as! [String]
-                            self.global.systemMusicPlayer.setQueueWithStoreIDs(roomQueue)
-                            self.global.systemMusicPlayer.play()
-                            self.global.song = Song(trackId: (self.global.room?.songID)!){
-                                print("completion handler?")
-                                self.showPop()
+                            if (roomData["songQueue"] != nil) {
+                                let roomQueue = roomData["songQueue"] as! [String]
+                                self.global.systemMusicPlayer.setQueueWithStoreIDs(roomQueue)
+                                //self.global.systemMusicPlayer.play()
+                                self.global.song = Song(trackId: (self.global.room?.songID)!) {
+                                    print("completion handler?")
+                                    //self.showPop()
+                                    self.global.systemMusicPlayer.play()
+                                }
                             }
                         }
                     }

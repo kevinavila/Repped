@@ -100,6 +100,7 @@ class HomeController: UITableViewController {
             self.defaults.set(self.global.user?.deconstructUser(), forKey: "User")
             self.observeJoinTable()
             self.observeRep()
+            self.tableView.reloadData()
         })
         
         

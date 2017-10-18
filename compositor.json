@@ -34,18 +34,9 @@
   },
   "content": [
     {
-      "component": "nav",
-      "links": [
-        {
-          "href": "https://github.com/kevinavila/Repped",
-          "text": "GitHub"
-        }
-      ]
-    },
-    {
       "component": "header",
       "heading": "Repped",
-      "subhead": "A mobile iOS application that lets you listen to music with your friends in sync and in real-time.",
+      "subhead": "Music sharing how you like it, with friends and in real-time.",
       "children": [
         {
           "component": "ui/TweetButton",
@@ -57,7 +48,9 @@
           "user": "kevinavila",
           "repo": "Repped"
         }
-      ]
+      ],
+      "text": "",
+      "links": []
     },
     {
       "component": "article",

@@ -50,7 +50,10 @@
         }
       ],
       "text": "",
-      "links": []
+      "links": [],
+      "backgroundImage": "",
+      "image": "",
+      "slug": ""
     },
     {
       "component": "article",
@@ -70,7 +73,8 @@
           "href": "https://github.com/kevinavila",
           "text": "kevinavila"
         }
-      ]
+      ],
+      "image": ""
     }
   ]
 }

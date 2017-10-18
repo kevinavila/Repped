@@ -1,0 +1,83 @@
+{
+  "name": "kevinavila/Repped",
+  "version": "0.1.4",
+  "libraries": {
+    "xv": "^1.1.25"
+  },
+  "title": "Repped",
+  "branch": "",
+  "style": {
+    "name": "Swiss",
+    "componentSet": {
+      "nav": "nav/BasicNav",
+      "header": "header/SwissHeader",
+      "article": "article/SwissArticle",
+      "footer": "footer/BasicFooter"
+    },
+    "fontFamily": "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
+    "heading": {
+      "fontWeight": 700,
+      "letterSpacing": "-0.01em"
+    },
+    "layout": {
+      "fluid": true
+    },
+    "colors": {
+      "text": "#000",
+      "background": "#fff",
+      "primary": "#05a",
+      "secondary": "#444",
+      "highlight": "#f30",
+      "border": "#ccc",
+      "muted": "#eee"
+    }
+  },
+  "content": [
+    {
+      "component": "nav",
+      "links": [
+        {
+          "href": "https://github.com/kevinavila/Repped",
+          "text": "GitHub"
+        }
+      ]
+    },
+    {
+      "component": "header",
+      "heading": "Repped",
+      "subhead": "A mobile iOS application that lets you listen to music with your friends in sync and in real-time.",
+      "children": [
+        {
+          "component": "ui/TweetButton",
+          "text": "Repped: A mobile iOS application that lets you listen to music with your friends in sync and in real-time.",
+          "url": null
+        },
+        {
+          "component": "ui/GithubButton",
+          "user": "kevinavila",
+          "repo": "Repped"
+        }
+      ]
+    },
+    {
+      "component": "article",
+      "metadata": {
+        "source": "github.readme"
+      },
+      "html": "\n\n"
+    },
+    {
+      "component": "footer",
+      "links": [
+        {
+          "href": "https://github.com/kevinavila/Repped",
+          "text": "GitHub"
+        },
+        {
+          "href": "https://github.com/kevinavila",
+          "text": "kevinavila"
+        }
+      ]
+    }
+  ]
+}
